@@ -1,0 +1,16 @@
+name: Lint and Analyze
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    - run: flutter config --no-analytics
+    - run: flutter pub get
+    - run: flutter format --set-exit-if-changed .
+    - run: flutter analyze .
