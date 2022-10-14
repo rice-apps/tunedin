@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:startup_namer/main.dart';
+import 'package:rice_music_sharing/main.dart';
 
 void main() {
   testWidgets('Codelab smoke test', (tester) async {
