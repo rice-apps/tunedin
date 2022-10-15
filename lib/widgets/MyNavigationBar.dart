@@ -31,6 +31,9 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: const Text('Welcome to TunedIn'),
+        ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -69,6 +72,5 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
           onTap: _onItemTapped,
           elevation: 5),
     );
-    // home, explore, post, notifications, account
   }
 }
