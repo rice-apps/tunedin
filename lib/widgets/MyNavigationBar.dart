@@ -32,8 +32,8 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Welcome to TunedIn'),
-        ),
+        title: const Text('Welcome to TunedIn'),
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -43,22 +43,18 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
                 icon: Icon(Icons.home),
                 label: 'Home',
                 backgroundColor: Colors.blue),
-            
             BottomNavigationBarItem(
                 icon: Icon(Icons.search),
                 label: 'Explore',
                 backgroundColor: Colors.blue),
-            
             BottomNavigationBarItem(
                 icon: Icon(Icons.post_add),
                 label: 'Post',
                 backgroundColor: Colors.blue),
-            
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications),
                 label: 'Notifications',
                 backgroundColor: Colors.blue),
-
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Account',
