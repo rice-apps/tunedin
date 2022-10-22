@@ -109,40 +109,42 @@ class PlaylistCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                "https://picsum.photos/250?image=9",
-                width: 48,
-                height: 48,
-                fit: BoxFit.cover,
+      child: InkWell(
+          onTap: () {},
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    "https://picsum.photos/250?image=9",
+                    width: 48,
+                    height: 48,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                "Playlist Name",
-                textAlign: TextAlign.left,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    "Playlist Name",
+                    textAlign: TextAlign.left,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("20 Songs", textAlign: TextAlign.left),
+                ],
               ),
-              SizedBox(
-                height: 5,
+              const Spacer(),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                child: Icon(Icons.chevron_right),
               ),
-              Text("20 Songs", textAlign: TextAlign.left),
             ],
-          ),
-          const Spacer(),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-            child: Icon(Icons.chevron_right),
-          ),
-        ],
-      ),
+          )),
     );
   }
 }
