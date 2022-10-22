@@ -1,3 +1,22 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
+
+part 'post_model.freezed.dart';
+
+@freezed
+class PostModel with _$PostModel {
+  const factory PostModel({
+    required String netID,
+    // required int numLikes,
+    required String bodyText,
+    // required var comments,
+    required String musicURL,
+  }) = _PostModel;
+
+  factory PostModel.fromJson(Map<String, dynamic> json) =>
+      _$PostModelFromJson(json);
+}
+
 class PostModel {
   String netID = "";
   int numLikes = 0;
