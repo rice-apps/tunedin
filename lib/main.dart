@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets/my_navigation_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to TunedIn',
       home: Scaffold(
+        bottomNavigationBar: const MyNavigationBar(),
         appBar: AppBar(
           title: const Text('Welcome to TunedIn'),
         ),
