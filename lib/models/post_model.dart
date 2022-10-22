@@ -19,7 +19,7 @@ class PostModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final data = <String, dynamic>{};
     data['netID'] = netID;
     data['numLikes'] = numLikes;
     data['comments'] = comments;
