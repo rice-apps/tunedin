@@ -2,12 +2,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
 part 'post_model.freezed.dart';
+part 'post_model.g.dart';
 
-@freezed
+@unfreezed
 class PostModel with _$PostModel {
-  const factory PostModel({
+  factory PostModel({
     required String netID,
-    // required int numLikes,
+    required int numLikes,
     required String bodyText,
     // required var comments,
     required String musicURL,
@@ -17,30 +18,30 @@ class PostModel with _$PostModel {
       _$PostModelFromJson(json);
 }
 
-class PostModel {
-  String netID = "";
-  int numLikes = 0;
-  String bodyText = "";
-  var comments = [];
-  String musicURL = "";
-  // ...
+// class PostModel {
+//   String netID = "";
+//   int numLikes = 0;
+//   String bodyText = "";
+//   var comments = [];
+//   String musicURL = "";
+//   // ...
 
-  PostModel(
-      {required this.netID, required this.bodyText, required this.musicURL});
+//   PostModel(
+//       {required this.netID, required this.bodyText, required this.musicURL});
 
-  PostModel.fromJson(Map<String, dynamic> json) {
-    netID = json['netID'];
-    numLikes = json['numLikes'];
-    comments = json['comments'];
-    musicURL = json['musicURL'];
-  }
+//   PostModel.fromJson(Map<String, dynamic> json) {
+//     netID = json['netID'];
+//     numLikes = json['numLikes'];
+//     comments = json['comments'];
+//     musicURL = json['musicURL'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['netID'] = netID;
-    data['numLikes'] = numLikes;
-    data['comments'] = comments;
-    data['musicURL'] = musicURL;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final data = <String, dynamic>{};
+//     data['netID'] = netID;
+//     data['numLikes'] = numLikes;
+//     data['comments'] = comments;
+//     data['musicURL'] = musicURL;
+//     return data;
+//   }
+// }
