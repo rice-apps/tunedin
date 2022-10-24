@@ -38,35 +38,33 @@ class MyNavigationBarState extends State<MyNavigationBar> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+          selectedLabelStyle: Theme.of(context).textTheme.labelMedium,
+          unselectedLabelStyle: Theme.of(context).textTheme.labelMedium,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.blue),
+                label: 'Home',),
             BottomNavigationBarItem(
                 icon: Icon(Icons.search),
-                label: 'Explore',
-                backgroundColor: Colors.blue),
+                label: 'Explore',),
             BottomNavigationBarItem(
                 icon: Icon(Icons.post_add),
-                label: 'Post',
-                backgroundColor: Colors.blue),
+                label: 'Post',),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications),
-                label: 'Notifications',
-                backgroundColor: Colors.blue),
+                label: 'Notifications',),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Account',
-              backgroundColor: Colors.blue,
             ),
           ],
-          type: BottomNavigationBarType.shifting,
+          type: BottomNavigationBarType.fixed,
+          fixedColor: Colors.white,
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
           iconSize: 40,
           onTap: _onItemTapped,
-          elevation: 5),
+          elevation: 5
+        ),
     );
   }
 }
