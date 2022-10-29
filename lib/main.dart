@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         title: 'Welcome to TunedIn',
         home: Scaffold(
           appBar: AppBar(title: const Text("TunedIn")),
-          body: CommentWidget(),
+          body: const CommentWidget(),
         ));
   }
 }
