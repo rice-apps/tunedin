@@ -242,6 +242,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.2"
+  image_stack:
+    dependency: "direct main"
+    description:
+      name: image_stack
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   io:
     dependency: transitive
     description:
