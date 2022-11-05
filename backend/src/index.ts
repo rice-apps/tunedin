@@ -1,6 +1,10 @@
 import Koa from 'koa';
 import Router from '@koa/router';
+import 'reflect-metadata';
+import db from './db';
 import userRouter from './routes/user';
+
+await db.initialize();
 
 const app = new Koa();
 const indexRouter = new Router();
