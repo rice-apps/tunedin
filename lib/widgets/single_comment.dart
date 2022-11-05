@@ -8,7 +8,7 @@ class CommentWidget extends StatefulWidget {
 
 class _CommentWidgetState extends State<CommentWidget> {
   int _likes = 0;
-  bool _isNotLiked = false;
+  bool _isNotLiked = true;
 
   void _onLikeTapped() {
     setState(() {
