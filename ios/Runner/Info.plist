@@ -54,7 +54,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.example.tunedin</string>
+				<string>com.auth0.tunedin</string>
 			</array>
 		</dict>
 	</array>
