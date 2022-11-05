@@ -6,7 +6,7 @@ class User extends BaseEntity {
 	@ObjectIdColumn()
 	id: typeof ObjectID;
 
-	@Column()
+	@Column({unique:true})
 	username: string;
 
 	@Column()
