@@ -8,16 +8,16 @@ class CommentWidget extends StatefulWidget {
 
 class _CommentWidgetState extends State<CommentWidget> {
   int _likes = 0;
-  Color _favIconColor = const Color(0x00000000);
-  Color _favIconOutline = Colors.black;
+  bool _isNotLiked = false;
 
   void _onLikeTapped() {
     setState(() {
-      if (_favIconColor == const Color(0x00000000)) {
-        _likes = _likes - 1;
-      } else {
+      if (_isNotLiked) {
         _likes = _likes + 1;
+      } else {
+        _likes = _likes - 1;
       }
+      _isNotLiked = !_isNotLiked;
     });
   }
 
@@ -62,20 +62,13 @@ class _CommentWidgetState extends State<CommentWidget> {
                   constraints: const BoxConstraints(),
                   icon: Stack(
                     children: [
-                      Icon(Icons.favorite, color: _favIconColor),
-                      Icon(Icons.favorite_border, color: _favIconOutline),
+                      Icon(Icons.favorite,
+                          color: _isNotLiked ? Colors.transparent : Colors.red),
+                      Icon(Icons.favorite_border,
+                          color: _isNotLiked ? Colors.black : Colors.red),
                     ],
                   ),
                   onPressed: () {
-                    setState(() {
-                      if (_favIconColor == const Color(0x00000000)) {
-                        _favIconColor = Colors.red;
-                        _favIconOutline = Colors.red;
-                      } else {
-                        _favIconColor = const Color(0x00000000);
-                        _favIconOutline = Colors.black;
-                      }
-                    });
                     _onLikeTapped();
                   },
                 ),
