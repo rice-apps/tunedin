@@ -10,7 +10,14 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
     - run: flutter config --no-analytics
     - run: flutter pub get
     - run: flutter format --set-exit-if-changed .
     - run: flutter analyze .
+    - run: npm install
+      working-directory: backend
+    - run: npm run lint
+      working-directory: backend
