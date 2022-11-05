@@ -1,12 +1,18 @@
 import Koa from 'koa';
 import Router from '@koa/router';
+import userRouter from './routes/user';
 
 const app = new Koa();
-const router = new Router();
+const indexRouter = new Router();
 
-router.get('/', (ctx, next) => {
+indexRouter.get('/', (ctx, next) => {
 	ctx.body = {};
 });
 
-app.use(router.routes());
+app.use(indexRouter.routes());
+app.use(indexRouter.allowedMethods());
+
+app.use(userRouter.routes());
+app.use(userRouter.allowedMethods());
+
 app.listen(3000);
