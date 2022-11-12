@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class DiscoveryScreen extends StatefulWidget {
   const DiscoveryScreen({Key? key}) : super(key: key);
@@ -32,7 +31,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen>
           expandedHeight: 100,
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: false,
-            title: Text(
+            title: const Text(
               'Explore',
               textAlign: TextAlign.left,
             ),
@@ -42,19 +41,19 @@ class _DiscoveryScreenState extends State<DiscoveryScreen>
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
           sliver: SliverPersistentHeader(
               pinned: true, floating: false, delegate: Delegate()),
         ),
         SliverPadding(
-            padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
             sliver: SliverToBoxAdapter(
               child: Container(
-                padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                 height: 36,
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
-                  color: Color(0xFF303449),
+                  color: const Color(0xFF303449),
                   borderRadius: BorderRadius.circular(
                     4.0,
                   ),
@@ -66,13 +65,13 @@ class _DiscoveryScreenState extends State<DiscoveryScreen>
                     borderRadius: BorderRadius.circular(
                       4.0,
                     ),
-                    color: Color(0xFF8E909E),
+                    color: const Color(0xFF8E909E),
                   ),
                   indicatorSize: TabBarIndicatorSize.tab,
                   //indicatorColor: Color(0xFF8E909E),
                   labelColor: Colors.black,
                   unselectedLabelColor: Colors.white,
-                  tabs: [
+                  tabs: const [
                     // first tab [you can add an icon using the icon property]
                     Tab(
                       text: 'Music',
@@ -89,10 +88,10 @@ class _DiscoveryScreenState extends State<DiscoveryScreen>
               ),
             )),
         SliverPadding(
-          padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
           sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
-                  ((context, index) => Padding(
+                  ((context, index) => const Padding(
                       padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
                       child: SongRow())),
                   childCount: 100)),
@@ -107,8 +106,8 @@ class Delegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-      child: Center(
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+      child: const Center(
         child: TextField(
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
@@ -150,7 +149,7 @@ class SongRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Row(
-        children: [
+        children: const [
           Text("Category Name"),
           Spacer(),
           Text("See All"),
@@ -228,7 +227,7 @@ class _FollowWidgetState extends State<FollowWidget> {
         });
       },
       child: Container(
-        padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+        padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
         clipBehavior: Clip.hardEdge,
         height: 180,
         width: 138,
@@ -248,17 +247,17 @@ class _FollowWidgetState extends State<FollowWidget> {
                       ),
                       radius: 45,
                     ),
-                    SizedBox(height: 10,),
-                    Text("User Name", style: TextStyle(color: Colors.white),),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
+                    const Text("User Name", style: TextStyle(color: Colors.white),),
+                    const SizedBox(height: 10,),
                     OutlinedButton(
-                      onPressed: ()=>{}, 
-                      child: Text("Follow", style: TextStyle(color: Colors.white),),
+                      onPressed: ()=>{},
                       style: OutlinedButton.styleFrom(
-                        shape: StadiumBorder(),
-                        side: BorderSide(color: Colors.white),
-                        minimumSize: Size(100, 40)
-                      )
+                        shape: const StadiumBorder(),
+                        side: const BorderSide(color: Colors.white),
+                        minimumSize: const Size(100, 40)
+                      ), 
+                      child: const Text("Follow", style: TextStyle(color: Colors.white),)
                     )
           ],)
         ),
