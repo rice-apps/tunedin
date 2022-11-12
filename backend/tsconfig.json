@@ -17,8 +17,12 @@
 		"moduleResolution": "node",
 		"allowJs": true,
 		"resolveJsonModule": true,
-		"types": ["node"],
-		"lib": ["ES2020"],
+		"types": [
+			"node"
+		],
+		"lib": [
+			"ES2020"
+		],
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true
 	}

@@ -1,13 +1,14 @@
 // This will be created when the user logs in
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 import axios from 'axios';
 
-var xml2js = require('xml2js');
+import xml2js from 'xml2js';
+
 var stripPrefix = require('xml2js').processors.stripPrefix;
 
 import { SECRET, SERVICE_URL } from '../config';
-import user from '../src/models/user';
+import User from '../src/models/user';
 
 /**
  * Parser used for XML response by CAS
@@ -41,8 +42,8 @@ export const createToken = (user) => {
  * Given a token, finds the associated user.
  */
 export const getUserFromToken = async (token) => {
-    let user = await User.find({ token: token });
-    return user;
+    let returnUser = await User.findOneBy({ token: token });
+    return returnUser;
 }
 
 /**

@@ -1,5 +1,4 @@
 import { Entity, ObjectIdColumn, ObjectID, Column, BaseEntity } from 'typeorm';
-import db from '../db';
 
 @Entity()
 class User extends BaseEntity {
@@ -11,6 +10,9 @@ class User extends BaseEntity {
 
 	@Column()
 	name: string;
+
+	@Column()
+	token: string;
 }
 
 export default User;
