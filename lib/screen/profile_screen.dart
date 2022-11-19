@@ -104,10 +104,12 @@ class ProfileScreenState extends State<ProfileScreen>
             controller: _tabController,
             tabs: const [
               Tab(
-                icon: Icon(Icons.music_note),
+                icon: Icon(Icons.music_note,
+                color: Colors.black,),
               ),
               Tab(
-                icon: Icon(Icons.history),
+                icon: Icon(Icons.history,
+                color: Colors.black,),
               ),
             ],
           ),
