@@ -31,13 +31,16 @@ router.put('/:username', async (ctx, next) => {
 	ctx.body = user;
 });
 
-router.post('/:login', async (ctx, next) => {
-	// 	// call the functions that we've written in authentication_utils
-	// 	// to get the information from the post body, use the body parser package (Shreyas will send link to body parser package)
+router.post('/login/:token', async (ctx, next) => {
+	// call the functions that we've written in authentication_utils
+	// to get the information from the post body, use the body parser package (Shreyas will send link to body parser package)
 	const user = new User();
+	user.username = ctx.params.username;
 	const token = createToken(user);
 	verifyToken(token);
-	// 	// to actually test, run a local instance of MongoDB and run it using npm start
+	user.token = token;
+	
+	// to actually test, run a local instance of MongoDB and run it using npm start
 });
 
 router.delete('/', async (ctx, next) => {

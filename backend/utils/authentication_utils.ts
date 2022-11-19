@@ -10,6 +10,11 @@ var stripPrefix = require('xml2js').processors.stripPrefix;
 import { SECRET, SERVICE_URL } from '../config';
 import User from '../src/models/user';
 
+import passport from 'koa-passport';
+import passportSaml from 'passport-saml';
+
+const { Strategy } = passportSaml;
+
 /**
  * Parser used for XML response by CAS
  */
