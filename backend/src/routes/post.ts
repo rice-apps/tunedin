@@ -1,10 +1,13 @@
 import Router from '@koa/router';
 import Post from '../models/post';
 import mongodb from 'mongodb';
+import bodyParser from 'koa-bodyparser';
 
 const router = new Router({
 	prefix: '/posts',
 });
+
+router.use(bodyParser());
 
 router.get('/', async (ctx, next) => {
 	ctx.body = await Post.find();
@@ -19,19 +22,23 @@ router.get('/:postID', async (ctx, next) => {
 	}
 	ctx.body = post;
 });
-router.post('/:netID/:body/:musicURL', async (ctx, next) => {
+router.post('/', async (ctx, next) => {
 	const post = new Post();
 	post.id = new mongodb.ObjectId();
-	post.netID = ctx.params.netID;
+	post.author = null; //This is dependent on Auth to determine the author
 	post.numLikes = 0;
-	post.bodyText = ctx.params.body;
-	post.musicURL = ctx.params.musicURL;
+
+	const requestBody = ctx.request.body as any;
+	const bodyText = requestBody.bodyText || '';
+	const musicURL = requestBody.musicURL || '';
+
+	post.bodyText = bodyText;
+	post.musicURL = musicURL;
 
 	await post.save();
 	ctx.body = post;
 });
 router.post('/:postID/like', async (ctx, next) => {
-	console.log(ctx.params.postID);
 	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
 	if (post === null) {
 		ctx.status = 404;
@@ -42,7 +49,6 @@ router.post('/:postID/like', async (ctx, next) => {
 	ctx.body = post;
 });
 router.post('/:postID/unlike', async (ctx, next) => {
-	console.log(ctx.params.postID);
 	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
 	if (post === null) {
 		ctx.status = 404;

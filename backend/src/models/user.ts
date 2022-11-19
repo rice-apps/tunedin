@@ -1,7 +1,5 @@
 import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
 import mongodb from 'mongodb';
-// import { ObjectId } from 'mongodb';
-import db from '../db';
 
 @Entity()
 class User extends BaseEntity {

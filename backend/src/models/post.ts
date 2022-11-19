@@ -1,7 +1,6 @@
-import { Entity, ObjectID, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
 import mongodb from 'mongodb';
-// import { ObjectId } from 'mongodb';
-import db from '../db';
+import User from './user';
 
 @Entity()
 class Post extends BaseEntity {
@@ -9,10 +8,7 @@ class Post extends BaseEntity {
 	id: typeof mongodb.ObjectId;
 
 	@Column()
-	netID: string;
-
-	@Column()
-	postID: number;
+	author: User;
 
 	@Column()
 	numLikes: number;

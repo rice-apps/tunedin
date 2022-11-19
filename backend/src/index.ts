@@ -7,12 +7,10 @@ import postRouter from './routes/post';
 
 await db.initialize();
 
+const PORT = 3000;
+
 const app = new Koa();
 const indexRouter = new Router();
-
-indexRouter.get('/', (ctx, next) => {
-	ctx.body = {};
-});
 
 app.use(indexRouter.routes());
 app.use(indexRouter.allowedMethods());
@@ -23,6 +21,6 @@ app.use(userRouter.allowedMethods());
 app.use(postRouter.routes());
 app.use(postRouter.allowedMethods());
 
-app.listen(3000);
+app.listen(PORT);
 
-console.log('❗ Server is Running ❗');
+console.log(`Listening on Port ${PORT}...`);
