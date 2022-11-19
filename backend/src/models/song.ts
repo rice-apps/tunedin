@@ -1,4 +1,11 @@
-import { Entity, ObjectIdColumn, ObjectID, BaseEntity, ManyToMany, JoinTable } from 'typeorm';
+import {
+	Entity,
+	ObjectIdColumn,
+	ObjectID,
+	BaseEntity,
+	ManyToMany,
+	JoinTable,
+} from 'typeorm';
 import Playlist from './playlist';
 
 /**
@@ -7,12 +14,12 @@ import Playlist from './playlist';
  */
 @Entity()
 class Song extends BaseEntity {
-    @ObjectIdColumn()
-    id: typeof ObjectID;
+	@ObjectIdColumn()
+	id: typeof ObjectID;
 
-    @ManyToMany(() => Playlist)
-    @JoinTable()
-    playlists: Playlist[];
+	@ManyToMany(() => Playlist)
+	@JoinTable()
+	playlists: Playlist[];
 }
 
 export default Song;

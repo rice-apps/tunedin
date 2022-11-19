@@ -7,11 +7,11 @@ import { Entity, ObjectIdColumn, ObjectID, BaseEntity, Column } from 'typeorm';
  */
 @Entity()
 class Playlist extends BaseEntity {
-    @ObjectIdColumn()
-    id: typeof ObjectID;
-    
-    @Column()
-    name: string;
+	@ObjectIdColumn()
+	id: typeof ObjectID;
+
+	@Column()
+	name: string;
 }
 
 export default Playlist;
