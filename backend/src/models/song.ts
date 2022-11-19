@@ -1,12 +1,5 @@
-import {
-	Entity,
-	ObjectIdColumn,
-	ObjectID,
-	BaseEntity,
-	ManyToMany,
-	JoinTable,
-} from 'typeorm';
-import Playlist from './playlist';
+import { Entity, ObjectIdColumn, ObjectID, BaseEntity } from 'typeorm';
+import mongodb from 'mongodb';
 
 /**
  * This is a model for a song.
@@ -15,11 +8,7 @@ import Playlist from './playlist';
 @Entity()
 class Song extends BaseEntity {
 	@ObjectIdColumn()
-	id: typeof ObjectID;
-
-	@ManyToMany(() => Playlist)
-	@JoinTable()
-	playlists: Playlist[];
+	id: typeof mongodb.ObjectID;
 }
 
 export default Song;
