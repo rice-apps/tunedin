@@ -238,29 +238,37 @@ class _FollowWidgetState extends State<FollowWidget> {
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        "https://picsum.photos/250?image=9",
-                      ),
-                      radius: 45,
-                    ),
-                    const SizedBox(height: 10,),
-                    const Text("User Name", style: TextStyle(color: Colors.white),),
-                    const SizedBox(height: 10,),
-                    OutlinedButton(
-                      onPressed: ()=>{},
-                      style: OutlinedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        side: const BorderSide(color: Colors.white),
-                        minimumSize: const Size(100, 40)
-                      ), 
-                      child: const Text("Follow", style: TextStyle(color: Colors.white),)
-                    )
-          ],)
-        ),
+              backgroundImage: NetworkImage(
+                "https://picsum.photos/250?image=9",
+              ),
+              radius: 45,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              "User Name",
+              style: TextStyle(color: Colors.white),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            OutlinedButton(
+                onPressed: () => {},
+                style: OutlinedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    side: const BorderSide(color: Colors.white),
+                    minimumSize: const Size(100, 40)),
+                child: const Text(
+                  "Follow",
+                  style: TextStyle(color: Colors.white),
+                ))
+          ],
+        )),
       ),
     );
   }
