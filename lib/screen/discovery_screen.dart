@@ -4,10 +4,10 @@ class DiscoveryScreen extends StatefulWidget {
   const DiscoveryScreen({Key? key}) : super(key: key);
 
   @override
-  _DiscoveryScreenState createState() => _DiscoveryScreenState();
+  DiscoveryScreenState createState() => DiscoveryScreenState();
 }
 
-class _DiscoveryScreenState extends State<DiscoveryScreen>
+class DiscoveryScreenState extends State<DiscoveryScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
@@ -181,29 +181,27 @@ class SongWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              "https://picsum.photos/250?image=9",
-              height: 144,
-              width: 144,
-              fit: BoxFit.cover,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image.network(
+            "https://picsum.photos/250?image=9",
+            height: 144,
+            width: 144,
+            fit: BoxFit.cover,
           ),
-          const Text(
-            "Playlist Name",
-            textAlign: TextAlign.left,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          const Text("20 Songs", textAlign: TextAlign.left),
-        ],
-      ),
+        ),
+        const Text(
+          "Playlist Name",
+          textAlign: TextAlign.left,
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        const Text("20 Songs", textAlign: TextAlign.left),
+      ],
     );
   }
 }
@@ -212,10 +210,10 @@ class FollowWidget extends StatefulWidget {
   const FollowWidget({Key? key}) : super(key: key);
 
   @override
-  _FollowWidgetState createState() => _FollowWidgetState();
+  FollowWidgetState createState() => FollowWidgetState();
 }
 
-class _FollowWidgetState extends State<FollowWidget> {
+class FollowWidgetState extends State<FollowWidget> {
   bool _isFollowing = false;
 
   @override
