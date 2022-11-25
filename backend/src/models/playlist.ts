@@ -1,7 +1,6 @@
 import {
 	Entity,
 	ObjectIdColumn,
-	ObjectID,
 	BaseEntity,
 	Column,
 	ManyToMany,
