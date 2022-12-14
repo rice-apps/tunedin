@@ -3,25 +3,46 @@ import 'package:flutter/material.dart';
 class Themes {
   static ThemeData get darkTheme {
     return ThemeData(
-      primaryColor: Colors.white,
-      backgroundColor: Color(0xFF1B1B1B),
-      brightness: Brightness.dark,
-      buttonTheme: ButtonThemeData(
-        buttonColor: Colors.transparent,
-        textTheme: ButtonTextTheme.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8)
-        ),
-        minWidth: 100,
-        height: 45
+      colorScheme: const ColorScheme(
+        primary: Color(0xFF171924),
+        onPrimary: Colors.white,
+        secondary: Color(0xFF202333),
+        onSecondary: Colors.white,
+        tertiary: Color(0xFF790D30),
+        onTertiary: Colors.white,
+        brightness: Brightness.dark,
+        background: Color(0xFF171924),
+        onBackground: Colors.white,
+        error: Colors.pink,
+        onError: Colors.white,
+        surface: Color(0xFF202333),
+        onSurface: Colors.white,
       ),
+      brightness: Brightness.dark,
       cardTheme: CardTheme(
         clipBehavior: Clip.antiAlias,
         color: Color(0xFF202333),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10)
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: Color(0xFF303449),
+            width: 1.5
+          ),
         )
       ),
+      buttonTheme: ButtonThemeData(
+        buttonColor: Color(0xFF202333),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: Colors.white,
+            width: 1.5
+          ),
+        ),
+        textTheme: ButtonTextTheme.primary,
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      ),
+      fontFamily: 'Inter',
       textTheme: const TextTheme(
         titleLarge: TextStyle(
           color: Colors.white,
@@ -53,7 +74,7 @@ class Themes {
           fontSize: 16,
           fontWeight: FontWeight.w500
         ),
-        
+
       )
     );
   }
