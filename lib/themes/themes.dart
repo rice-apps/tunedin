@@ -74,7 +74,18 @@ class Themes {
           fontSize: 16,
           fontWeight: FontWeight.w500
         ),
-
+        displaySmall: TextStyle(
+          color: Color(0xFFA1A9BC),
+          fontSize: 12,
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w400
+        ),
+        displayMedium: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Poppins'
+        ),
       )
     );
   }
