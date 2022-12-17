@@ -31,7 +31,7 @@ class Themes {
         )
       ),
       buttonTheme: ButtonThemeData(
-        buttonColor: Color(0xFF202333),
+        buttonColor: Color(0xFF933A8F),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: BorderSide(
@@ -39,7 +39,6 @@ class Themes {
             width: 1.5
           ),
         ),
-        textTheme: ButtonTextTheme.primary,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       ),
       fontFamily: 'Inter',
