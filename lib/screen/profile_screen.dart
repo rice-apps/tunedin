@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../widgets/my_navigation_bar.dart';
+import '../widgets/outlined_button.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const MyNavigationBar(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Stack(children: [
           SvgPicture.asset(
@@ -59,35 +63,19 @@ class ProfileScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          OutlinedButton(
-                              onPressed: () => {},
-                              style: OutlinedButton.styleFrom(
-                                shape: const StadiumBorder(),
-                                fixedSize: const Size(100, 36),
-                                side: BorderSide(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              child: Text("Follow",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium)),
+                          TunedInOutlinedButton(
+                            text: "Follow",
+                            onPressed: () => {},
+                            toggle: false,
+                          ),
                           const SizedBox(
                             width: 25,
                           ),
-                          OutlinedButton(
-                              onPressed: () => {},
-                              style: OutlinedButton.styleFrom(
-                                shape: const StadiumBorder(),
-                                fixedSize: const Size(100, 36),
-                                side: BorderSide(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              child: Text("Join",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium)),
+                          TunedInOutlinedButton(
+                            text: "Join",
+                            onPressed: () => {},
+                            toggle: true,
+                          ),
                         ],
                       )),
                   const SizedBox(height: 10),
