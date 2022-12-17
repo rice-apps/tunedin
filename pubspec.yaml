@@ -86,6 +86,9 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
+    - family:  TunedinIcon
+      fonts:
+        - asset: assets/TunedinIcon.ttf
     - family: Inter
       fonts:
         - asset: fonts/Inter-Black.ttf
