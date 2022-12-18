@@ -326,6 +326,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  page_transition:
+    dependency: "direct main"
+    description:
+      name: page_transition
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.9"
   path:
     dependency: transitive
     description:
@@ -354,6 +361,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  sheet:
+    dependency: "direct main"
+    description:
+      name: sheet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4+1"
   shelf:
     dependency: transitive
     description:
@@ -480,3 +494,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.18.0 <3.0.0"
+  flutter: ">=3.0.0"
