@@ -2,8 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+// TO:DO
+// Use provider maybe for this to propagate down tree
+typedef PushRouteBuilder = void Function({
+      required Widget child,
+      required BuildContext pageContext,
+      required BuildContext sheetContext,
+      required String title
+    });
+
+typedef TunedInBottomSheetBuilder = Widget Function(
+    BuildContext sheetContext, BuildContext pageContext, PushRouteBuilder pushRoute);
+
 class TunedInBottomSheet extends StatelessWidget {
-  final Widget Function(BuildContext context, BuildContext modalContext, void Function(BuildContext context, BuildContext modalContext, String title, Widget child)) builder;
+  final TunedInBottomSheetBuilder builder;
   final String title;
 
   const TunedInBottomSheet({super.key, required this.builder, required this.title});
@@ -31,8 +43,8 @@ class TunedInBottomSheet extends StatelessWidget {
     );
   }
 
-  void pushRoute(BuildContext context, BuildContext modalContext, String title, Widget child) {
-    Navigator.of(modalContext).push(
+  void pushRoute({required BuildContext sheetContext, required BuildContext pageContext, required String title, required Widget child}) {
+    Navigator.of(pageContext).push(
       PageTransition(
         type: PageTransitionType.rightToLeft,
         child: Scaffold(
@@ -42,7 +54,7 @@ class TunedInBottomSheet extends StatelessWidget {
             actions: [
               IconButton(
                 icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => Navigator.of(sheetContext).pop(),
               ),
             ],
           ),
