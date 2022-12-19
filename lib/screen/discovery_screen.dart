@@ -15,6 +15,9 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -87,15 +90,26 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
                 ),
               ),
             )),
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-          sliver: SliverList(
+        [
+          SliverList(
               delegate: SliverChildBuilderDelegate(
                   ((context, index) => const Padding(
                       padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
                       child: SongRow())),
                   childCount: 100)),
-        )
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+                  ((context, index) => const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
+                      child: SongRow())),
+                  childCount: 100)),
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+                  ((context, index) => const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
+                      child: UserRow())),
+                  childCount: 100)),
+        ][_tabController.index],
       ],
     );
   }
@@ -147,31 +161,53 @@ class SongRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
-        children: const [
-          Text("Category Name"),
-          Spacer(),
-          Text("See All"),
-        ],
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Padding(
+        padding: EdgeInsets.fromLTRB(8.0, 0, 0, 4),
+        child: Text("Category Name"),
       ),
-      SingleChildScrollView(
+      SizedBox(
+        height: 200,
+        child: ListView.builder(
+          shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          child: Wrap(spacing: 8, children: const [
-            FollowWidget(),
-            FollowWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-            SongWidget(),
-          ]))
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(index == 0 ? 8 : 0, 0, 8, 0),
+              child: const FollowWidget(),
+            );
+          },
+        ),
+      )
+    ]);
+  }
+}
+
+class UserRow extends StatelessWidget {
+  const UserRow({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Padding(
+        padding: EdgeInsets.fromLTRB(8.0, 0, 0, 4),
+        child: Text("Category Name"),
+      ),
+      SizedBox(
+        height: 200,
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(index == 0 ? 8 : 0, 0, 8, 0),
+              child: const SongWidget(),
+            );
+          },
+        ),
+      )
     ]);
   }
 }
@@ -227,7 +263,6 @@ class FollowWidgetState extends State<FollowWidget> {
       child: Container(
         padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
         clipBehavior: Clip.hardEdge,
-        height: 180,
         width: 138,
         decoration: BoxDecoration(
           color: Colors.black,
