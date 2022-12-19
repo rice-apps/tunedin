@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/TunedinIcon.ttf
 ///
-/// 
+///
 ///
 // ignore_for_file: constant_identifier_names
 
@@ -23,10 +23,16 @@ class TunedinIcon {
   static const _kFontFam = 'TunedinIcon';
   static const String? _kFontPkg = null;
 
-  static const IconData home_unfilled = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData account_filled = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData account_unfilled = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData explore_filled = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData explore_unfilled = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData home_filled = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData home_unfilled =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData account_filled =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData account_unfilled =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData explore_filled =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData explore_unfilled =
+      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData home_filled =
+      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -12,10 +12,12 @@ class MyNavigationBar extends StatelessWidget {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(TunedinIcon.home_unfilled),
-            label: 'Home',),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
             icon: Icon(TunedinIcon.explore_unfilled),
-            label: 'Explore',),
+            label: 'Explore',
+          ),
           BottomNavigationBarItem(
             icon: Icon(TunedinIcon.account_unfilled),
             label: 'Account',
@@ -28,7 +30,6 @@ class MyNavigationBar extends StatelessWidget {
         fixedColor: Theme.of(context).colorScheme.onBackground,
         currentIndex: 0,
         onTap: (index) => {},
-        elevation: 5
-    );
+        elevation: 5);
   }
 }

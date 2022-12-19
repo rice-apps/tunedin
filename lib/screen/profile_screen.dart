@@ -10,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const MyNavigationBar(),
+        bottomNavigationBar: const MyNavigationBar(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Stack(children: [
           SvgPicture.asset(
@@ -97,8 +97,8 @@ class ProfileScreen extends StatelessWidget {
                     "Playlists: 4",
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontFamily: 'Poppins',
-                    ),
+                          fontFamily: 'Poppins',
+                        ),
                   ),
                   const PlaylistCard(),
                   const PlaylistCard(),
@@ -148,17 +148,20 @@ class PlaylistCard extends StatelessWidget {
                   Text(
                     "Playlist Name",
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(color: Colors.white),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
                   Text("20 Songs",
                       textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        color: const Color(0xFFA1A9BC),
-                      )
-                  ),
+                      style:
+                          Theme.of(context).textTheme.displayMedium?.copyWith(
+                                color: const Color(0xFFA1A9BC),
+                              )),
                 ],
               ),
               const Spacer(),

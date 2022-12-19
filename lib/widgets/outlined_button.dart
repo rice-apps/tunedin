@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class TunedInOutlinedButton extends StatelessWidget {
@@ -20,7 +19,8 @@ class TunedInOutlinedButton extends StatelessWidget {
     return OutlinedButton(
         onPressed: () => {},
         style: OutlinedButton.styleFrom(
-          backgroundColor: toggle ? Theme.of(context).colorScheme.onPrimary : null,
+          backgroundColor:
+              toggle ? Theme.of(context).colorScheme.onPrimary : null,
           shape: const StadiumBorder(),
           fixedSize: const Size(100, 36),
           side: const BorderSide(
@@ -28,11 +28,7 @@ class TunedInOutlinedButton extends StatelessWidget {
           ),
         ),
         child: Text(text,
-            style: Theme.of(context)
-                .textTheme
-                .headlineMedium
-                ?.copyWith(color: toggle ? Theme.of(context).colorScheme.primary : null)
-        )
-    );
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                color: toggle ? Theme.of(context).colorScheme.primary : null)));
   }
 }
