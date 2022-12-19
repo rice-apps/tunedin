@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   CircleAvatar(
-                    foregroundImage: NetworkImage(
+                    foregroundImage: const NetworkImage(
                       "https://picsum.photos/250?image=9",
                     ),
                     radius: 45,
@@ -150,13 +150,13 @@ class PlaylistCard extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.white),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text("20 Songs",
                       textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        color: Color(0xFFA1A9BC),
+                        color: const Color(0xFFA1A9BC),
                       )
                   ),
                 ],

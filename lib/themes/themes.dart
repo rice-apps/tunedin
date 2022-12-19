@@ -21,25 +21,25 @@ class Themes {
       brightness: Brightness.dark,
       cardTheme: CardTheme(
         clipBehavior: Clip.antiAlias,
-        color: Color(0xFF202333),
+        color: const Color(0xFF202333),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          side: BorderSide(
+          side: const BorderSide(
             color: Color(0xFF303449),
             width: 1.5
           ),
         )
       ),
       buttonTheme: ButtonThemeData(
-        buttonColor: Color(0xFF933A8F),
+        buttonColor: const Color(0xFF933A8F),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          side: BorderSide(
+          side: const BorderSide(
             color: Colors.white,
             width: 1.5
           ),
         ),
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       ),
       fontFamily: 'Inter',
       textTheme: const TextTheme(
