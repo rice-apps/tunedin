@@ -5,10 +5,10 @@ class ShareModal extends StatefulWidget {
   const ShareModal({super.key});
 
   @override
-  _ShareModalState createState() => _ShareModalState();
+  ShareModalState createState() => ShareModalState();
 }
 
-class _ShareModalState extends State<ShareModal> {
+class ShareModalState extends State<ShareModal> {
   @override
   Widget build(BuildContext context) {
     return TunedInBottomSheet(
