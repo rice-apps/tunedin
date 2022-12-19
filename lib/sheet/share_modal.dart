@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rice_music_sharing/sheet/tunedin_bottom_sheet.dart';
 
 class ShareModal extends StatefulWidget {
@@ -37,7 +36,7 @@ class _ShareModalState extends State<ShareModal> {
                       pushRoute,
                       getTargetName: (index) => 'Playlist',
                       getTargetIcon: (index) => const Icon(Icons.playlist_play),
-                      buildTargetPage: (index) => ShareCommentPage(),
+                      buildTargetPage: (index) => const ShareCommentPage(),
                     );
                   },
                 );
@@ -49,7 +48,7 @@ class _ShareModalState extends State<ShareModal> {
                   getTargetName: (index) => 'Playlist',
                   getTargetIcon: (index) => const Icon(Icons.playlist_play),
                   buildTargetPage: (int index) {
-                    return ShareCommentPage();
+                    return const ShareCommentPage();
                   },
                 );
               }
@@ -156,9 +155,8 @@ class ShareCommentPage extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
@@ -168,14 +166,14 @@ class ShareCommentPage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               const Text("Playlist"),
-              SizedBox(height: 2),
+              const SizedBox(height: 2),
               const Text("Name"),
             ]),
           ),
-          SizedBox(height: 4),
-          Expanded(
+          const SizedBox(height: 4),
+          const Expanded(
             flex: 5,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 12),
@@ -183,7 +181,7 @@ class ShareCommentPage extends StatelessWidget {
                 keyboardType: TextInputType.multiline,
                 maxLines: 12,
                 maxLength: 1000,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Share your thoughts...',
                   border: OutlineInputBorder(),
                 ),
