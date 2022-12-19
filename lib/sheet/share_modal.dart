@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rice_music_sharing/sheet/tunedin_bottom_sheet.dart';
 
 class ShareModal extends StatefulWidget {
@@ -22,24 +23,36 @@ class _ShareModalState extends State<ShareModal> {
             getTargetName: (target) => 0 == target ? 'Your profile' : 'Group',
             maxCount: 2,
             buildTargetPage: (int index) {
-              return TargetPickerPage(
-                sheetContext,
-                pageContext,
-                pushRoute,
-                getTargetName: (index) => 'Will Rice College',
-                getTargetIcon: (index) => const Icon(Icons.school),
-                buildTargetPage: (int index) {
-                  return TargetPickerPage(
-                    sheetContext,
-                    pageContext,
-                    pushRoute,
-                    getTargetName: (index) => 'Will Rice College',
-                    getTargetIcon: (index) => const Icon(Icons.school),
-                    buildTargetPage: (index) =>
-                        const Text("This is the end of the line"),
-                  );
-                },
-              );
+              if (index == 1) {
+                return TargetPickerPage(
+                  sheetContext,
+                  pageContext,
+                  pushRoute,
+                  getTargetName: (index) => 'Will Rice College',
+                  getTargetIcon: (index) => const Icon(Icons.school),
+                  buildTargetPage: (int index) {
+                    return TargetPickerPage(
+                      sheetContext,
+                      pageContext,
+                      pushRoute,
+                      getTargetName: (index) => 'Playlist',
+                      getTargetIcon: (index) => const Icon(Icons.playlist_play),
+                      buildTargetPage: (index) => ShareCommentPage(),
+                    );
+                  },
+                );
+              } else {
+                return TargetPickerPage(
+                  sheetContext,
+                  pageContext,
+                  pushRoute,
+                  getTargetName: (index) => 'Playlist',
+                  getTargetIcon: (index) => const Icon(Icons.playlist_play),
+                  buildTargetPage: (int index) {
+                    return ShareCommentPage();
+                  },
+                );
+              }
             },
           );
         },
@@ -128,5 +141,80 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
         ],
       ),
     );
+  }
+}
+
+class ShareCommentPage extends StatelessWidget {
+  const ShareCommentPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.network(
+                  "https://picsum.photos/250?image=9",
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: 8),
+              const Text("Playlist"),
+              SizedBox(height: 2),
+              const Text("Name"),
+            ]),
+          ),
+          SizedBox(height: 4),
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: 12,
+                maxLength: 1000,
+                decoration: const InputDecoration(
+                  hintText: 'Share your thoughts...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+            color: Colors.white,
+          ),
+          padding: const EdgeInsets.all(16),
+          child: MaterialButton(
+            onPressed: () {
+              // implement networking here
+              Navigator.of(context).pop();
+            },
+            child: const Text('Submit'),
+          ),
+        ),
+      ),
+    ]);
   }
 }
