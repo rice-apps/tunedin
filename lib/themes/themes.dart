@@ -17,6 +17,8 @@ class Themes {
           onError: Colors.white,
           surface: Color(0xFF202333),
           onSurface: Colors.white,
+          surfaceVariant: Color(0xFF303449),
+          onSurfaceVariant: Colors.white,
         ),
         brightness: Brightness.dark,
         cardTheme: CardTheme(
@@ -39,7 +41,10 @@ class Themes {
           titleLarge: TextStyle(
               color: Colors.white, fontSize: 24, fontWeight: FontWeight.w600),
           labelLarge: TextStyle(
-              color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              height: 1.5),
           labelMedium: TextStyle(
               color: Colors.white, fontSize: 10, fontFamily: 'Poppins'),
           labelSmall: TextStyle(
