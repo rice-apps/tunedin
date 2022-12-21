@@ -35,6 +35,9 @@ class Themes {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         ),
         fontFamily: 'Inter',
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFFF417F),
+        ),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
               color: Colors.white, fontSize: 24, fontWeight: FontWeight.w600),
