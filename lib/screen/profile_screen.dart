@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../widgets/my_navigation_bar.dart';
+import '../widgets/outlined_button.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -6,100 +10,113 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-            padding: const EdgeInsets.all(0),
-            child: CustomScrollView(slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.fromLTRB(20, 85, 20, 20),
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate([
-                    const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        "https://picsum.photos/250?image=9",
+        bottomNavigationBar: const MyNavigationBar(),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Stack(children: [
+          SvgPicture.asset(
+            'Gradient.svg',
+            alignment: Alignment.topCenter,
+            width: MediaQuery.of(context).size.width,
+          ),
+          SvgPicture.asset(
+            'Vector.svg',
+            alignment: Alignment.topCenter,
+            width: MediaQuery.of(context).size.width,
+          ),
+          CustomScrollView(slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(20, 85, 20, 20),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  CircleAvatar(
+                    foregroundImage: const NetworkImage(
+                      "https://picsum.photos/250?image=9",
+                    ),
+                    radius: 45,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).colorScheme.tertiary,
+                            blurRadius: 40,
+                            blurStyle: BlurStyle.outer,
+                          ),
+                        ],
                       ),
-                      radius: 45,
                     ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    const Text(
-                      "Will Rice College",
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: const [
-                            Text("208"),
-                            Text("Followers"),
-                          ],
-                        ),
-                        Column(
-                          children: const [
-                            Text("80"),
-                            Text("Following"),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                                child: OutlinedButton(
-                                    onPressed: () => {},
-                                    style: TextButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        minimumSize: const Size(100, 45)),
-                                    child: const Text("Follow"))),
-                            const SizedBox(
-                              width: 25,
-                            ),
-                            Expanded(
-                                child: OutlinedButton(
-                                    onPressed: () => {},
-                                    style: TextButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        minimumSize: const Size(100, 45)),
-                                    child: const Text("Join"))),
-                          ],
-                        )),
-                    const SizedBox(height: 25),
-                    const Text(
-                      "Playlists: 4",
-                      textAlign: TextAlign.left,
-                    ),
-                    const PlaylistCard(),
-                    const PlaylistCard(),
-                    const PlaylistCard(),
-                    const PlaylistCard(),
-                    const SizedBox(height: 25),
-                    Row(children: const [
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    "Will Rice College",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TunedInOutlinedButton(
+                            text: "Follow",
+                            onPressed: () => {},
+                            toggle: false,
+                          ),
+                          const SizedBox(
+                            width: 25,
+                          ),
+                          TunedInOutlinedButton(
+                            text: "Join",
+                            onPressed: () => {},
+                            toggle: true,
+                          ),
+                        ],
+                      )),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       Text(
-                        "Browse all playlists 20",
+                        "200",
+                        style:
+                            Theme.of(context).textTheme.displaySmall?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                       ),
-                      Spacer(),
-                      Icon(Icons.chevron_right),
-                    ])
-                  ]),
-                ),
-              )
-            ])));
+                      Text(" Followers",
+                          style: Theme.of(context).textTheme.displaySmall)
+                    ],
+                  ),
+                  Text(
+                    "Playlists: 4",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontFamily: 'Poppins',
+                        ),
+                  ),
+                  const PlaylistCard(),
+                  const PlaylistCard(),
+                  const PlaylistCard(),
+                  const PlaylistCard(),
+                  const SizedBox(height: 25),
+                  Row(children: const [
+                    Text(
+                      "Browse all playlists 20",
+                    ),
+                    Spacer(),
+                    Icon(Icons.chevron_right),
+                  ])
+                ]),
+              ),
+            )
+          ]),
+        ]));
   }
 }
 
@@ -114,28 +131,37 @@ class PlaylistCard extends StatelessWidget {
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
                     "https://picsum.photos/250?image=9",
-                    width: 48,
-                    height: 48,
+                    width: 56,
+                    height: 56,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     "Playlist Name",
                     textAlign: TextAlign.left,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(color: Colors.white),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text("20 Songs", textAlign: TextAlign.left),
+                  Text("20 Songs",
+                      textAlign: TextAlign.left,
+                      style:
+                          Theme.of(context).textTheme.displayMedium?.copyWith(
+                                color: const Color(0xFFA1A9BC),
+                              )),
                 ],
               ),
               const Spacer(),
