@@ -1,163 +1,122 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class ProfileScreen extends StatefulWidget {
+import '../widgets/my_navigation_bar.dart';
+import '../widgets/outlined_button.dart';
+
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
-
-  @override
-  ProfileScreenState createState() => ProfileScreenState();
-}
-
-class ProfileScreenState extends State<ProfileScreen>
-    with TickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-      child: SingleChildScrollView(
-        child: Column(children: [
-          const SizedBox(
-            height: 25,
+        bottomNavigationBar: const MyNavigationBar(),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Stack(children: [
+          SvgPicture.asset(
+            'Gradient.svg',
+            alignment: Alignment.topCenter,
+            width: MediaQuery.of(context).size.width,
           ),
-          const CircleAvatar(
-            backgroundImage: NetworkImage(
-              "https://picsum.photos/250?image=9",
-            ),
-            radius: 45,
+          SvgPicture.asset(
+            'Vector.svg',
+            alignment: Alignment.topCenter,
+            width: MediaQuery.of(context).size.width,
           ),
-          const SizedBox(
-            height: 25,
-          ),
-          const Text(
-            "Will Rice College",
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                children: const [
-                  Text("208"),
-                  Text("Followers"),
-                ],
-              ),
-              Column(
-                children: const [
-                  Text("80"),
-                  Text("Following"),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Padding(
-              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: OutlinedButton(
-                          onPressed: () => {},
-                          style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              minimumSize: const Size(100, 45)),
-                          child: const Text("Follow"))),
+          CustomScrollView(slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(20, 85, 20, 20),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  CircleAvatar(
+                    foregroundImage: const NetworkImage(
+                      "https://picsum.photos/250?image=9",
+                    ),
+                    radius: 45,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).colorScheme.tertiary,
+                            blurRadius: 40,
+                            blurStyle: BlurStyle.outer,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   const SizedBox(
-                    width: 25,
+                    height: 25,
                   ),
-                  Expanded(
-                      child: OutlinedButton(
-                          onPressed: () => {},
-                          style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              minimumSize: const Size(100, 45)),
-                          child: const Text("Join"))),
-                ],
-              )),
-          TabBar(
-            controller: _tabController,
-            tabs: const [
-              Tab(
-                icon: Icon(
-                  Icons.music_note,
-                  color: Colors.black,
-                ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.history,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 25),
-          <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Playlists: 4",
-                  textAlign: TextAlign.left,
-                ),
-                const PlaylistCard(),
-                const PlaylistCard(),
-                const PlaylistCard(),
-                const PlaylistCard(),
-                const SizedBox(height: 25),
-                Row(children: const [
                   Text(
-                    "Browse all playlists 20",
+                    "Will Rice College",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Spacer(),
-                  Icon(Icons.chevron_right),
-                ])
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  "1 day ago",
-                  textAlign: TextAlign.left,
-                ),
-                InfoCard(),
-                InfoCard(),
-                InfoCard(),
-                InfoCard(),
-                SizedBox(height: 25),
-              ],
-            ),
-          ][_tabController.index],
-        ]),
-      ),
-    ));
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TunedInOutlinedButton(
+                            text: "Follow",
+                            onPressed: () => {},
+                            toggle: false,
+                          ),
+                          const SizedBox(
+                            width: 25,
+                          ),
+                          TunedInOutlinedButton(
+                            text: "Join",
+                            onPressed: () => {},
+                            toggle: true,
+                          ),
+                        ],
+                      )),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "200",
+                        style:
+                        Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(" Followers",
+                          style: Theme.of(context).textTheme.displaySmall)
+                    ],
+                  ),
+                  Text(
+                    "Playlists: 4",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  const PlaylistCard(),
+                  const PlaylistCard(),
+                  const PlaylistCard(),
+                  const PlaylistCard(),
+                  const SizedBox(height: 25),
+                  Row(children: const [
+                    Text(
+                      "Browse all playlists 20",
+                    ),
+                    Spacer(),
+                    Icon(Icons.chevron_right),
+                  ])
+                ]),
+              ),
+            )
+          ]),
+        ]));
   }
 }
 
@@ -169,53 +128,49 @@ class PlaylistCard extends StatelessWidget {
     return Card(
       child: InkWell(
           onTap: () {},
-          child: const InfoCard(
-            hasChevron: true,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    "https://picsum.photos/250?image=9",
+                    width: 56,
+                    height: 56,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Playlist Name",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text("20 Songs",
+                      textAlign: TextAlign.left,
+                      style:
+                      Theme.of(context).textTheme.displayMedium?.copyWith(
+                        color: const Color(0xFFA1A9BC),
+                      )),
+                ],
+              ),
+              const Spacer(),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                child: Icon(Icons.chevron_right),
+              ),
+            ],
           )),
-    );
-  }
-}
-
-class InfoCard extends StatelessWidget {
-  final bool hasChevron;
-  const InfoCard({this.hasChevron = false, Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              "https://picsum.photos/250?image=9",
-              width: 48,
-              height: 48,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              "Playlist Name",
-              textAlign: TextAlign.left,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text("20 Songs", textAlign: TextAlign.left),
-          ],
-        ),
-        if (hasChevron) const Spacer(),
-        if (hasChevron)
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-            child: Icon(Icons.chevron_right),
-          ),
-      ],
     );
   }
 }
