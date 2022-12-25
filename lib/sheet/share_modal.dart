@@ -17,8 +17,15 @@ class ShareModalState extends State<ShareModal> {
             sheetContext,
             pageContext,
             pushRoute,
-            getTargetIcon: (target) =>
-                Icon(0 == target ? Icons.person : Icons.group),
+            getTargetIcon: (target) => DecoratedBox(
+                decoration: const BoxDecoration(
+                  color: Color(0xFF45495C),
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Icon(0 == target ? Icons.person : Icons.group),
+                )),
             getTargetName: (target) => 0 == target ? 'Your profile' : 'Group',
             maxCount: 2,
             buildTargetPage: (int index) {
@@ -36,7 +43,8 @@ class ShareModalState extends State<ShareModal> {
                       pushRoute,
                       getTargetName: (index) => 'Playlist',
                       getTargetIcon: (index) => const Icon(Icons.playlist_play),
-                      buildTargetPage: (index) => const ShareCommentPage(),
+                      buildTargetPage: (index) =>
+                          ShareCommentPage(sheetContext),
                     );
                   },
                 );
@@ -48,7 +56,7 @@ class ShareModalState extends State<ShareModal> {
                   getTargetName: (index) => 'Playlist',
                   getTargetIcon: (index) => const Icon(Icons.playlist_play),
                   buildTargetPage: (int index) {
-                    return const ShareCommentPage();
+                    return ShareCommentPage(sheetContext);
                   },
                 );
               }
@@ -94,19 +102,28 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
           ListView.builder(
               itemCount: widget.maxCount,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(widget.getTargetName(index)),
-                  leading: widget.getTargetIcon(index),
-                  trailing: Radio(
-                    value: index,
-                    groupValue: _selectedIndex,
-                    onChanged: (value) {
-                      if (value != null) {
-                        setState(() {
-                          _selectedIndex = value;
-                        });
-                      }
-                    },
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  child: ListTile(
+                    title: Text(
+                      widget.getTargetName(index),
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.w400,
+                              ),
+                    ),
+                    leading: widget.getTargetIcon(index),
+                    trailing: Radio(
+                      value: index,
+                      groupValue: _selectedIndex,
+                      onChanged: (value) {
+                        if (value != null) {
+                          setState(() {
+                            _selectedIndex = value;
+                          });
+                        }
+                      },
+                    ),
                   ),
                 );
               }),
@@ -114,17 +131,17 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
             alignment: Alignment.bottomCenter,
             child: Container(
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
                 border: Border(
                   top: BorderSide(
-                    color: Colors.grey,
                     width: 0.5,
+                    color: Colors.grey,
                   ),
                 ),
-                color: Colors.white,
               ),
-              padding: const EdgeInsets.all(16),
-              child: MaterialButton(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              child: ElevatedButton(
                 onPressed: () {
                   widget.pushRoute(
                     pageContext: widget.pageContext,
@@ -144,70 +161,75 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
 }
 
 class ShareCommentPage extends StatelessWidget {
-  const ShareCommentPage({super.key});
+  final BuildContext sheetContext;
+  const ShareCommentPage(this.sheetContext, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  "https://picsum.photos/250?image=9",
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 8),
-              const Text("Playlist"),
-              const SizedBox(height: 2),
-              const Text("Name"),
-            ]),
-          ),
-          const SizedBox(height: 4),
-          const Expanded(
-            flex: 5,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                keyboardType: TextInputType.multiline,
-                maxLines: 12,
-                maxLength: 1000,
-                decoration: InputDecoration(
-                  hintText: 'Share your thoughts...',
-                  border: OutlineInputBorder(),
-                ),
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 15),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                "https://picsum.photos/250?image=9",
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 15),
+            Text("Playlist",
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontWeight: FontWeight.w400,
+                    )),
+            const SizedBox(height: 2),
+            Text("Name",
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.w400,
+                    )),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: TextField(
+                style: Theme.of(context).textTheme.displaySmall,
+                keyboardType: TextInputType.multiline,
+                maxLines: 10,
+                maxLength: 1000,
+                decoration: InputDecoration(
+                    counterStyle: Theme.of(context).textTheme.displaySmall,
+                    hintText: 'Share your thoughts...',
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(color: Color(0xFF969BB5))),
+              ),
+            ),
+          ],
+        ),
       ),
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
           width: double.infinity,
-          decoration: const BoxDecoration(
-            border: Border(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            border: const Border(
               top: BorderSide(
-                color: Colors.grey,
                 width: 0.5,
+                color: Colors.grey,
               ),
             ),
-            color: Colors.white,
           ),
-          padding: const EdgeInsets.all(16),
-          child: MaterialButton(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+          child: ElevatedButton(
             onPressed: () {
               // implement networking here
-              Navigator.of(context).pop();
+              Navigator.of(sheetContext).pop();
             },
             child: const Text('Submit'),
           ),

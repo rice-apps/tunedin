@@ -26,8 +26,12 @@ class TunedInBottomSheet extends StatelessWidget {
         onGenerateRoute: (_) => MaterialPageRoute<void>(
             builder: (BuildContext contentContext) => Scaffold(
                 appBar: AppBar(
-                  title: Text(title),
+                  title: Text(
+                    title,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
                   centerTitle: true,
+                  elevation: 0,
                   actions: [
                     IconButton(
                       icon: const Icon(Icons.close),
@@ -35,6 +39,7 @@ class TunedInBottomSheet extends StatelessWidget {
                     ),
                   ],
                 ),
+                backgroundColor: Theme.of(context).colorScheme.secondary,
                 body: builder(context, contentContext, pushRoute))),
       ),
     );
@@ -49,9 +54,14 @@ class TunedInBottomSheet extends StatelessWidget {
       PageTransition(
         type: PageTransitionType.rightToLeft,
         child: Scaffold(
+          backgroundColor: Theme.of(sheetContext).colorScheme.secondary,
           appBar: AppBar(
-            title: Text(title),
+            title: Text(
+              title,
+              style: Theme.of(sheetContext).textTheme.headlineMedium,
+            ),
             centerTitle: true,
+            elevation: 0,
             actions: [
               IconButton(
                 icon: const Icon(Icons.close),

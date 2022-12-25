@@ -26,13 +26,27 @@ class Themes {
               borderRadius: BorderRadius.circular(10),
               side: const BorderSide(color: Color(0xFF303449), width: 1.5),
             )),
-        buttonTheme: ButtonThemeData(
-          buttonColor: const Color(0xFF933A8F),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(color: Colors.white, width: 1.5),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+              const Color(0xFF933A8F),
+            ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+            ),
+            textStyle: MaterialStateProperty.all<TextStyle>(
+              TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Poppins'),
+            ),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         ),
         fontFamily: 'Inter',
         textSelectionTheme: const TextSelectionThemeData(
@@ -50,7 +64,10 @@ class Themes {
           titleMedium: TextStyle(
               color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
           headlineMedium: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Poppins'),
           displaySmall: TextStyle(
               color: Color(0xFFA1A9BC),
               fontSize: 12,
@@ -61,6 +78,31 @@ class Themes {
               fontSize: 14,
               fontWeight: FontWeight.w400,
               fontFamily: 'Poppins'),
+        ),
+        radioTheme: RadioThemeData(
+          overlayColor: MaterialStateProperty.all<Color>(
+              const Color(0xFFFF417F).withOpacity(0.2)),
+          fillColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return const Color(0xFFFF417F);
+            } else if (states.contains(MaterialState.disabled)) {
+              return const Color(0x80933A8F);
+            } else {
+              return const Color(0xFF45495C);
+            }
+          }),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          fillColor: const Color(0xFF303449),
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(width: 1.5, color: Color(0xFF878D9E)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(width: 1.5, color: Color(0xFF878D9E)),
+          ),
         ));
   }
 }
