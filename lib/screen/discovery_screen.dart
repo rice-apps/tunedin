@@ -36,23 +36,31 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
           SliverAppBar(
             expandedHeight: 100,
             flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.only(left: 16),
               centerTitle: false,
               title: const Text(
                 'Explore',
                 textAlign: TextAlign.left,
               ),
-              background: Image.network(
-                  "https://images.unsplash.com/photo-1603785608232-44c43cdc0d70",
-                  fit: BoxFit.cover),
+              background: DecoratedBox(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: <Color>[
+                      Color(0xFF782758),
+                      Color(0xFF482876),
+                    ], // Gradient from https://learnui.design/tools/gradient-generator.html
+                    tileMode: TileMode.mirror,
+                  ),
+                ),
+              ),
             ),
           ),
+          SliverPersistentHeader(
+              pinned: true, floating: false, delegate: Delegate()),
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            sliver: SliverPersistentHeader(
-                pinned: true, floating: false, delegate: Delegate()),
-          ),
-          SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               sliver: SliverToBoxAdapter(
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
@@ -97,19 +105,19 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
             SliverList(
                 delegate: SliverChildBuilderDelegate(
                     ((context, index) => const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 36, 0, 0),
                         child: SongRow())),
                     childCount: 100)),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
                     ((context, index) => const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 36, 0, 0),
                         child: SongRow())),
                     childCount: 100)),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
                     ((context, index) => const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 36, 0, 0),
                         child: UserRow())),
                     childCount: 100)),
           ][_tabController.index],
@@ -123,33 +131,57 @@ class Delegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-      child: Center(
-        child: TextField(
-          keyboardType: TextInputType.text,
-          style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                color: Colors.black,
-              ),
-          decoration: InputDecoration(
-            hintText: 'Search',
-            hintStyle: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  color: Colors.black,
-                ),
-            prefixIcon: Icon(Icons.search, color: Colors.black),
-            filled: true,
-            fillColor: Colors.white,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
-              borderSide: BorderSide(color: Color(0xFF303449), width: 1),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
-              borderSide: BorderSide(color: Color(0xFF303449), width: 1),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: <Color>[
+                Color(0xFF782758),
+                Color(0xFF482876),
+              ], // Gradient from https://learnui.design/tools/gradient-generator.html
+              tileMode: TileMode.mirror,
             ),
           ),
         ),
-      ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+            child: TextField(
+              keyboardType: TextInputType.text,
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    color: Colors.black,
+                  ),
+              decoration: InputDecoration(
+                hintText: 'Search',
+                hintStyle: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      color: Colors.black,
+                    ),
+                prefixIcon: Icon(Icons.search, color: Colors.black),
+                filled: true,
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  borderSide: BorderSide(color: Color(0xFF303449), width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  borderSide: BorderSide(color: Color(0xFF303449), width: 1),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 
