@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rice_music_sharing/widgets/outlined_button.dart';
 
 class DiscoveryScreen extends StatefulWidget {
   const DiscoveryScreen({Key? key}) : super(key: key);
@@ -28,89 +29,92 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          expandedHeight: 100,
-          flexibleSpace: FlexibleSpaceBar(
-            centerTitle: false,
-            title: const Text(
-              'Explore',
-              textAlign: TextAlign.left,
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 100,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: false,
+              title: const Text(
+                'Explore',
+                textAlign: TextAlign.left,
+              ),
+              background: Image.network(
+                  "https://images.unsplash.com/photo-1603785608232-44c43cdc0d70",
+                  fit: BoxFit.cover),
             ),
-            background: Image.network(
-                "https://images.unsplash.com/photo-1603785608232-44c43cdc0d70",
-                fit: BoxFit.cover),
           ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-          sliver: SliverPersistentHeader(
-              pinned: true, floating: false, delegate: Delegate()),
-        ),
-        SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-            sliver: SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                height: 36,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF303449),
-                  borderRadius: BorderRadius.circular(
-                    4.0,
-                  ),
-                ),
-                child: TabBar(
-                  controller: _tabController,
-                  // give the indicator a decoration (color and border radius)
-                  indicator: BoxDecoration(
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            sliver: SliverPersistentHeader(
+                pinned: true, floating: false, delegate: Delegate()),
+          ),
+          SliverPadding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              sliver: SliverToBoxAdapter(
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                  height: 36,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF303449),
                     borderRadius: BorderRadius.circular(
                       4.0,
                     ),
-                    color: const Color(0xFF8E909E),
                   ),
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  //indicatorColor: Color(0xFF8E909E),
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.white,
-                  tabs: const [
-                    // first tab [you can add an icon using the icon property]
-                    Tab(
-                      text: 'Music',
+                  child: TabBar(
+                    controller: _tabController,
+                    // give the indicator a decoration (color and border radius)
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        4.0,
+                      ),
+                      color: const Color(0xFF8E909E),
                     ),
-                    // second tab [you can add an icon using the icon property]
-                    Tab(
-                      text: 'Groups',
-                    ),
-                    Tab(
-                      text: 'Users',
-                    ),
-                  ],
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    //indicatorColor: Color(0xFF8E909E),
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.white,
+                    tabs: const [
+                      // first tab [you can add an icon using the icon property]
+                      Tab(
+                        text: 'Music',
+                      ),
+                      // second tab [you can add an icon using the icon property]
+                      Tab(
+                        text: 'Groups',
+                      ),
+                      Tab(
+                        text: 'Users',
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            )),
-        [
-          SliverList(
-              delegate: SliverChildBuilderDelegate(
-                  ((context, index) => const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
-                      child: SongRow())),
-                  childCount: 100)),
-          SliverList(
-              delegate: SliverChildBuilderDelegate(
-                  ((context, index) => const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
-                      child: SongRow())),
-                  childCount: 100)),
-          SliverList(
-              delegate: SliverChildBuilderDelegate(
-                  ((context, index) => const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
-                      child: UserRow())),
-                  childCount: 100)),
-        ][_tabController.index],
-      ],
+              )),
+          [
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    ((context, index) => const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
+                        child: SongRow())),
+                    childCount: 100)),
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    ((context, index) => const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
+                        child: SongRow())),
+                    childCount: 100)),
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    ((context, index) => const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 48, 0, 0),
+                        child: UserRow())),
+                    childCount: 100)),
+          ][_tabController.index],
+        ],
+      ),
     );
   }
 }
@@ -121,13 +125,18 @@ class Delegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-      child: const Center(
+      child: Center(
         child: TextField(
           keyboardType: TextInputType.text,
+          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                color: Colors.black,
+              ),
           decoration: InputDecoration(
             hintText: 'Search',
-            hintStyle: TextStyle(color: Colors.grey),
-            prefixIcon: Icon(Icons.search, color: Colors.grey),
+            hintStyle: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  color: Colors.black,
+                ),
+            prefixIcon: Icon(Icons.search, color: Colors.black),
             filled: true,
             fillColor: Colors.white,
             enabledBorder: OutlineInputBorder(
@@ -162,10 +171,15 @@ class SongRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Padding(
-        padding: EdgeInsets.fromLTRB(8.0, 0, 0, 4),
-        child: Text("Category Name"),
-      ),
+      Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 0, 8),
+          child: Text(
+            "Category Name",
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium
+                ?.copyWith(fontWeight: FontWeight.w600),
+          )),
       SizedBox(
         height: 200,
         child: ListView.builder(
@@ -174,7 +188,7 @@ class SongRow extends StatelessWidget {
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: EdgeInsets.fromLTRB(index == 0 ? 8 : 0, 0, 8, 0),
+              padding: EdgeInsets.fromLTRB(index == 0 ? 16 : 0, 0, 8, 0),
               child: const FollowWidget(),
             );
           },
@@ -190,19 +204,23 @@ class UserRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Padding(
-        padding: EdgeInsets.fromLTRB(8.0, 0, 0, 4),
-        child: Text("Category Name"),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 0, 8),
+        child: Text("Category Name",
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium
+                ?.copyWith(fontWeight: FontWeight.w600)),
       ),
       SizedBox(
-        height: 200,
+        height: 230,
         child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: EdgeInsets.fromLTRB(index == 0 ? 8 : 0, 0, 8, 0),
+              padding: EdgeInsets.fromLTRB(index == 0 ? 16 : 0, 0, 8, 0),
               child: const SongWidget(),
             );
           },
@@ -224,19 +242,23 @@ class SongWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
           child: Image.network(
             "https://picsum.photos/250?image=9",
-            height: 144,
-            width: 144,
+            height: 185,
+            width: 185,
             fit: BoxFit.cover,
           ),
-        ),
-        const Text(
-          "Playlist Name",
-          textAlign: TextAlign.left,
         ),
         const SizedBox(
           height: 5,
         ),
-        const Text("20 Songs", textAlign: TextAlign.left),
+        Text("Playlist Name",
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge
+                ?.copyWith(fontWeight: FontWeight.w500)),
+        const SizedBox(
+          height: 5,
+        ),
+        Text("20 Songs", style: Theme.of(context).textTheme.labelMedium),
       ],
     );
   }
@@ -263,11 +285,15 @@ class FollowWidgetState extends State<FollowWidget> {
       child: Container(
         padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
         clipBehavior: Clip.hardEdge,
-        width: 138,
+        width: 160,
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(
-            4.0,
+            8.0,
+          ),
+          border: Border.all(
+            color: const Color(0xFF303449),
+            width: 1,
           ),
         ),
         child: Center(
@@ -290,16 +316,7 @@ class FollowWidgetState extends State<FollowWidget> {
             const SizedBox(
               height: 10,
             ),
-            OutlinedButton(
-                onPressed: () => {},
-                style: OutlinedButton.styleFrom(
-                    shape: const StadiumBorder(),
-                    side: const BorderSide(color: Colors.white),
-                    minimumSize: const Size(100, 40)),
-                child: const Text(
-                  "Follow",
-                  style: TextStyle(color: Colors.white),
-                ))
+            TunedInOutlinedButton(text: "Follow", onPressed: () => {})
           ],
         )),
       ),
