@@ -38,12 +38,12 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.only(left: 16),
               centerTitle: false,
-              title: const Text(
+              title: Text(
                 'Explore',
-                textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              background: DecoratedBox(
-                decoration: const BoxDecoration(
+              background: const DecoratedBox(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
@@ -85,6 +85,12 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
                     //indicatorColor: Color(0xFF8E909E),
                     labelColor: Colors.black,
                     unselectedLabelColor: Colors.white,
+                    unselectedLabelStyle:
+                        Theme.of(context).textTheme.displayMedium,
+                    labelStyle:
+                        Theme.of(context).textTheme.displayMedium?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
                     tabs: const [
                       // first tab [you can add an icon using the icon property]
                       Tab(
@@ -169,11 +175,11 @@ class Delegate extends SliverPersistentHeaderDelegate {
                 prefixIcon: Icon(Icons.search, color: Colors.black),
                 filled: true,
                 fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(4.0)),
                   borderSide: BorderSide(color: Color(0xFF303449), width: 1),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(4.0)),
                   borderSide: BorderSide(color: Color(0xFF303449), width: 1),
                 ),
