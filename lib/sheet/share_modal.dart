@@ -28,6 +28,7 @@ class ShareModalState extends State<ShareModal> {
                 )),
             getTargetName: (target) => 0 == target ? 'Your profile' : 'Group',
             maxCount: 2,
+            showSearch: false,
             buildTargetPage: (int index) {
               if (index == 1) {
                 return TargetPickerPage(
@@ -76,6 +77,7 @@ class TargetPickerPage extends StatefulWidget {
   final BuildContext sheetContext;
   final BuildContext pageContext;
   final PushRouteBuilder pushRoute;
+  final bool showSearch;
 
   const TargetPickerPage(
     this.sheetContext,
@@ -86,6 +88,7 @@ class TargetPickerPage extends StatefulWidget {
     required this.getTargetIcon,
     this.maxCount,
     required this.buildTargetPage,
+    this.showSearch = true,
   }) : super(key: key);
 
   @override
@@ -99,6 +102,33 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (widget.showSearch)
+          Container(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            child: TextField(
+              keyboardType: TextInputType.text,
+              style: Theme.of(context).textTheme.displayMedium,
+              decoration: InputDecoration(
+                isDense: true,
+                hintText: 'Search Playlist',
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .displayMedium
+                    ?.copyWith(color: Color(0xFFA1A9BC)),
+                prefixIcon: const Icon(Icons.search, color: Color(0xFFA1A9BC)),
+                filled: true,
+                fillColor: Color(0xFF45495C),
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  borderSide: BorderSide(color: Color(0xFF303449), width: 1),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  borderSide: BorderSide(color: Color(0xFF303449), width: 1),
+                ),
+              ),
+            ),
+          ),
         Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
@@ -231,7 +261,7 @@ class ShareCommentPage extends StatelessWidget {
             // implement networking here
             Navigator.of(sheetContext).pop();
           },
-          child: const Text('Submit'),
+          child: const Text('Send'),
         ),
       ),
     ]);
