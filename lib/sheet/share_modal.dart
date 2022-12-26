@@ -167,49 +167,51 @@ class ShareCommentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const SizedBox(height: 15),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                "https://picsum.photos/250?image=9",
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
+      Expanded(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const SizedBox(height: 15),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.network(
+                  "https://picsum.photos/250?image=9",
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            const SizedBox(height: 15),
-            Text("Playlist",
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.w400,
-                    )),
-            const SizedBox(height: 2),
-            Text("Name",
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontWeight: FontWeight.w400,
-                    )),
-            const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                style: Theme.of(context).textTheme.displaySmall,
-                keyboardType: TextInputType.multiline,
-                maxLines: 10,
-                maxLength: 1000,
-                decoration: InputDecoration(
-                    counterStyle: Theme.of(context).textTheme.displaySmall,
-                    hintText: 'Share your thoughts...',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .displayMedium
-                        ?.copyWith(color: Color(0xFF969BB5))),
+              const SizedBox(height: 15),
+              Text("Playlist",
+                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                        fontWeight: FontWeight.w400,
+                      )),
+              const SizedBox(height: 2),
+              Text("Name",
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.w400,
+                      )),
+              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: TextField(
+                  style: Theme.of(context).textTheme.displaySmall,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 10,
+                  maxLength: 1000,
+                  decoration: InputDecoration(
+                      counterStyle: Theme.of(context).textTheme.displaySmall,
+                      hintText: 'Share your thoughts...',
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(color: Color(0xFF969BB5))),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       Container(
