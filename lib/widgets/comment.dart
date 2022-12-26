@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CommentWidget extends StatefulWidget {
+class Comment extends StatefulWidget {
   @override
-  State<CommentWidget> createState() => _CommentWidgetState();
-  const CommentWidget({super.key});
+  State<Comment> createState() => _CommentState();
+  const Comment({super.key});
 }
 
-class _CommentWidgetState extends State<CommentWidget> {
+class _CommentState extends State<Comment> {
   int _likes = 0;
   bool _isNotLiked = true;
 
