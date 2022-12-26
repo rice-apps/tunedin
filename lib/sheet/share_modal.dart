@@ -34,6 +34,7 @@ class ShareModalState extends State<ShareModal> {
                   sheetContext,
                   pageContext,
                   pushRoute,
+                  maxCount: 10,
                   getTargetName: (index) => 'Will Rice College',
                   getTargetIcon: (index) => const Icon(Icons.school),
                   buildTargetPage: (int index) {
@@ -96,66 +97,65 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        children: [
-          ListView.builder(
-              itemCount: widget.maxCount,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                  child: ListTile(
-                    title: Text(
-                      widget.getTargetName(index),
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.w400,
-                              ),
+    return Column(
+      children: [
+        Expanded(
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: widget.maxCount,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                    child: ListTile(
+                      title: Text(
+                        widget.getTargetName(index),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                      leading: widget.getTargetIcon(index),
+                      trailing: Radio(
+                        value: index,
+                        groupValue: _selectedIndex,
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              _selectedIndex = value;
+                            });
+                          }
+                        },
+                      ),
                     ),
-                    leading: widget.getTargetIcon(index),
-                    trailing: Radio(
-                      value: index,
-                      groupValue: _selectedIndex,
-                      onChanged: (value) {
-                        if (value != null) {
-                          setState(() {
-                            _selectedIndex = value;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                );
-              }),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                border: Border(
-                  top: BorderSide(
-                    width: 0.5,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-              child: ElevatedButton(
-                onPressed: () {
-                  widget.pushRoute(
-                    pageContext: widget.pageContext,
-                    sheetContext: widget.sheetContext,
-                    title: "Share",
-                    child: widget.buildTargetPage(_selectedIndex),
                   );
-                },
-                child: const Text('Next'),
+                })),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            border: Border(
+              top: BorderSide(
+                width: 0.5,
+                color: Colors.grey,
               ),
             ),
           ),
-        ],
-      ),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+          child: ElevatedButton(
+            onPressed: () {
+              widget.pushRoute(
+                pageContext: widget.pageContext,
+                sheetContext: widget.sheetContext,
+                title: "Share",
+                child: widget.buildTargetPage(_selectedIndex),
+              );
+            },
+            child: const Text('Next'),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -166,7 +166,7 @@ class ShareCommentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
+    return Column(children: [
       SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -212,27 +212,24 @@ class ShareCommentPage extends StatelessWidget {
           ],
         ),
       ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
-            border: const Border(
-              top: BorderSide(
-                width: 0.5,
-                color: Colors.grey,
-              ),
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          border: const Border(
+            top: BorderSide(
+              width: 0.5,
+              color: Colors.grey,
             ),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-          child: ElevatedButton(
-            onPressed: () {
-              // implement networking here
-              Navigator.of(sheetContext).pop();
-            },
-            child: const Text('Submit'),
-          ),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        child: ElevatedButton(
+          onPressed: () {
+            // implement networking here
+            Navigator.of(sheetContext).pop();
+          },
+          child: const Text('Submit'),
         ),
       ),
     ]);
