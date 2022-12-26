@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Comment extends StatefulWidget {
+  final bool children;
+
   @override
   State<Comment> createState() => _CommentState();
-  const Comment({super.key});
+  const Comment({super.key, this.children = false});
 }
 
 class _CommentState extends State<Comment> {
@@ -37,19 +39,31 @@ class _CommentState extends State<Comment> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children: const [
-                Text("David"),
+              children: [
+                Text(
+                  "David",
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
                 SizedBox(
                   width: 5,
                 ),
-                Text("32 min ago"),
+                Text(
+                  "32 min ago",
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: const Color(0xFF878D9E),
+                        fontWeight: FontWeight.w400,
+                      ),
+                ),
               ],
             ),
             const SizedBox(
               height: 5,
             ),
-            const Text(
+            Text(
               "I haven't listened to this song in ages.",
+              style: Theme.of(context).textTheme.displayMedium,
             ),
             const SizedBox(
               height: 5,
@@ -63,9 +77,13 @@ class _CommentState extends State<Comment> {
                   icon: Stack(
                     children: [
                       Icon(Icons.favorite,
-                          color: _isNotLiked ? Colors.transparent : Colors.red),
+                          color: _isNotLiked
+                              ? Colors.transparent
+                              : Color(0xFFFF417F)),
                       Icon(Icons.favorite_border,
-                          color: _isNotLiked ? Colors.black : Colors.red),
+                          color: _isNotLiked
+                              ? Color(0xFF878D9E)
+                              : Color(0xFFFF417F)),
                     ],
                   ),
                   onPressed: () {
@@ -75,19 +93,70 @@ class _CommentState extends State<Comment> {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(_likes.toString()),
+                Text(
+                  _likes.toString(),
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: const Color(0xFF878D9E),
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
                 const SizedBox(
                   width: 10,
                 ),
-                InkWell(
-                  child: const Text("Reply"),
-                  onTap: () {},
+                TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Color(0xFF878D9E),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    "Reply",
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          color: const Color(0xFF878D9E),
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
                 ),
               ],
-            )
+            ),
+            if (widget.children)
+              Column(
+                children: const [
+                  Padding(padding: EdgeInsets.only(top: 15), child: Comment()),
+                ],
+              ),
+            Row(children: [
+              CustomPaint(painter: LinePaint()),
+              const SizedBox(
+                width: 30,
+              ),
+              Text(
+                "View 3 more replies",
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: const Color(0xFF878D9E),
+                      fontWeight: FontWeight.w600,
+                    ),
+              )
+            ])
           ],
         ),
       ],
     );
+  }
+}
+
+class LinePaint extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color(0xFF303449)
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+
+    canvas.drawLine(Offset(0, 0), Offset(20, 0), paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
