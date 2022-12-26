@@ -15,7 +15,9 @@ class CommentModal extends StatelessWidget {
                 child: ListView.builder(itemBuilder: (context, index) {
                   return const Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Comment(),
+                    child: Comment(
+                      children: true,
+                    ),
                   );
                 }),
               ),
@@ -32,8 +34,9 @@ class CommentModal extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       style: Theme.of(context).textTheme.displayMedium,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
+                      decoration: InputDecoration(
+                        fillColor: Theme.of(context).colorScheme.secondary,
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFF45495C)),
                           borderRadius: BorderRadius.all(Radius.circular(64.0)),
                         ),
