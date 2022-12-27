@@ -23,7 +23,15 @@ class CommentModal extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.all(8.0),
-                color: Theme.of(context).colorScheme.secondary,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                  border: const Border(
+                    top: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
                 child: Row(children: [
                   const CircleAvatar(
                     radius: 25,
