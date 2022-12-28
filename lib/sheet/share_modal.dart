@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:rice_music_sharing/sheet/tunedin_bottom_sheet.dart';
 
 class ShareModal extends StatefulWidget {
@@ -161,29 +162,37 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
                     ),
                   );
                 })),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
-            border: Border(
-              top: BorderSide(
-                width: 0.5,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-          child: ElevatedButton(
-            onPressed: () {
-              widget.pushRoute(
-                pageContext: widget.pageContext,
-                sheetContext: widget.sheetContext,
-                title: "Share",
-                child: widget.buildTargetPage(_selectedIndex),
+        KeyboardVisibilityBuilder(
+          builder: (context, isKeyboardVisible) {
+            if (!isKeyboardVisible) {
+              return Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                  border: Border(
+                    top: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.pushRoute(
+                      pageContext: widget.pageContext,
+                      sheetContext: widget.sheetContext,
+                      title: "Share",
+                      child: widget.buildTargetPage(_selectedIndex),
+                    );
+                  },
+                  child: const Text('Next'),
+                ),
               );
-            },
-            child: const Text('Next'),
-          ),
+            }
+            return const SizedBox.shrink();
+          },
         ),
       ],
     );
@@ -244,26 +253,31 @@ class ShareCommentPage extends StatelessWidget {
           ),
         ),
       ),
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          border: const Border(
-            top: BorderSide(
-              width: 0.5,
-              color: Colors.grey,
+      KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+        if (!isKeyboardVisible) {
+          return Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
+              border: const Border(
+                top: BorderSide(
+                  width: 0.5,
+                  color: Colors.grey,
+                ),
+              ),
             ),
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-        child: ElevatedButton(
-          onPressed: () {
-            // implement networking here
-            Navigator.of(sheetContext).pop();
-          },
-          child: const Text('Send'),
-        ),
-      ),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: ElevatedButton(
+              onPressed: () {
+                // implement networking here
+                Navigator.of(sheetContext).pop();
+              },
+              child: const Text('Send'),
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      }),
     ]);
   }
 }
