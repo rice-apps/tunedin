@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rice_music_sharing/sheet/share_modal.dart';
+import 'package:rice_music_sharing/widgets/my_navigation_bar.dart';
+
 import 'themes/themes.dart';
-import 'widgets/my_navigation_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +24,16 @@ class MyApp extends StatelessWidget {
         body: const Center(
           child: Text('Hello World'),
         ),
+        floatingActionButton: Builder(builder: (context) {
+          return FloatingActionButton(
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context, builder: (_) => ShareModal());
+            },
+            child: const Icon(Icons.add),
+            backgroundColor: Colors.blue,
+          );
+        }),
       ),
     );
   }
