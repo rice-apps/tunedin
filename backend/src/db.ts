@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import User from './models/user';
+import Post from './models/post';
 
 const db = new DataSource({
 	type: 'mongodb',
@@ -8,7 +9,7 @@ const db = new DataSource({
 	// username: 'test',
 	// password: 'test',
 	database: 'test',
-	entities: [User],
+	entities: [User, Post],
 });
 
 export default db;
