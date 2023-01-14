@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 child: TabBar(
                   indicatorColor: Theme.of(context).colorScheme.onBackground,
                   labelColor: Theme.of(context).colorScheme.onBackground,
-                  unselectedLabelColor: Color(0xFF404663),
+                  unselectedLabelColor: const Color(0xFF404663),
                   controller: _tabController,
                   tabs: const [
                     Tab(
@@ -227,7 +227,7 @@ class Label extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(5, 0, 0, 10),
       child: RichText(
           text: TextSpan(
-        text: '${name} ',
+        text: '$name ',
         style: Theme.of(context).textTheme.headlineMedium,
         children: [
           const WidgetSpan(
@@ -237,7 +237,7 @@ class Label extends StatelessWidget {
           TextSpan(
             text: count,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: Color(0xFFA1A9BC),
+                  color: const Color(0xFFA1A9BC),
                   fontWeight: FontWeight.w400,
                 ),
           ),
