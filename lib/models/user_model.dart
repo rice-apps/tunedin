@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-
 @JsonSerializable(explicitToJson: true)
 class UserModel {
   String? netID;
@@ -24,11 +23,8 @@ class UserModel {
         following: json['following']);
   }
 
-  Map<String, dynamic> toJson() => {
-        'name': displayName,
-        'userName': userName,
-        'following': following
-      };
+  Map<String, dynamic> toJson() =>
+      {'name': displayName, 'userName': userName, 'following': following};
   void followUser(UserModel targetUser) {
     following?.add(targetUser);
   }
