@@ -1,13 +1,15 @@
 import SpotifyWebApi from 'spotify-web-api-node';
 import Router from '@koa/router';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 var spotifyApi = new SpotifyWebApi({
 	// clientId: //BLOCKING ON DOTENV,
 	// clientSecret: //BLOCKING ON DOTENV,
 	// redirectUri: //BLOCKING ON DOTENV,
-	// clientId: '6d5af6a94aa241dd89626407ab9fc2fc',
-	// clientSecret: '9b09ad81ded14600bba84d6c9131f7ff',
-	// redirectUri: 'http://localhost:3000/callback',
+	clientId: process.env.CLIENT_ID,
+	clientSecret: process.env.CLIENT_SECRET,
+	redirectUri: process.env.REDIRECT_URI,
 });
 
 const scopes = [
@@ -37,7 +39,10 @@ const router = new Router({
 });
 
 router.get('/login', async (ctx, next) => {
-	ctx.redirect(spotifyApi.createAuthorizeURL(scopes));
+	ctx.body = {
+		//Retrieves the login url and send to front-end.
+		url: spotifyApi.createAuthorizeURL(scopes),
+	};
 });
 
 router.get('/callback', async (ctx, next) => {

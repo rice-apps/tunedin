@@ -21,6 +21,7 @@ app.use(indexRouter.allowedMethods());
 
 app.use(userRouter.routes());
 app.use(userRouter.allowedMethods());
+
 app.use(spotifyRouter.routes());
 app.use(spotifyRouter.allowedMethods());
 
