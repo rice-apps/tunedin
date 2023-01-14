@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screen/home_screen.dart';
 import 'themes/themes.dart';
 import 'widgets/my_navigation_bar.dart';
 
@@ -19,9 +20,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Welcome to TunedIn'),
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+        body: const HomeScreen(),
       ),
     );
   }
