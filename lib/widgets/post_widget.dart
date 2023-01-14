@@ -54,7 +54,7 @@ class PostWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          PostSongDetails(),
+          const PostSongDetails(),
           const SizedBox(
             height: 20,
           ),

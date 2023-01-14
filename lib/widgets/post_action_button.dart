@@ -26,7 +26,7 @@ class PostSongDetails extends StatelessWidget {
         const SizedBox(height: 5),
         Text("Artist Name",
             style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  color: Color(0xFFB7B7B7),
+                  color: const Color(0xFFB7B7B7),
                 )),
         const SizedBox(height: 15),
         Row(
@@ -37,13 +37,13 @@ class PostSongDetails extends StatelessWidget {
               text: "Listen",
               onPressed: () {},
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             PostActionButton(
               icon: Icons.add_box_outlined,
               text: "Share",
               onPressed: () {},
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             PostActionButton(
               icon: Icons.bookmark_border,
               text: "Save",
