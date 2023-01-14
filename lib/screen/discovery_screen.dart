@@ -172,7 +172,7 @@ class Delegate extends SliverPersistentHeaderDelegate {
                 hintStyle: Theme.of(context).textTheme.displayMedium?.copyWith(
                       color: Colors.black,
                     ),
-                prefixIcon: Icon(Icons.search, color: Colors.black),
+                prefixIcon: const Icon(Icons.search, color: Colors.black),
                 filled: true,
                 fillColor: Colors.white,
                 enabledBorder: const OutlineInputBorder(
