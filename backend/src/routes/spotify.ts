@@ -4,9 +4,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 var spotifyApi = new SpotifyWebApi({
-	// clientId: //BLOCKING ON DOTENV,
-	// clientSecret: //BLOCKING ON DOTENV,
-	// redirectUri: //BLOCKING ON DOTENV,
 	clientId: process.env.CLIENT_ID,
 	clientSecret: process.env.CLIENT_SECRET,
 	redirectUri: process.env.REDIRECT_URI,
