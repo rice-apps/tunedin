@@ -10,7 +10,6 @@ class PostModel with _$PostModel {
     required String netID,
     required int numLikes,
     required String bodyText,
-    // required var comments,
     required String musicURL,
   }) = _PostModel;
 
