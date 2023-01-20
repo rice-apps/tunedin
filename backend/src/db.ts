@@ -11,6 +11,8 @@ const db = new DataSource({
 	password: process.env.MONGODB_PASSWORD,
 	database: process.env.MONGODB_DB,
 	entities: [User],
+	ssl: true,
+	authSource: 'admin'
 });
 
 export default db;

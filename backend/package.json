@@ -26,6 +26,7 @@
     "koa": "^2.13.4",
     "mongodb": "^3.7.3",
     "reflect-metadata": "^0.1.13",
+    "spotify-web-api-node": "^5.0.2",
     "typeorm": "^0.3.10"
   }
 }
