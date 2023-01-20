@@ -3,7 +3,7 @@ description: A music-sharing app for the Rice community.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -20,16 +20,20 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.0-271.7.beta <3.0.0'
+  sdk: ">=2.18.0-271.7.beta <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
   freezed_annotation: ^2.2.0
   json_annotation: ^4.7.0
   image_stack: ^2.1.1
-  flutter_svg: ^1.1.5
+  flutter_svg: ^1.1.6
+  http: ^0.13.5
+  universal_html: ^2.0.8
+  shared_preferences: ^2.0.16
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:
@@ -40,9 +44,9 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
-  build_runner: ^2.3.2
-  freezed: ^2.2.1
+  flutter_lints: ^2.0.1
+  build_runner: ^2.3.3
+  freezed: ^2.3.2
   json_serializable: ^6.5.4
 
 # For information on the generic Dart part of this file, see the
@@ -86,7 +90,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
-    - family:  TunedinIcon
+    - family: TunedinIcon
       fonts:
         - asset: assets/TunedinIcon.ttf
     - family: Inter

@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import db from './db';
 import userRouter from './routes/user';
 import postRouter from './routes/post';
+import authRouter from './routes/auth';
 
 await db.initialize();
 
@@ -20,6 +21,9 @@ app.use(userRouter.allowedMethods());
 
 app.use(postRouter.routes());
 app.use(postRouter.allowedMethods());
+
+app.use(authRouter.routes());
+app.use(authRouter.allowedMethods());
 
 app.listen(PORT);
 
