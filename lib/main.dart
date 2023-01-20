@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'screen/home_screen.dart';
+import 'themes/themes.dart';
 import 'widgets/my_navigation_bar.dart';
 
 void main() {
@@ -11,15 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: Themes.darkTheme,
       title: 'Welcome to TunedIn',
       home: Scaffold(
         bottomNavigationBar: const MyNavigationBar(),
         appBar: AppBar(
           title: const Text('Welcome to TunedIn'),
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+        body: const HomeScreen(),
       ),
     );
   }
