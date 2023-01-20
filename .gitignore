@@ -18,9 +18,6 @@
 .pub/
 build/
 
-#Back-end related
-./backend/.env
-
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
