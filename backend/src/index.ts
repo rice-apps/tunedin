@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import db from './db';
 import userRouter from './routes/user';
 import postRouter from './routes/post';
+import groupRoute from './routes/group';
 
 await db.initialize();
 
@@ -20,6 +21,9 @@ app.use(userRouter.allowedMethods());
 
 app.use(postRouter.routes());
 app.use(postRouter.allowedMethods());
+//Add group router
+app.use(groupRoute.routes());
+app.use(groupRoute.allowedMethods());
 
 app.listen(PORT);
 

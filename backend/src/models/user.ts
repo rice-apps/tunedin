@@ -7,10 +7,10 @@ class User extends BaseEntity {
 	id: typeof mongodb.ObjectId;
 
 	@Column()
-	username: string;
+	handle: string;
 
 	@Column()
-	name: string;
+	displayname: string;
 }
 
 export default User;

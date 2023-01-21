@@ -15,15 +15,16 @@ class Group extends BaseEntity {
 	id: typeof mongodb.ObjectId;
 
 	@Column()
-	groupname: string;
+	handle: string;
+
+	@Column()
+	displayname: string;
     
 	@Column()
 	description: string;
-
-    @Column()
-    imagepath: string;
     
-    @ManyToMany(() => User)
+	//Relation for a collection of users that follow the group
+	@ManyToMany(() => User)
 	@JoinTable()
 	followers: User[];
     
@@ -38,11 +39,3 @@ class Group extends BaseEntity {
 
 export default Group;
 
-/*
-Name (Stirng)
-followers (collection of users)
-members (collection of users)
-description (string)
-image ()
-timeline (collection of post IDs)
-/*
