@@ -80,7 +80,7 @@ class _PersonalAccountScreen extends State<PersonalAccountScreen>
                 height: 25,
               ),
               TunedInOutlinedButton(
-                text: "Follow",
+                text: "Edit Profile",
                 onPressed: () => {},
                 toggle: false,
               ),

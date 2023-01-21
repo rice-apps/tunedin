@@ -22,7 +22,7 @@ class TunedInOutlinedButton extends StatelessWidget {
           backgroundColor:
               toggle ? Theme.of(context).colorScheme.onPrimary : null,
           shape: const StadiumBorder(),
-          fixedSize: const Size(100, 36),
+          fixedSize: const Size(120, 36),
           side: const BorderSide(
             color: Colors.white,
           ),
