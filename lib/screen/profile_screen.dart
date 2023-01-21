@@ -72,61 +72,67 @@ class ProfileScreen extends StatelessWidget {
                           SizedBox(
                             width: group ? 25 : 0,
                           ),
-                          group ? TunedInOutlinedButton(
-                            text: "Join",
-                            onPressed: () => {},
-                            toggle: true,
-                          ) : const SizedBox.shrink(),
+                          group
+                              ? TunedInOutlinedButton(
+                                  text: "Join",
+                                  onPressed: () => {},
+                                  toggle: true,
+                                )
+                              : const SizedBox.shrink(),
                         ],
                       )),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: !group ? [
-                      // Text(
-                      //   "200",
-                      //   style:
-                      //       Theme.of(context).textTheme.displaySmall?.copyWith(
-                      //             fontWeight: FontWeight.w600,
-                      //           ),
-                      // ),
-                      // Text(" Followers",
-                      //     style: Theme.of(context).textTheme.displaySmall),
-                      // const SizedBox(width: 25, height: 2),
-                      // Text(
-                      //   "200",
-                      //   style:
-                      //       Theme.of(context).textTheme.displaySmall?.copyWith(
-                      //             fontWeight: FontWeight.w600,
-                      //           ),
-                      // ),
-                      // Text(" Following",
-                      //     style: Theme.of(context).textTheme.displaySmall)
-                      
-                      const SizedBox(
-                        width: 100,
-                        child: Text("Followers\n 200", textAlign: TextAlign.center),
+                    children: !group
+                        ? [
+                            // Text(
+                            //   "200",
+                            //   style:
+                            //       Theme.of(context).textTheme.displaySmall?.copyWith(
+                            //             fontWeight: FontWeight.w600,
+                            //           ),
+                            // ),
+                            // Text(" Followers",
+                            //     style: Theme.of(context).textTheme.displaySmall),
+                            // const SizedBox(width: 25, height: 2),
+                            // Text(
+                            //   "200",
+                            //   style:
+                            //       Theme.of(context).textTheme.displaySmall?.copyWith(
+                            //             fontWeight: FontWeight.w600,
+                            //           ),
+                            // ),
+                            // Text(" Following",
+                            //     style: Theme.of(context).textTheme.displaySmall)
 
-                      ),
-                      const SizedBox(width: 25, height: 2),
-                      const SizedBox(
-                        width: 100,
-                        child: Text("Following\n 200", textAlign: TextAlign.center),
-
-                      ),
-
-                    ] : [
-                      Text(
-                        "200",
-                        style:
-                            Theme.of(context).textTheme.displaySmall?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                      ),
-                      Text(" Followers",
-                          style: Theme.of(context).textTheme.displaySmall),
-                      const SizedBox(width: 25, height: 2)
-                    ],
+                            const SizedBox(
+                              width: 100,
+                              child: Text("Followers\n 200",
+                                  textAlign: TextAlign.center),
+                            ),
+                            const SizedBox(width: 25, height: 2),
+                            const SizedBox(
+                              width: 100,
+                              child: Text("Following\n 200",
+                                  textAlign: TextAlign.center),
+                            ),
+                          ]
+                        : [
+                            Text(
+                              "200",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displaySmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                            Text(" Followers",
+                                style:
+                                    Theme.of(context).textTheme.displaySmall),
+                            const SizedBox(width: 25, height: 2)
+                          ],
                   ),
                   Text(
                     "Playlists: 4",
