@@ -14,13 +14,16 @@ class CommentsScreen extends StatefulWidget {
         body: Stack());
   }
 
-  State<CommentWidget> createState() => _CommentWidgetState();
+  State<CommentsScreen> createState() => _CommentWidgetState();
 }
 
-class _CommentWidgetState extends State<CommentWidget> {
+class _CommentWidgetState extends State<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Row();
+    return Scaffold(
+        bottomNavigationBar: const MyNavigationBar(),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Stack());
   }
   // int _likes = 0;
   // bool _isNotLiked = true;
