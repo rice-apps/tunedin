@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PostSongDetails extends StatelessWidget {
   const PostSongDetails({super.key});
@@ -35,7 +36,13 @@ class PostSongDetails extends StatelessWidget {
             PostActionButton(
               icon: Icons.play_arrow,
               text: "Listen",
-              onPressed: () {},
+              onPressed: () async {
+                //const spotifyUrl = 'https://open.spotify.com/playlist/37i9dQZF1DWX5ZOsG2Ogi1?si=41c6a392cf7d4a2b';
+                final Uri _url = Uri.parse('https://youtu.be/98WtmW-lfeE');
+                if (await canLaunchUrl(_url)) {
+                  launchUrl(_url);
+                }
+              },
             ),
             const SizedBox(width: 8),
             PostActionButton(

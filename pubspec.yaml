@@ -30,7 +30,7 @@ dependencies:
   json_annotation: ^4.7.0
   image_stack: ^2.1.1
   flutter_svg: ^1.1.5
-  url_launcher:
+  url_launcher: ^6.1.8
 
 dev_dependencies:
   flutter_test:
