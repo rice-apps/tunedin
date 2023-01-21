@@ -32,6 +32,8 @@
     "mongodb": "^3.7.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.11",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.4.23",
+    "dotenv": "^16.0.3",
+    "spotify-web-api-node": "^5.0.2"
   }
 }

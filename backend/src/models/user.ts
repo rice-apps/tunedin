@@ -6,7 +6,7 @@ class User extends BaseEntity {
 	@ObjectIdColumn()
 	id: typeof mongodb.ObjectId;
 
-	@Column({unique: true})
+	@Column({ unique: true })
 	netid: string;
 
 	@Column()

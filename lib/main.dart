@@ -4,11 +4,13 @@ import 'screen/home_screen.dart';
 import 'screen/login_screen.dart';
 import 'themes/themes.dart';
 import 'widgets/my_navigation_bar.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const keyToken = 'token';
 const keyNetID = 'netid';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 

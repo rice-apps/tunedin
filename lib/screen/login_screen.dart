@@ -1,15 +1,25 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rice_music_sharing/screen/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:http/http.dart' as http;
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+// sharedpreferences keys
 const keyToken = 'token';
 const keyNetID = 'netid';
-const casLoginURL =
-    'https://idp.rice.edu/idp/profile/cas/login?service=localhost:3000/auth';
-final Uri _url = Uri.parse(casLoginURL);
+
+var casServiceUrl = dotenv.get('CAS_SERVICE_URL');
+var casServiceUrlAndroid = dotenv.get('CAS_SERVICE_URL_ANDROID');
+
+String authRequestUrl =
+    Platform.isAndroid ? casServiceUrlAndroid : casServiceUrl;
+
+var casLoginURL =
+    'https://idp.rice.edu/idp/profile/cas/login?service=$casServiceUrl/';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,84 +29,50 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  String? _ticket;
-  html.WindowBase? _popupWin;
-
-  Future<bool> _authenticateTicket(String data) async {
-    // Parse data to extract the ticket.
-    final receivedUri = Uri.parse(data);
-
-    // Close the popup window
-    if (_popupWin != null) {
-      _popupWin!.close();
-    }
-
-    setState(() => _ticket = receivedUri.fragment
-        .split('?')
-        .firstWhere((e) => e.startsWith('ticket='))
-        .substring('ticket='.length));
-
-    final response = await http.get(
-      Uri.parse('localhost:3000/auth'),
-      headers: {'ticket': '$_ticket'},
-    );
-    final result = json.decode(response.body);
-
-    if (!result['success']) {
-      print(result['message']);
-    }
-
-    if (result && result['success']) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString(keyToken, result['user']['token']);
-      sharedPreferences.setString(keyNetID, result['user']['netid']);
-
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void _attemptLogin() {
-    // Listen to message send with `postMessage`.
-    html.window.onMessage.listen((event) {
-      // The event contains the ticket which means the user has logged in
-      if (event.data.toString().contains('ticket=')) {
-        Future.delayed(Duration.zero, () {
-          _authenticateTicket(event.data).then((val) {
-            if (val) {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => const HomeScreen()));
-            } else {
-              // ADD ERROR
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => const HomeScreen()));
-            }
-          });
-        });
-      }
-    });
-
-    // Open the Rice CAS login page
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final currentUri = Uri.base;
-      final redirectUri = Uri(
-        host: currentUri.host,
-        scheme: currentUri.scheme,
-        port: currentUri.port,
-        path: '/redirect.html',
-      );
-      final authUrl =
-          'https://idp.rice.edu/idp/profile/cas/login?service=$redirectUri';
-      _popupWin = html.window.open(
-          authUrl, "Rice NetID Login", "width=800, height=900, scrollbars=yes");
-    });
-  }
-
   @override
   void initState() {
     super.initState();
+  }
+
+  void _attemptLogin() async {
+    // Display login page in WebView
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => InAppWebView(
+                initialUrlRequest: URLRequest(url: Uri.parse(casLoginURL)),
+                onUpdateVisitedHistory: (_, Uri? uri, __) {
+                  if (uri.toString().contains('ticket')) {
+                    var ticket = uri.toString().split('ticket=').last;
+                    _authenticateTicket(ticket);
+                  } else {
+                    // error handle
+                  }
+                })));
+  }
+
+  void _authenticateTicket(String ticket) async {
+    final response = await http.get(
+      Uri.parse('$authRequestUrl/auth'),
+      headers: {'ticket': ticket},
+    );
+    final result = json.decode(response.body);
+
+    if (result != null && result['success']) {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      // save this user's token and netid
+      sharedPreferences.setString(keyToken, result['user']['token']);
+      sharedPreferences.setString(keyNetID, result['user']['netid']);
+
+      // nav to homepage
+      Future.delayed(Duration.zero, () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
+      });
+    } else {
+      //error handle
+    }
   }
 
   @override
