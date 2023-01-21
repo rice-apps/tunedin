@@ -1,16 +1,23 @@
 import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
 import mongodb from 'mongodb';
+import User from './user';
 
 @Entity()
-class User extends BaseEntity {
+class Post extends BaseEntity {
 	@ObjectIdColumn()
 	id: typeof mongodb.ObjectId;
 
 	@Column()
-	username: string;
+	author: User;
 
 	@Column()
-	name: string;
+	numLikes: number;
+
+	@Column()
+	bodyText: string;
+
+	@Column()
+	musicURL: string;
 }
 
-export default User;
+export default Post;
