@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rice_music_sharing/screen/group_and_profile_screen.dart';
 import 'themes/themes.dart';
 import 'widgets/my_navigation_bar.dart';
 

@@ -5,7 +5,7 @@ import '../widgets/my_navigation_bar.dart';
 import '../widgets/outlined_button.dart';
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen(this.isGroup);
+  const ProfileScreen(this.isGroup, {super.key});
 
   final bool isGroup;
   @override
