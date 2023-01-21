@@ -66,51 +66,65 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ],
                   ),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Text(
+                "Will Rice College",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TunedInOutlinedButton(
+                    text: "Follow",
+                    onPressed: () => {},
+                    toggle: false,
+                  ),
                   const SizedBox(
-                    height: 25,
+                    width: 25,
                   ),
-                  Text(
-                    "Will Rice College",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium,
+                  TunedInOutlinedButton(
+                    text: "Join",
+                    onPressed: () => {},
+                    toggle: true,
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          TunedInOutlinedButton(
-                            text: "Follow",
-                            onPressed: () => {},
-                            toggle: false,
-                          ),
-                          const SizedBox(
-                            width: 25,
-                          ),
-                          TunedInOutlinedButton(
-                            text: "Join",
-                            onPressed: () => {},
-                            toggle: true,
-                          ),
-                        ],
-                      )),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
                     children: [
-                      Text(
-                        "200",
-                        style:
-                            Theme.of(context).textTheme.displaySmall?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                      ),
-                      Text(" Followers",
-                          style: Theme.of(context).textTheme.displaySmall)
+                      Text("208",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.w600,
+                              )),
+                      Text("Followers",
+                          style: Theme.of(context).textTheme.displaySmall),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text("80",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(fontWeight: FontWeight.w600)),
+                      Text("Following",
+                          style: Theme.of(context).textTheme.displaySmall),
                     ],
                   ),
                 ],
