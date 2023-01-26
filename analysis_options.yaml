@@ -1,4 +1,7 @@
 include: package:flutter_lints/flutter.yaml
 analyzer:
-    exclude:
-        - lib/models/*.g.dart
+  errors:
+    # ignore this for pubspec.yaml
+    asset_does_not_exist: ignore
+  exclude:
+    - lib/models/*.g.dart

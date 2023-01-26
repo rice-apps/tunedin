@@ -3,11 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screen/home_screen.dart';
 import 'screen/login_screen.dart';
 import 'themes/themes.dart';
-import 'widgets/my_navigation_bar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+// SharedPreferences keys
 const keyToken = 'token';
-const keyNetID = 'netid';
+const keyUsername = 'username';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
 
   Future<bool> get loggedIn async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
     var token = sharedPreferences.get(keyToken);
     return token != null;
   }
@@ -29,21 +30,17 @@ class MyApp extends StatelessWidget {
       theme: Themes.darkTheme,
       title: 'Welcome to TunedIn',
       home: Scaffold(
-          bottomNavigationBar: const MyNavigationBar(),
-          appBar: AppBar(
-            title: const Text('Welcome to TunedIn'),
-          ),
           body: FutureBuilder(
-            future: loggedIn,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return const CircularProgressIndicator();
-              if (snapshot.data == true) {
-                return const HomeScreen();
-              } else {
-                return const LoginScreen();
-              }
-            },
-          )),
+        future: loggedIn,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return const CircularProgressIndicator();
+          if (snapshot.data == true) {
+            return const HomeScreen();
+          } else {
+            return const LoginScreen();
+          }
+        },
+      )),
     );
   }
 }

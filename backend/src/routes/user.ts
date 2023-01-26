@@ -24,7 +24,7 @@ router.get('/:username', async (ctx, next) => {
 router.put('/:username', async (ctx, next) => {
 	const user = new User();
 	user.username = ctx.params.username;
-	user.name = 'John Doe';
+	user.displayname = 'John Doe';
 	await user.save();
 	ctx.body = user;
 });

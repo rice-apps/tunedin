@@ -7,24 +7,37 @@ class UserModel {
   String? userName;
 
   List<UserModel>? following;
+  List<UserModel>? followers;
 
-  UserModel({
-    required this.netID,
-    required this.displayName,
-    required this.userName,
-    required this.following,
-  });
+  String? token;
+
+  UserModel(
+      {required this.netID,
+      required this.displayName,
+      required this.userName,
+      required this.following,
+      required this.followers,
+      required this.token});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-        netID: json['netID'],
-        displayName: json['displayName'],
-        userName: json['userName'],
-        following: json['following']);
+        netID: json['netid'],
+        displayName: json['displayname'],
+        userName: json['username'],
+        following: json['following'],
+        followers: json['followers'],
+        token: json['token']);
   }
 
-  Map<String, dynamic> toJson() =>
-      {'name': displayName, 'userName': userName, 'following': following};
+  Map<String, dynamic> toJson() => {
+        'netid': netID,
+        'displayname': displayName,
+        'username': userName,
+        'following': following,
+        'followers': followers,
+        'token': token
+      };
+
   void followUser(UserModel targetUser) {
     following?.add(targetUser);
   }

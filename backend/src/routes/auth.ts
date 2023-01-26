@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import xml2js from 'xml2js';
 import { stripPrefix } from 'xml2js/lib/processors';
 
-import { CAS_SERVICE_URL, JWT_SECRET } from '../../config';
+import { CAS_SERVICE_URL, JWT_SECRET } from '../config';
 
 /**
  * Parser used for XML response by CAS
@@ -48,13 +48,14 @@ router.get('/', async (ctx, next) => {
 		});
 
 		if (!user) {
-			// Create user + redirect to onboarding
+			// Create user (+ redirect to onboarding on frontend?)
 			user = new User();
 			user.netid = netid;
+			user.username = null;
 			await user.save();
 		}
 
-		// Get a new token for the user
+		// Get a new jwt token for the user
 		const token = createToken(user);
 		user.token = token;
 		await user.save();
@@ -63,7 +64,7 @@ router.get('/', async (ctx, next) => {
 			success: true,
 			message: 'CAS authentication success',
 			user: {
-				netid: user.netid,
+				username: user.username,
 				token: token,
 			},
 		};

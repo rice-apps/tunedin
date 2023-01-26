@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '../.env' });
+
 export const MONGODB_HOST = process.env.MONGODB_HOST;
 export const MONGODB_USER = process.env.MONGODB_USER;
 export const MONGODB_PASSWORD = process.env.MONGODB_PASSWORD;
