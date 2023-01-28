@@ -23,11 +23,28 @@ router.get('/:handle', async (ctx, next) => {
 	ctx.body = user;
 });
 
-//Create a new user
-router.put('/:handle', async (ctx, next) => {
+//Create a new user with required handle and display name
+router.put('/newuser/:handle/:displayname', async (ctx, next) => {
+	console.log("new user route");
 	const user = new User();
 	user.handle = ctx.params.handle;
-	user.displayname = 'John Doe';
+	user.displayname = ctx.params.displayname;
+	await user.save();
+	ctx.body = user;
+});
+
+//Change displayname by handle
+router.put('/change/:handle/:displayname', async (ctx, next) => {
+	console.log("change dname route");
+
+	const user = await User.findOneBy({
+		handle: ctx.params.handle,
+	});
+	if (user === null) {
+		ctx.status = 404;
+		return;
+	}
+	user.displayname = ctx.params.displayname;
 	await user.save();
 	ctx.body = user;
 });

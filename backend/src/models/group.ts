@@ -24,16 +24,14 @@ class Group extends BaseEntity {
 	description: string;
     
 	//Relation for a collection of users that follow the group
-	@ManyToMany(() => User)
-	@JoinTable()
+
+	@Column()
 	followers: User[];
-    
-    @ManyToMany(() => User)
-	@JoinTable()
+
+	@Column()
 	members: User[];
 
-    @ManyToMany(() => User)
-	@JoinTable()
+	@Column()
 	timeline: mongodb.ObjectId[];
 }
 

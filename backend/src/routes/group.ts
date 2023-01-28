@@ -25,14 +25,23 @@ router.get('/:grouphandle', async (ctx, next) => {
 
 
 //Create a new group with required group handle and display name.
-router.put('/:grouphandle/:displayname', async (ctx, next) => {
+router.put('/:grouphandle/:displayname/:creatorhandle', async (ctx, next) => {
+	// once auth is set up, fix this to use object id provided by auth info.
+	const user = await User.findOneBy({
+		handle: ctx.params.creatorhandle,
+	});
+	if (user === null) {
+		console.log("This user does not exist.");
+		ctx.status = 404;
+		return;
+	}
 	const group = new Group();
 	group.handle = ctx.params.grouphandle;
 	group.displayname = ctx.params.displayname;
 	//Create new user array for followers and members.
-	group.followers = [null];
-	group.members = [null];
-	group.timeline = [null];
+	group.followers = [];
+	group.members = [user];
+	group.timeline = [];
 	await group.save();
 	ctx.body = group;
 });
