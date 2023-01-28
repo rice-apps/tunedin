@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../widgets/my_navigation_bar.dart';
 import '../widgets/outlined_button.dart';
 
 class ProfileScreen extends StatefulWidget {
