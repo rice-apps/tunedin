@@ -81,4 +81,11 @@ router.get('/callback', async (ctx, next) => {
 	}, (expires_in / 2) * 1000);
 });
 
+//Add a route for searching for a track on spotify API
+router.get('/search/:query', async (ctx, next) => {
+	const query = ctx.body.query;
+	
+	
+});
+
 export default router;
