@@ -28,7 +28,9 @@ class MyApp extends StatelessWidget {
           return FloatingActionButton(
             onPressed: () {
               showModalBottomSheet(
-                  context: context, builder: (_) => ShareModal());
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (_) => ShareModal());
             },
             child: const Icon(Icons.add),
             backgroundColor: Colors.blue,
