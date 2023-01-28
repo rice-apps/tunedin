@@ -25,10 +25,8 @@ mixin _$PostModel {
   int get numLikes => throw _privateConstructorUsedError;
   set numLikes(int value) => throw _privateConstructorUsedError;
   String get bodyText => throw _privateConstructorUsedError;
-  set bodyText(String value) =>
-      throw _privateConstructorUsedError; // required var comments,
-  String get musicURL =>
-      throw _privateConstructorUsedError; // required var comments,
+  set bodyText(String value) => throw _privateConstructorUsedError;
+  String get musicURL => throw _privateConstructorUsedError;
   set musicURL(String value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -149,7 +147,6 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
   int numLikes;
   @override
   String bodyText;
-// required var comments,
   @override
   String musicURL;
 
@@ -202,8 +199,8 @@ abstract class _PostModel implements PostModel {
   @override
   String get bodyText;
   set bodyText(String value);
-  @override // required var comments,
-  String get musicURL; // required var comments,
+  @override
+  String get musicURL;
   set musicURL(String value);
   @override
   @JsonKey(ignore: true)
