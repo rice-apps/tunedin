@@ -49,22 +49,6 @@ class LoginScreenState extends State<LoginScreen> {
                       useShouldOverrideUrlLoading: true,
                     ),
                   ),
-                  // onUpdateVisitedHistory: (_, Uri? uri, __) {
-                  //   if (uri.toString().contains('ticket')) {
-                  //     Future.delayed(Duration.zero, () {
-                  //       Navigator.pushAndRemoveUntil(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) =>
-                  //                   const CircularProgressIndicator()),
-                  //           (Route<dynamic> route) => false);
-                  //     });
-                  //     var ticket = uri.toString().split('ticket=').last;
-                  //     _authenticateTicket(ticket);
-                  //   } else {
-                  //     // error handle -- display error page
-                  //   }
-                  // },
                   shouldOverrideUrlLoading:
                       (controller, navigationAction) async {
                     final uri = navigationAction.request.url!;
@@ -74,6 +58,7 @@ class LoginScreenState extends State<LoginScreen> {
                       return NavigationActionPolicy.CANCEL;
                     } else {
                       // error handle -- display error page
+                      return NavigationActionPolicy.ALLOW;
                     }
                   },
                 )));
