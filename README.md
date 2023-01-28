@@ -26,7 +26,7 @@ npm run fix
 
 Developers:
 
-- Ahmed Alcassab
+- Ahmed Hisham
 - Anya Gu
 - Daniel Cufino
 - Michael Ngo
