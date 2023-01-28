@@ -37,10 +37,10 @@ class PostSongDetails extends StatelessWidget {
               icon: Icons.play_arrow,
               text: "Listen",
               onPressed: () async {
-                //const spotifyUrl = 'https://open.spotify.com/playlist/37i9dQZF1DWX5ZOsG2Ogi1?si=41c6a392cf7d4a2b';
-                final Uri _url = Uri.parse('https://youtu.be/98WtmW-lfeE');
+                const spotifyUrl = 'https://open.spotify.com/playlist/37i9dQZF1DWX5ZOsG2Ogi1?si=41c6a392cf7d4a2b';
+                final Uri _url = Uri.parse(spotifyUrl);
                 if (await canLaunchUrl(_url)) {
-                  launchUrl(_url);
+                  launchUrl(_url, mode: LaunchMode.externalApplication);
                 }
               },
             ),
