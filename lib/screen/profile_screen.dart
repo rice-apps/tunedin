@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const MyNavigationBar(),
+      // bottomNavigationBar: const MyNavigationBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(children: [
         SvgPicture.asset(
