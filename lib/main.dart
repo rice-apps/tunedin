@@ -19,9 +19,7 @@ class MyApp extends StatelessWidget {
 
   Future<bool> get loggedIn async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
-    var token = sharedPreferences.get(keyToken);
-    return token != null;
+    return sharedPreferences.containsKey(keyToken);
   }
 
   @override
@@ -33,7 +31,7 @@ class MyApp extends StatelessWidget {
           body: FutureBuilder(
         future: loggedIn,
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return const CircularProgressIndicator();
+          if (!snapshot.hasData) return const SizedBox();
           if (snapshot.data == true) {
             return const HomeScreen();
           } else {

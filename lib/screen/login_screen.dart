@@ -14,8 +14,8 @@ const keyToken = 'token';
 const keyUsername = 'username';
 
 String backendUrl = Platform.isAndroid
-    ? dotenv.get('BACKEND_URL')
-    : dotenv.get('BACKEND_URL_ANDROID');
+    ? dotenv.get('BACKEND_URL_ANDROID')
+    : dotenv.get('BACKEND_URL');
 
 var casServiceUrl = dotenv.get('CAS_SERVICE_URL');
 
@@ -43,15 +43,40 @@ class LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
             builder: (context) => InAppWebView(
-                initialUrlRequest: URLRequest(url: Uri.parse(casLoginURL)),
-                onUpdateVisitedHistory: (_, Uri? uri, __) {
-                  if (uri.toString().contains('ticket')) {
-                    var ticket = uri.toString().split('ticket=').last;
-                    _authenticateTicket(ticket);
-                  } else {
-                    // error handle -- display error page
-                  }
-                })));
+                  initialUrlRequest: URLRequest(url: Uri.parse(casLoginURL)),
+                  initialOptions: InAppWebViewGroupOptions(
+                    crossPlatform: InAppWebViewOptions(
+                      useShouldOverrideUrlLoading: true,
+                    ),
+                  ),
+                  // onUpdateVisitedHistory: (_, Uri? uri, __) {
+                  //   if (uri.toString().contains('ticket')) {
+                  //     Future.delayed(Duration.zero, () {
+                  //       Navigator.pushAndRemoveUntil(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (context) =>
+                  //                   const CircularProgressIndicator()),
+                  //           (Route<dynamic> route) => false);
+                  //     });
+                  //     var ticket = uri.toString().split('ticket=').last;
+                  //     _authenticateTicket(ticket);
+                  //   } else {
+                  //     // error handle -- display error page
+                  //   }
+                  // },
+                  shouldOverrideUrlLoading:
+                      (controller, navigationAction) async {
+                    final uri = navigationAction.request.url!;
+                    if (uri.toString().contains('ticket')) {
+                      var ticket = uri.toString().split('ticket=').last;
+                      _authenticateTicket(ticket);
+                      return NavigationActionPolicy.CANCEL;
+                    } else {
+                      // error handle -- display error page
+                    }
+                  },
+                )));
   }
 
   void _authenticateTicket(String ticket) async {
@@ -78,7 +103,13 @@ class LoginScreenState extends State<LoginScreen> {
               (Route<dynamic> route) => false);
         });
       } else {
-        // initiate onboarding flow
+        // initiate onboarding flow -- for now just show home page :)
+        Future.delayed(Duration.zero, () {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              (Route<dynamic> route) => false);
+        });
       }
     } else {
       // error handle -- display error page
