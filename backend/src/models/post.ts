@@ -1,4 +1,4 @@
-import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, ObjectIdColumn, Column, BaseEntity, ManyToMany, JoinTable } from 'typeorm';
 import mongodb from 'mongodb';
 import User from './user';
 
@@ -18,6 +18,10 @@ class Post extends BaseEntity {
 
 	@Column()
 	musicURL: string;
+
+	@ManyToMany(() => User)
+	@JoinTable()
+	likedBy: User[];
 }
 
 export default Post;

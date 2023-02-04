@@ -1,5 +1,6 @@
 import Router from '@koa/router';
 import Post from '../models/post';
+import User from '../models/user';
 import mongodb from 'mongodb';
 import bodyParser from 'koa-bodyparser';
 
@@ -44,19 +45,25 @@ router.post('/:postID/like', async (ctx, next) => {
 		ctx.status = 404;
 		return;
 	}
-	post.numLikes += 1;
-	await post.save();
-	ctx.body = post;
-});
-router.post('/:postID/unlike', async (ctx, next) => {
-	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
-	if (post === null) {
-		ctx.status = 404;
-		return;
+	// currently, we have no way of identifying based off the request given
+	// so we will just use the username parameter to identify the user
+	if (ctx.params.username) {
+		const user = await User.findOneBy({
+			username: ctx.params.username,
+		});
+		if (user === null) {
+			ctx.status = 404;
+			return;
+		}
+		if (ctx.params.unlike == "true") {
+			// if they unlike the post, remove them from the likedBy array
+			// this covers the case where they have not liked the post yet
+			post.likedBy = post.likedBy.filter((u) => u.id !== user.id);
+		} else { 
+			post.likedBy.push(user);
+		}
+		await post.save()
 	}
-	post.numLikes -= 1;
-	await post.save();
-	ctx.body = post;
 });
 
 router.delete('/', async (ctx, next) => {
