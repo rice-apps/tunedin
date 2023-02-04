@@ -6,10 +6,17 @@ import '../widgets/outlined_button.dart';
 import '../widgets/single_comment.dart';
 
 class CommentsScreen extends StatefulWidget {
-  State<CommentsScreen> createState() => _CommentWidgetState();
+  @override
+  State<CommentsScreen> createState() =>
+      _CommentWidgetState("I haven't listened to this song in ages", 0, true);
 }
 
 class _CommentWidgetState extends State<CommentsScreen> {
+  _CommentWidgetState(this.comment, this.numLikes, this.isNotLiked);
+
+  String comment;
+  int numLikes;
+  bool isNotLiked; // if you liked this comment already
   // @override
   // Widget build(BuildContext context) {
   //   return Scaffold(
@@ -18,17 +25,10 @@ class _CommentWidgetState extends State<CommentsScreen> {
   //       body: Stack());
   // }
 
-  int _likes = 0;
-  bool _isNotLiked = true;
-
   void _onLikeTapped() {
     setState(() {
-      if (_isNotLiked) {
-        _likes = _likes + 1;
-      } else {
-        _likes = _likes - 1;
-      }
-      _isNotLiked = !_isNotLiked;
+      numLikes = isNotLiked ? numLikes + 1 : numLikes - 1;
+      isNotLiked = !isNotLiked;
     });
   }
 
@@ -63,8 +63,8 @@ class _CommentWidgetState extends State<CommentsScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  "I haven't listened to this song in ages.",
+                Text(
+                  comment,
                 ),
                 const SizedBox(
                   height: 5,
@@ -78,11 +78,10 @@ class _CommentWidgetState extends State<CommentsScreen> {
                       icon: Stack(
                         children: [
                           Icon(Icons.favorite,
-                              color: _isNotLiked
-                                  ? Colors.transparent
-                                  : Colors.red),
+                              color:
+                                  isNotLiked ? Colors.transparent : Colors.red),
                           Icon(Icons.favorite_border,
-                              color: _isNotLiked ? Colors.black : Colors.red),
+                              color: isNotLiked ? Colors.black : Colors.red),
                         ],
                       ),
                       onPressed: () {
@@ -92,7 +91,7 @@ class _CommentWidgetState extends State<CommentsScreen> {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(_likes.toString()),
+                    Text(numLikes.toString()),
                     const SizedBox(
                       width: 10,
                     ),
