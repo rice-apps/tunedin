@@ -4,4 +4,4 @@ analyzer:
     # ignore this for pubspec.yaml
     asset_does_not_exist: ignore
   exclude:
-    - lib/models/*.g.dart
+    - lib/data/models/*.g.dart

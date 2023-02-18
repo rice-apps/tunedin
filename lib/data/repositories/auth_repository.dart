@@ -16,6 +16,17 @@ class AuthRepository {
 
   Client client = Client();
 
+  Future<String?> get _token async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(keyToken);
+    if (token != null) {
+      return token;
+    } else {
+      // how to deal with no token
+      return null;
+    }
+  }
+
   Future<void> signIn({required String ticket}) async {
     final response = await client.get(
       Uri.parse('$baseUrl/auth'),
@@ -39,7 +50,10 @@ class AuthRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? username = prefs.getString(keyUsername);
     if (username != null) {
-      final response = await client.get(Uri.parse('$baseUrl/users/$username'));
+      final response =
+          await client.get(Uri.parse('$baseUrl/users/$username'), headers: {
+        'Authorization': 'Bearer $_token',
+      });
       final result = json.decode(response.body);
       return UserModel.fromJson(result['user']);
     } else {

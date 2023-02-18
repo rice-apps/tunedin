@@ -28,9 +28,6 @@ class User extends BaseEntity {
 
 	@ManyToMany(() => User, (user) => user.following)
 	followers: User[];
-
-	@Column()
-	token: string;
 }
 
 export default User;

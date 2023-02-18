@@ -74,9 +74,6 @@ class LoginButtonState extends ConsumerState<LoginButton> {
 
   @override
   Widget build(BuildContext context) {
-    // watch and rebuild when the state changes
-    final AsyncValue<void> state = ref.watch(loginScreenControllerProvider);
-
     void attemptLogin() async {
       // Display login page in WebView
       Navigator.push(
