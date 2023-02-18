@@ -3,9 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/my_navigation_bar.dart';
 import '../widgets/outlined_button.dart';
+import '../models/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final UserModel userModel;
+  const ProfileScreen({Key? key, required this.userModel}) : super(key: key);
+  //const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -14,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  late UserModel _userModel;
 
   @override
   void initState() {
@@ -22,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     _tabController.addListener(() {
       setState(() {});
     });
+    _userModel = widget.userModel;
   }
 
   @override
@@ -72,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 height: 25,
               ),
               Text(
-                "Will Rice College",
+                _userModel.userName ?? '',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
