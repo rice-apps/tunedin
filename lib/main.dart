@@ -30,7 +30,10 @@ class MyApp extends StatelessWidget {
               showModalBottomSheet(
                   isScrollControlled: true,
                   context: context,
-                  builder: (_) => ShareModal());
+                  builder: (sheetContext) => MediaQuery(
+                      data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+                      child: SafeArea(child: ShareModal()))
+              );
             },
             child: const Icon(Icons.add),
             backgroundColor: Colors.blue,
