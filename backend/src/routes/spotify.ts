@@ -9,7 +9,6 @@ var spotifyApi = new SpotifyWebApi({
 	redirectUri: process.env.REDIRECT_URI,
 });
 
-
 const scopes = [
 	'ugc-image-upload',
 	'user-read-playback-state',
@@ -64,7 +63,7 @@ router.get('/callback', async (ctx, next) => {
 	const access_token = authData.body['access_token'];
 	const refresh_token = authData.body['refresh_token'];
 	const expires_in = authData.body['expires_in'];
-	
+
 	spotifyApi.setAccessToken(access_token);
 	spotifyApi.setRefreshToken(refresh_token);
 
@@ -76,9 +75,9 @@ router.get('/callback', async (ctx, next) => {
 
 	ctx.body = 'Success! You can now close the window.';
 
-	//Refresh the access token before it expires
+	// Refresh the access token before it expires.
 	setInterval(async () => {
-		console.log("This just exectued");
+		console.log('This just exectued');
 		const data = await spotifyApi.refreshAccessToken();
 		const access_token = data.body['access_token'];
 
@@ -86,16 +85,14 @@ router.get('/callback', async (ctx, next) => {
 	}, (expires_in / 2) * 1000);
 });
 
-//Add a route for searching for a track on spotify API
+// Add a route for searching for a track on Spotify API.
 router.get('/search/:query', async (ctx, next) => {
 	const query = ctx.params.query;
 	var queryResult;
 	try {
 		queryResult = await spotifyApi.searchTracks(query);
-
 	} catch (error) {
-		console.log("PRINTING ERROR FROM API CALL");
-		console.log(error);
+		console.log(`Received the following error from query: \n ${error}`);
 	}
 	const firstPage = queryResult.body.tracks.items;
 
