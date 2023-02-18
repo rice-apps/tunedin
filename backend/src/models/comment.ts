@@ -3,7 +3,7 @@ import mongodb from 'mongodb';
 import User from './user';
 
 @Entity()
-class Post extends BaseEntity {
+class Comment extends BaseEntity {
 	@ObjectIdColumn()
 	id: typeof mongodb.ObjectId;
 
@@ -16,11 +16,11 @@ class Post extends BaseEntity {
 	@Column()
 	bodyText: string;
 
-	@Column()
-	musicURL: string;
+	// @Column()
+	// postID: typeof mongodb.ObjectId;
 
 	@Column()
-	comments: typeof mongodb.ObjectId;
+	parentCommentID: typeof mongodb.ObjectId;
 }
 
-export default Post;
+export default Comment;
