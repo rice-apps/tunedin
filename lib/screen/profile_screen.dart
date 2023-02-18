@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/my_navigation_bar.dart';
 import '../widgets/outlined_button.dart';
 import '../widgets/playlist_card.dart';
+import '../widgets/tab_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const MyNavigationBar(),
+      // bottomNavigationBar: const MyNavigationBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(children: [
         SvgPicture.asset(
@@ -133,34 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ],
               ),
               const SizedBox(height: 10),
-              DecoratedBox(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Color(0xFF404663),
-                      width: 2,
-                    ),
-                  ),
-                ),
-                child: TabBar(
-                  indicatorColor: Theme.of(context).colorScheme.onBackground,
-                  labelColor: Theme.of(context).colorScheme.onBackground,
-                  unselectedLabelColor: const Color(0xFF404663),
-                  controller: _tabController,
-                  tabs: const [
-                    Tab(
-                      icon: Icon(
-                        Icons.music_note,
-                      ),
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.history,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              TabBars(tabController: _tabController,),
               const SizedBox(height: 25),
               <Widget>[
                 Column(

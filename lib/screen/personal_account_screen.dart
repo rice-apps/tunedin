@@ -35,7 +35,7 @@ class _PersonalAccountScreen extends State<PersonalAccountScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const MyNavigationBar(),
+      // bottomNavigationBar: const MyNavigationBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(children: [
         SvgPicture.asset(
@@ -118,7 +118,7 @@ class _PersonalAccountScreen extends State<PersonalAccountScreen>
                 ],
               ),
               const SizedBox(height: 10),
-              TabBars(),
+              TabBars(tabController: _tabController,),
               const SizedBox(height: 25),
               <Widget>[
                 Column(

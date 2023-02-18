@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TabBars extends StatelessWidget {
-  TabBars({Key? key}) : super(key: key);
+  TabBars({Key? key, required this.tabController}) : super(key: key);
 
   late TabController tabController;
-
-  TabBars({this.tabController});
 
   @override
   Widget build(BuildContext context) {
