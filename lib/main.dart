@@ -27,13 +27,13 @@ class MyApp extends StatelessWidget {
         floatingActionButton: Builder(builder: (context) {
           return FloatingActionButton(
             onPressed: () {
-              showModalBottomSheet(
+              showModalBottomSheet<dynamic>(
                   isScrollControlled: true,
                   context: context,
                   builder: (sheetContext) => MediaQuery(
-                      data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
-                      child: SafeArea(child: ShareModal()))
-              );
+                      data: MediaQueryData.fromWindow(
+                          WidgetsBinding.instance.window),
+                      child: SafeArea(child: ShareModal())));
             },
             child: const Icon(Icons.add),
             backgroundColor: Colors.blue,
