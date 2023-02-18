@@ -28,7 +28,7 @@ dependencies:
   flutter_riverpod: ^2.1.1
   cupertino_icons: ^1.0.5
   freezed_annotation: ^2.2.0
-  json_annotation: ^4.7.0
+  json_annotation: ^4.8.0
   image_stack: ^2.1.1
   flutter_svg: ^1.1.6
   http: ^0.13.5
@@ -37,6 +37,7 @@ dependencies:
   webview_flutter: ^4.0.2
   flutter_inappwebview: ^5.7.2+3
   flutter_dotenv: ^5.0.2
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:
@@ -69,7 +70,6 @@ flutter:
   assets:
     - .env
     - assets/
-    - web/static.html
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

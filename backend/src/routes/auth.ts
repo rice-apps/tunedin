@@ -48,10 +48,9 @@ router.get('/', async (ctx, next) => {
 		});
 
 		if (!user) {
-			// Create user (+ redirect to onboarding on frontend?)
+			// Create user
 			user = new User();
 			user.netid = netid;
-			user.username = null;
 			await user.save();
 		}
 
@@ -64,7 +63,7 @@ router.get('/', async (ctx, next) => {
 			success: true,
 			message: 'CAS authentication success',
 			user: {
-				username: user.username,
+				netid: user.netid,
 				token: token,
 			},
 		};

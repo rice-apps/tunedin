@@ -5,10 +5,7 @@ import 'screen/home_screen.dart';
 import 'screen/login_screen.dart';
 import 'themes/themes.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-// SharedPreferences keys
-const keyToken = 'token';
-const keyUsername = 'username';
+import '../constants.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
