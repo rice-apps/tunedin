@@ -55,12 +55,12 @@ router.post('/:postID/like', async (ctx, next) => {
 			ctx.status = 404;
 			return;
 		}
-		if (ctx.params.unlike == "true") {
+		if (ctx.params.dir === 1) {
+		    post.likedBy.push(user);
+		} else {
 			// if they unlike the post, remove them from the likedBy array
 			// this covers the case where they have not liked the post yet
 			post.likedBy = post.likedBy.filter((u) => u.id !== user.id);
-		} else { 
-			post.likedBy.push(user);
 		}
 		await post.save()
 	}
