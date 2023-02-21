@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../widgets/outlined_button.dart';
 import '../widgets/playlist_card.dart';
 import '../widgets/profile_widgets.dart';
