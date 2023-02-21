@@ -1,12 +1,12 @@
-import { Entity, ObjectIdColumn, ObjectID, Column, BaseEntity } from 'typeorm';
-import db from '../db';
+import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
+import mongodb from 'mongodb';
 
 @Entity()
 class User extends BaseEntity {
 	@ObjectIdColumn()
-	id: typeof ObjectID;
+	id: typeof mongodb.ObjectId;
 
-	@Column()
+	@Column({ unique: true })
 	username: string;
 
 	@Column()

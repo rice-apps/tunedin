@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'screen/home_screen.dart';
 import 'themes/themes.dart';
 import 'widgets/my_navigation_bar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,9 +25,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Welcome to TunedIn'),
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+        body: const HomeScreen(),
       ),
     );
   }

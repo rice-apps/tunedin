@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rice_music_sharing/widgets/profile_widgets.dart';
 import '../widgets/outlined_button.dart';
 import '../widgets/playlist_card.dart';
-import '../widgets/profile_widgets.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class PersonalAccountScreen extends StatefulWidget {
+  const PersonalAccountScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<PersonalAccountScreen> createState() => _PersonalAccountScreen();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
+class _PersonalAccountScreen extends State<PersonalAccountScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
@@ -50,31 +50,37 @@ class _ProfileScreenState extends State<ProfileScreen>
             padding: const EdgeInsets.fromLTRB(20, 85, 20, 20),
             child: Column(children: [
               const ProfileHeader(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TunedInOutlinedButton(
-                    text: "Follow",
-                    onPressed: () => {},
-                    toggle: false,
-                  ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  TunedInOutlinedButton(
-                    text: "Join",
-                    onPressed: () => {},
-                    toggle: true,
-                  ),
-                ],
+              TunedInOutlinedButton(
+                text: "Edit Profile",
+                onPressed: () => {},
+                toggle: false,
               ),
               const SizedBox(height: 10),
-              const FollowCounts(followers: 200),
+              const FollowCounts(followers: 200, following: 200),
               const SizedBox(height: 10),
-              TabBars(tabController: _tabController, isPersonal: false),
+              TabBars(
+                tabController: _tabController,
+                isPersonal: true,
+              ),
               const SizedBox(height: 25),
               <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Label(name: "Songs", count: "120"),
+                    PlaylistCard(),
+                    SizedBox(height: 25),
+                    Label(name: "Playlists", count: "8"),
+                    PlaylistCard(),
+                    PlaylistCard(),
+                    PlaylistCard(),
+                    PlaylistCard(),
+                    PlaylistCard(),
+                    PlaylistCard(),
+                    PlaylistCard(),
+                    PlaylistCard(),
+                  ],
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
@@ -82,8 +88,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                     InfoCard(),
                     InfoCard(),
                     InfoCard(),
-                    InfoCard(),
                     SizedBox(height: 25),
+                    Label(name: "1 week ago", count: "4"),
+                    InfoCard(),
+                    InfoCard(),
+                    InfoCard(),
+                    InfoCard(),
                   ],
                 ),
               ][_tabController.index],
