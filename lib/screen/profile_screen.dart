@@ -5,7 +5,10 @@ import '../widgets/playlist_card.dart';
 import '../widgets/profile_widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({Key? key, required this.isGroupProfile})
+      : super(key: key);
+
+  final bool isGroupProfile;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -18,6 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       setState(() {});
@@ -51,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen>
             child: Column(children: [
               const ProfileHeader(),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TunedInOutlinedButton(
@@ -59,14 +63,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                     onPressed: () => {},
                     toggle: false,
                   ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  TunedInOutlinedButton(
-                    text: "Join",
-                    onPressed: () => {},
-                    toggle: true,
-                  ),
+                  if (widget.isGroupProfile)
+                    TunedInOutlinedButton(
+                      text: "Join",
+                      onPressed: () => {},
+                      toggle: false,
+                    )
                 ],
               ),
               const SizedBox(height: 10),
