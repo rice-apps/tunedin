@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../widgets/my_navigation_bar.dart';
+import 'package:rice_music_sharing/widgets/profile_widgets.dart';
 import '../widgets/outlined_button.dart';
 import '../widgets/playlist_card.dart';
-import '../widgets/tab_bar.dart';
 
 class PersonalAccountScreen extends StatefulWidget {
   const PersonalAccountScreen({Key? key}) : super(key: key);
@@ -35,7 +33,6 @@ class _PersonalAccountScreen extends State<PersonalAccountScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: const MyNavigationBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(children: [
         SvgPicture.asset(
@@ -52,73 +49,19 @@ class _PersonalAccountScreen extends State<PersonalAccountScreen>
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 85, 20, 20),
             child: Column(children: [
-              CircleAvatar(
-                foregroundImage: const NetworkImage(
-                  "https://picsum.photos/250?image=9",
-                ),
-                radius: 45,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        blurRadius: 40,
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Text(
-                "Olivia Malone",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(
-                height: 25,
-              ),
+              const ProfileHeader(),
               TunedInOutlinedButton(
                 text: "Edit Profile",
                 onPressed: () => {},
                 toggle: false,
               ),
               const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Text("208",
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              )),
-                      Text("Followers",
-                          style: Theme.of(context).textTheme.displaySmall),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text("80",
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(fontWeight: FontWeight.w600)),
-                      Text("Following",
-                          style: Theme.of(context).textTheme.displaySmall),
-                    ],
-                  ),
-                ],
-              ),
+              const FollowCounts(followers: 200, following: 200),
               const SizedBox(height: 10),
-              TabBars(tabController: _tabController,),
+              TabBars(
+                tabController: _tabController,
+                isPersonal: true,
+              ),
               const SizedBox(height: 25),
               <Widget>[
                 Column(
