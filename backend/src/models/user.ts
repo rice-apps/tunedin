@@ -6,7 +6,7 @@ class User extends BaseEntity {
 	@ObjectIdColumn()
 	id: typeof mongodb.ObjectId;
 
-	@Column()
+	@Column({ unique: true })
 	username: string;
 
 	@Column()
