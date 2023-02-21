@@ -21,12 +21,11 @@ class MyApp extends StatelessWidget {
       theme: Themes.darkTheme,
       title: 'Welcome to TunedIn',
       home: Scaffold(
-        bottomNavigationBar: const MyNavigationBar(),
-        appBar: AppBar(
-          title: const Text('Welcome to TunedIn'),
-        ),
-        body: const HomeScreen(),
-      ),
+          bottomNavigationBar: const MyNavigationBar(),
+          appBar: AppBar(
+            title: const Text('Welcome to TunedIn'),
+          ),
+          body: const HomeScreen()),
     );
   }
 }
