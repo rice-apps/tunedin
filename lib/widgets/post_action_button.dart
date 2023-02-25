@@ -43,8 +43,7 @@ class PostSongDetails extends StatelessWidget {
                 final Uri url = Uri.parse(spotifyUrl);
                 if (!await canLaunchUrl(url)) {
                   launchUrl(url, mode: LaunchMode.externalApplication);
-                }
-                else {
+                } else {
                   Fluttertoast.showToast(
                       msg: "Could not open Spotify link.",
                       toastLength: Toast.LENGTH_SHORT,
@@ -52,8 +51,7 @@ class PostSongDetails extends StatelessWidget {
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.red,
                       textColor: Colors.white,
-                      fontSize: 16.0
-                  );
+                      fontSize: 16.0);
                 }
               },
             ),
