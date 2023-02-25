@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         floatingActionButton: Builder(builder: (context) {
           return FloatingActionButton(
             onPressed: () {
-              showModalBottomSheet<dynamic>(
+              showModalBottomSheet(
                   isScrollControlled: true,
                   context: context,
                   builder: (sheetContext) => MediaQuery(
