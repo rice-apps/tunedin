@@ -41,7 +41,7 @@ class PostSongDetails extends StatelessWidget {
                 const spotifyUrl =
                     'https://open.spotify.com/playlist/37i9dQZF1DWX5ZOsG2Ogi1?si=41c6a392cf7d4a2b';
                 final Uri url = Uri.parse(spotifyUrl);
-                if (!await canLaunchUrl(url)) {
+                if (await canLaunchUrl(url)) {
                   launchUrl(url, mode: LaunchMode.externalApplication);
                 } else {
                   Fluttertoast.showToast(
