@@ -16,11 +16,8 @@ class Comment extends BaseEntity {
 	@Column()
 	bodyText: string;
 
-	// @Column()
-	// postID: typeof mongodb.ObjectId;
-
 	@Column()
-	parentCommentID: typeof mongodb.ObjectId;
+	likedBy: mongodb.ObjectId[];
 }
 
 export default Comment;

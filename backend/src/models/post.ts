@@ -1,4 +1,11 @@
-import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
+import {
+	Entity,
+	ObjectIdColumn,
+	Column,
+	BaseEntity,
+	ManyToMany,
+	JoinTable,
+} from 'typeorm';
 import mongodb from 'mongodb';
 import User from './user';
 
@@ -11,16 +18,16 @@ class Post extends BaseEntity {
 	author: User;
 
 	@Column()
-	numLikes: number;
-
-	@Column()
 	bodyText: string;
 
 	@Column()
 	musicURL: string;
 
 	@Column()
-	comments: typeof mongodb.ObjectId;
+	likedBy: mongodb.ObjectId[];
+
+	@Column()
+	comments: mongodb.ObjectId[];
 }
 
 export default Post;

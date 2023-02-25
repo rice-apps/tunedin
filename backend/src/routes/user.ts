@@ -24,6 +24,7 @@ router.get('/:username', async (ctx, next) => {
 router.put('/:username', async (ctx, next) => {
 	const user = new User();
 	user.username = ctx.params.username;
+	// add error handling for the same username
 	user.name = 'John Doe';
 	await user.save();
 	ctx.body = user;

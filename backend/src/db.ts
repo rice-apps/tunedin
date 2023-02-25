@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import User from './models/user';
 import Post from './models/post';
+import Comment from './models/comment';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -11,7 +12,7 @@ const db = new DataSource({
 	username: process.env.MONGODB_USER,
 	password: process.env.MONGODB_PASSWORD,
 	database: process.env.MONGODB_DB,
-	entities: [User, Post],
+	entities: [Comment, User, Post],
 	ssl: true,
 	authSource: 'admin',
 });
