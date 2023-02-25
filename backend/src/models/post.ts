@@ -18,6 +18,9 @@ class Post extends BaseEntity {
 
 	@Column()
 	musicURL: string;
+
+	@Column()
+	createdAt: Date;
 }
 
 export default Post;
