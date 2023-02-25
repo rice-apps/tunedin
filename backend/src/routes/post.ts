@@ -50,7 +50,7 @@ router.post('/:postID/like', async (ctx, next) => {
 	if (ctx.request.body.username) {
 		const user = await User.findOneBy({
 			username: ctx.request.body.username,
-		});s
+		});
 		if (user === null) {
 			ctx.status = 404;
 			return;
