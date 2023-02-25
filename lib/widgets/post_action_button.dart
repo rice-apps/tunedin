@@ -43,6 +43,9 @@ class PostSongDetails extends StatelessWidget {
                 if (await canLaunchUrl(url)) {
                   launchUrl(url, mode: LaunchMode.externalApplication);
                 }
+                else {
+                  throw 'Could not launch $spotifyUrl';
+                }
               },
             ),
             const SizedBox(width: 8),
