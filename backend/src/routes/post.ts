@@ -47,15 +47,15 @@ router.post('/:postID/like', async (ctx, next) => {
 	}
 	// currently, we have no way of identifying based off the request given
 	// so we will just use the username parameter to identify the user
-	if (ctx.params.username) {
+	if (ctx.request.body.username) {
 		const user = await User.findOneBy({
-			username: ctx.params.username,
-		});
+			username: ctx.request.body.username,
+		});s
 		if (user === null) {
 			ctx.status = 404;
 			return;
 		}
-		if (ctx.params.dir === 1) {
+		if (ctx.request.body.dir === 1) {
 		    post.likedBy.push(user);
 		} else {
 			// if they unlike the post, remove them from the likedBy array
