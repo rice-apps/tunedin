@@ -1,18 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rice_music_sharing/data/repositories/storage_repository.dart';
 import 'package:rice_music_sharing/screen/home_screen.dart';
 import 'package:rice_music_sharing/screen/login_screen_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../../constants.dart';
 
-var casServiceUrl = dotenv.get('CAS_SERVICE_URL');
-
 var casLoginURL =
-    'https://idp.rice.edu/idp/profile/cas/login?service=$casServiceUrl/';
+    'https://idp.rice.edu/idp/profile/cas/login?service=$backendURL/';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
@@ -20,9 +17,9 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void checkSignInStatus(AsyncValue<void> state) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      StorageRepository storage = StorageRepository();
 
-      if (prefs.getString(keyUsername) != null) {
+      if (await storage.readSecureData(keyUsername) != null) {
         // nav to homepage
         Future.delayed(Duration.zero, () {
           Navigator.pushAndRemoveUntil(

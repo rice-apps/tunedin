@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rice_music_sharing/data/repositories/storage_repository.dart';
 import 'screen/home_screen.dart';
 import 'screen/login_screen.dart';
 import 'themes/themes.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../constants.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -20,8 +18,8 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   Future<bool> get loggedIn async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.containsKey(keyToken);
+    final StorageRepository storageRepo = StorageRepository();
+    return storageRepo.containsKeyInSecureData(keyToken);
   }
 
   @override

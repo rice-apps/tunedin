@@ -9,6 +9,8 @@ import authRouter from './routes/auth';
 
 await db.initialize();
 
+const jwt = require('./jwt');
+
 const PORT = 3000;
 
 const app = new Koa();
@@ -16,6 +18,11 @@ const indexRouter = new Router();
 indexRouter.get('/', (ctx, next) => {
 	ctx.body = {};
 });
+
+app.use(authRouter.routes());
+app.use(authRouter.allowedMethods());
+
+app.use(jwt);
 
 app.use(indexRouter.routes());
 app.use(indexRouter.allowedMethods());
@@ -28,9 +35,6 @@ app.use(spotifyRouter.allowedMethods());
 
 app.use(postRouter.routes());
 app.use(postRouter.allowedMethods());
-
-app.use(authRouter.routes());
-app.use(authRouter.allowedMethods());
 
 app.listen(PORT);
 
