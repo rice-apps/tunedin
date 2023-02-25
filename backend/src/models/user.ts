@@ -12,7 +12,7 @@ class User extends BaseEntity {
 
 	@Column()
 	name: string;
-	
+
 	@Column()
 	savedPosts: mongodb.ObjectId[];
 }
