@@ -14,58 +14,46 @@ class ShareModalState extends State<ShareModal> {
   Widget build(BuildContext context) {
     return TunedInBottomSheet(
         builder: (sheetContext, pageContext, pushRoute) {
-          return TargetPickerPage(
-            // TODO: replace this temporary search page with Spotify search
-            sheetContext,
-            pageContext,
-            pushRoute,
-            getTargetName: (index) => 'Playlist',
-            getTargetIcon: (index) => const Icon(Icons.playlist_play),
-            buildTargetPage: (index) => TargetPickerPage(
-                // TODO: Display song at top of "Profile or Group" page
-                sheetContext,
-                pageContext,
-                pushRoute,
-                getTargetIcon: (target) => DecoratedBox(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF45495C),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(0 == target ? Icons.person : Icons.group),
-                    )),
-                getTargetName: (target) =>
-                    0 == target ? 'Your profile' : 'Group',
-                maxCount: 2,
-                showSearch: false,
-                buildTargetPage: (int index) {
-                  if (index == 1) {
-                    return ShareGroupCommentPage(
-                        // TODO: add this group selector page to bottom of ShareCommentPage, // TODO: Display song at top of ShareCommentPage
-                        sheetContext,
-                        getTargetName: (index) => 'Will Rice College',
-                        getTargetIcon: (index) => const Icon(Icons.school),
-                        maxCount: 10);
-                  } else {
-                    //   return TargetPickerPage(
-                    //       // TODO: add this group selector page to bottom of ShareCommentPage
-                    //       sheetContext,
-                    //       pageContext,
-                    //       pushRoute,
-                    //       maxCount: 10,
-                    //       getTargetName: (index) => 'Will Rice College',
-                    //       getTargetIcon: (index) => const Icon(Icons.school),
-                    //       buildTargetPage: (int index) {
-                    //         return ShareGroupCommentPage(
-                    //             sheetContext); // TODO: Display song at top of ShareCommentPage
-                    //       });
-                    // } else {
-                    return ShareCommentPage(
-                        sheetContext); // TODO: have this ShareCommentPage have an option to select group
-                  }
-                }),
-          );
+          return TargetPickerPage(sheetContext, pageContext, pushRoute,
+              getTargetName: (index) => 'Song',
+              getTargetIcon: (index) => const Icon(Icons.playlist_play),
+              showSong: false,
+              buildTargetPage: (index) => TargetPickerPage(
+                    // TODO: Display song at top of "Profile or Group" page
+                    sheetContext,
+                    pageContext,
+                    pushRoute,
+                    getTargetIcon: (target) => DecoratedBox(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF45495C),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Icon(0 == target ? Icons.person : Icons.group),
+                        )),
+                    getTargetName: (target) =>
+                        0 == target ? 'Your profile' : 'Group',
+                    maxCount: 2,
+                    showSearch: false,
+                    buildTargetPage: (int index) {
+                      if (index == 1) {
+                        return TargetPickerPage(
+                          sheetContext,
+                          pageContext,
+                          pushRoute,
+                          maxCount: 10,
+                          getTargetName: (index) => 'Will Rice College',
+                          getTargetIcon: (index) => const Icon(Icons.school),
+                          buildTargetPage: (int index) {
+                            return ShareCommentPage(sheetContext);
+                          },
+                        );
+                      } else {
+                        return ShareCommentPage(sheetContext);
+                      }
+                    },
+                  ));
         },
         title: 'Profile');
   }
@@ -80,18 +68,17 @@ class TargetPickerPage extends StatefulWidget {
   final BuildContext pageContext;
   final PushRouteBuilder pushRoute;
   final bool showSearch;
+  final bool showSong;
 
-  const TargetPickerPage(
-    this.sheetContext,
-    this.pageContext,
-    this.pushRoute, {
-    Key? key,
-    required this.getTargetName,
-    required this.getTargetIcon,
-    this.maxCount,
-    required this.buildTargetPage,
-    this.showSearch = true,
-  }) : super(key: key);
+  const TargetPickerPage(this.sheetContext, this.pageContext, this.pushRoute,
+      {Key? key,
+      required this.getTargetName,
+      required this.getTargetIcon,
+      this.maxCount,
+      required this.buildTargetPage,
+      this.showSearch = true,
+      this.showSong = true})
+      : super(key: key);
 
   @override
   State<TargetPickerPage> createState() => _TargetPickerPageState();
@@ -104,6 +91,32 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (widget.showSong)
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(height: 15),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    "https://picsum.photos/250?image=9",
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Text("Song",
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.w400,
+                        )),
+                const SizedBox(height: 2),
+                Text("Name",
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontWeight: FontWeight.w400,
+                        )),
+              ]),
         if (widget.showSearch)
           Container(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
@@ -112,7 +125,7 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
               style: Theme.of(context).textTheme.displayMedium,
               decoration: InputDecoration(
                 isDense: true,
-                hintText: 'Search Playlist',
+                hintText: 'Search Songs',
                 hintStyle: Theme.of(context)
                     .textTheme
                     .displayMedium
@@ -224,7 +237,7 @@ class ShareCommentPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-              Text("Playlist",
+              Text("Song",
                   style: Theme.of(context).textTheme.displayMedium?.copyWith(
                         fontWeight: FontWeight.w400,
                       )),
@@ -272,135 +285,6 @@ class ShareCommentPage extends StatelessWidget {
               onPressed: () {
                 // implement networking here
                 Navigator.of(sheetContext).pop();
-              },
-              child: const Text('Send'),
-            ),
-          );
-        }
-        return const SizedBox.shrink();
-      }),
-    ]);
-  }
-}
-
-class ShareGroupCommentPage extends StatefulWidget {
-  final BuildContext sheetContext;
-
-  final String Function(int index) getTargetName;
-  final Widget Function(int index) getTargetIcon;
-  final int? maxCount;
-
-  const ShareGroupCommentPage(this.sheetContext,
-      {Key? key,
-      required this.getTargetName,
-      required this.getTargetIcon,
-      this.maxCount})
-      : super(key: key);
-
-  @override
-  State<ShareGroupCommentPage> createState() => _ShareGroupCommentPageState();
-}
-
-class _ShareGroupCommentPageState extends State<ShareGroupCommentPage> {
-  int _selectedIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(height: 15),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  "https://picsum.photos/250?image=9",
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 15),
-              Text("Playlist",
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontWeight: FontWeight.w400,
-                      )),
-              const SizedBox(height: 2),
-              Text("Name",
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.w400,
-                      )),
-              const SizedBox(height: 15),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: TextField(
-                  style: Theme.of(context).textTheme.displaySmall,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 10,
-                  maxLength: 1000,
-                  decoration: InputDecoration(
-                      counterStyle: Theme.of(context).textTheme.displaySmall,
-                      hintText: 'Share your thought(s)...',
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .displayMedium
-                          ?.copyWith(color: Color(0xFF969BB5))),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      Expanded(
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.maxCount,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                  child: ListTile(
-                    title: Text(
-                      widget.getTargetName(index),
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.w400,
-                              ),
-                    ),
-                    leading: widget.getTargetIcon(index),
-                    trailing: Radio(
-                      value: index,
-                      groupValue: _selectedIndex,
-                      onChanged: (value) {
-                        if (value != null) {
-                          setState(() {
-                            _selectedIndex = value;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                );
-              })),
-      KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
-        if (!isKeyboardVisible) {
-          return Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              border: const Border(
-                top: BorderSide(
-                  width: 0.5,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-            child: ElevatedButton(
-              onPressed: () {
-                // implement networking here
-                Navigator.of(widget.sheetContext).pop();
               },
               child: const Text('Send'),
             ),
