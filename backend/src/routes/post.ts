@@ -2,6 +2,7 @@ import Router from '@koa/router';
 import Post from '../models/post';
 import mongodb from 'mongodb';
 import bodyParser from 'koa-bodyparser';
+import User from '../models/user';
 
 const router = new Router({
 	prefix: '/posts',
@@ -58,7 +59,17 @@ router.post('/:postID/unlike', async (ctx, next) => {
 	await post.save();
 	ctx.body = post;
 });
-
+router.post('/:postID/save', async (ctx, next) => {
+	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
+	if (post === null) {
+		ctx.status = 404;
+		return;
+	}
+	const user = null; //This is dependent on Auth to determine the author
+	user.savedPosts.push(post.id);
+	await user.save();
+	ctx.body = user.savedPosts;
+});
 router.delete('/', async (ctx, next) => {
 	const post = await Post.find();
 	ctx.body = await Post.remove(post);
