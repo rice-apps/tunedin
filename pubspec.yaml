@@ -32,6 +32,7 @@ dependencies:
   image_stack: ^2.1.1
   flutter_svg: ^1.1.5
   url_launcher: ^6.1.8
+  fluttertoast: ^8.2.1
 
 dev_dependencies:
   flutter_test:
