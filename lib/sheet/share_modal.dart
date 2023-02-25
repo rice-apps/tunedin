@@ -18,6 +18,7 @@ class ShareModalState extends State<ShareModal> {
             sheetContext,
             pageContext,
             pushRoute,
+            showSong: false,
             getTargetName: (index) => 'Song',
             getTargetIcon: (index) => const Icon(Icons.playlist_play),
             buildTargetPage: (index) => TargetPickerPage(
@@ -46,7 +47,6 @@ class ShareModalState extends State<ShareModal> {
                       pushRoute,
                       maxCount: 10,
                       showSearch: false,
-                      showGroupSearch: true,
                       getTargetName: (index) => 'Will Rice College',
                       getTargetIcon: (index) => const Icon(Icons.school),
                       buildTargetPage: (int index) {
@@ -73,7 +73,7 @@ class TargetPickerPage extends StatefulWidget {
   final BuildContext pageContext;
   final PushRouteBuilder pushRoute;
   final bool showSearch;
-  final bool showGroupSearch;
+  final bool showSong;
 
   const TargetPickerPage(
     this.sheetContext,
@@ -85,7 +85,7 @@ class TargetPickerPage extends StatefulWidget {
     this.maxCount,
     required this.buildTargetPage,
     this.showSearch = true,
-    this.showGroupSearch = false,
+    this.showSong = true,
   }) : super(key: key);
 
   @override
@@ -99,6 +99,41 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (widget.showSong)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 15),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.network(
+                  "https://picsum.photos/250?image=9",
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Column(
+                children: [
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text("Song",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                )),
+                  ),
+                  const SizedBox(height: 2),
+                  Text("Name",
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w400,
+                          )),
+                ],
+              ),
+            ],
+          ),
         if (widget.showSearch)
           Container(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
@@ -108,33 +143,6 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
               decoration: InputDecoration(
                 isDense: true,
                 hintText: 'Search Songs',
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .displayMedium
-                    ?.copyWith(color: Color(0xFFA1A9BC)),
-                prefixIcon: const Icon(Icons.search, color: Color(0xFFA1A9BC)),
-                filled: true,
-                fillColor: Color(0xFF45495C),
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Color(0xFF303449), width: 1),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Color(0xFF303449), width: 1),
-                ),
-              ),
-            ),
-          ),
-        if (widget.showGroupSearch)
-          Container(
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-            child: TextField(
-              keyboardType: TextInputType.text,
-              style: Theme.of(context).textTheme.displayMedium,
-              decoration: InputDecoration(
-                isDense: true,
-                hintText: 'Search Groups',
                 hintStyle: Theme.of(context)
                     .textTheme
                     .displayMedium
