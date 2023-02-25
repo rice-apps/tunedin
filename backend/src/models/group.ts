@@ -6,7 +6,7 @@ import {
 	ManyToMany,
 	JoinTable,
 } from 'typeorm';
-import User from './user'
+import User from './user';
 import mongodb from 'mongodb';
 
 @Entity()
@@ -19,10 +19,10 @@ class Group extends BaseEntity {
 
 	@Column()
 	displayname: string;
-    
+
 	@Column()
 	description: string;
-    
+
 	//Relation for a collection of users that follow the group
 
 	@Column()
@@ -36,4 +36,3 @@ class Group extends BaseEntity {
 }
 
 export default Group;
-

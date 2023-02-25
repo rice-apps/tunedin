@@ -23,7 +23,6 @@ router.get('/:grouphandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
-
 //Create a new group with required group handle and display name.
 router.put('/:grouphandle/:displayname/:creatorhandle', async (ctx, next) => {
 	// once auth is set up, fix this to use object id provided by auth info.
@@ -31,7 +30,7 @@ router.put('/:grouphandle/:displayname/:creatorhandle', async (ctx, next) => {
 		handle: ctx.params.creatorhandle,
 	});
 	if (user === null) {
-		console.log("This user does not exist.");
+		console.log('This user does not exist.');
 		ctx.status = 404;
 		return;
 	}
@@ -45,7 +44,6 @@ router.put('/:grouphandle/:displayname/:creatorhandle', async (ctx, next) => {
 	await group.save();
 	ctx.body = group;
 });
-
 
 // Add user to a group.
 router.put('/member/:grouphandle/:userhandle', async (ctx, next) => {
@@ -98,7 +96,7 @@ router.delete('/', async (ctx, next) => {
 
 // Delete group by handle.
 router.delete('/:grouphandle', async (ctx, next) => {
-	Group.delete({handle : ctx.params.grouphandle});
+	Group.delete({ handle: ctx.params.grouphandle });
 });
 
 //Delete user from group by handle
@@ -138,7 +136,9 @@ router.delete('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 		ctx.status = 404;
 		return;
 	}
-	group.followers = group.followers.filter((follower) => follower.id !== user.id);
+	group.followers = group.followers.filter(
+		(follower) => follower.id !== user.id
+	);
 	await group.save();
 	ctx.body = group;
 });

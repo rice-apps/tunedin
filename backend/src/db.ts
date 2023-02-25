@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import User from './models/user';
 import Post from './models/post';
-import Group from './models/group'
+import Group from './models/group';
 
 const db = new DataSource({
 	type: 'mongodb',

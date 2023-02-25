@@ -25,7 +25,7 @@ router.get('/:handle', async (ctx, next) => {
 
 //Create a new user with required handle and display name
 router.put('/newuser/:handle/:displayname', async (ctx, next) => {
-	console.log("new user route");
+	console.log('new user route');
 	const user = new User();
 	user.handle = ctx.params.handle;
 	user.displayname = ctx.params.displayname;
@@ -35,7 +35,7 @@ router.put('/newuser/:handle/:displayname', async (ctx, next) => {
 
 //Change displayname by handle
 router.put('/change/:handle/:displayname', async (ctx, next) => {
-	console.log("change dname route");
+	console.log('change dname route');
 
 	const user = await User.findOneBy({
 		handle: ctx.params.handle,
