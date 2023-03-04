@@ -20,6 +20,7 @@ class Themes {
           surfaceVariant: Color(0xFF303449),
           onSurfaceVariant: Colors.white,
         ),
+        canvasColor: const Color(0xFF171924),
         brightness: Brightness.dark,
         cardTheme: CardTheme(
             clipBehavior: Clip.antiAlias,

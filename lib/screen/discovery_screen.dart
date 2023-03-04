@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rice_music_sharing/widgets/my_navigation_bar.dart';
 import 'package:rice_music_sharing/widgets/outlined_button.dart';
 
 class DiscoveryScreen extends StatefulWidget {
@@ -31,7 +30,6 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const MyNavigationBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView(
         slivers: [

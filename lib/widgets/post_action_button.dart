@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PostSongDetails extends StatelessWidget {
   const PostSongDetails({super.key});
@@ -35,7 +37,23 @@ class PostSongDetails extends StatelessWidget {
             PostActionButton(
               icon: Icons.play_arrow,
               text: "Listen",
-              onPressed: () {},
+              onPressed: () async {
+                const spotifyUrl =
+                    'https://open.spotify.com/playlist/37i9dQZF1DWX5ZOsG2Ogi1?si=41c6a392cf7d4a2b';
+                final Uri url = Uri.parse(spotifyUrl);
+                if (await canLaunchUrl(url)) {
+                  launchUrl(url, mode: LaunchMode.externalApplication);
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Could not open Spotify link.",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                }
+              },
             ),
             const SizedBox(width: 8),
             PostActionButton(

@@ -20,7 +20,7 @@ class User extends BaseEntity {
 	username: string;
 
 	@Column()
-	displayname: string;
+	displayName: string;
 
 	@ManyToMany(() => User, (user) => user.followers)
 	@JoinTable()
