@@ -14,46 +14,53 @@ class ShareModalState extends State<ShareModal> {
   Widget build(BuildContext context) {
     return TunedInBottomSheet(
         builder: (sheetContext, pageContext, pushRoute) {
-          return TargetPickerPage(sheetContext, pageContext, pushRoute,
-              getTargetName: (index) => 'Song',
-              getTargetIcon: (index) => const Icon(Icons.playlist_play),
-              showSong: false,
-              buildTargetPage: (index) => TargetPickerPage(
-                    // TODO: Display song at top of "Profile or Group" page
-                    sheetContext,
-                    pageContext,
-                    pushRoute,
-                    getTargetIcon: (target) => DecoratedBox(
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF45495C),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Icon(0 == target ? Icons.person : Icons.group),
-                        )),
-                    getTargetName: (target) =>
-                        0 == target ? 'Your profile' : 'Group',
-                    maxCount: 2,
-                    showSearch: false,
-                    buildTargetPage: (int index) {
-                      if (index == 1) {
-                        return TargetPickerPage(
-                          sheetContext,
-                          pageContext,
-                          pushRoute,
-                          maxCount: 10,
-                          getTargetName: (index) => 'Will Rice College',
-                          getTargetIcon: (index) => const Icon(Icons.school),
-                          buildTargetPage: (int index) {
-                            return ShareCommentPage(sheetContext);
-                          },
-                        );
-                      } else {
+          return TargetPickerPage(
+            sheetContext,
+            pageContext,
+            pushRoute,
+            showSong: false,
+            showSongSearchHeader: true,
+            getTargetName: (index) => 'Song',
+            getTargetIcon: (index) => const Icon(Icons.playlist_play),
+            buildTargetPage: (index) => TargetPickerPage(
+                // TODO: Display song at top of "Profile or Group" page
+                sheetContext,
+                pageContext,
+                pushRoute,
+                getTargetIcon: (target) => DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF45495C),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(0 == target ? Icons.person : Icons.group),
+                    )),
+                getTargetName: (target) =>
+                    0 == target ? 'Your profile' : 'Group',
+                maxCount: 2,
+                showSearch: false,
+                buildTargetPage: (int index) {
+                  if (index == 1) {
+                    return TargetPickerPage(
+                      sheetContext,
+                      pageContext,
+                      pushRoute,
+                      maxCount: 10,
+                      showSearch: false,
+                      showChooseGroupHeader: true,
+                      getTargetName: (index) => 'Will Rice College',
+                      getTargetIcon: (index) => const Icon(Icons.school),
+                      buildTargetPage: (int index) {
                         return ShareCommentPage(sheetContext);
-                      }
-                    },
-                  ));
+                      },
+                    );
+                  } else {
+                    return ShareCommentPage(sheetContext);
+                  }
+                  // TODO: have this ShareCommentPage have an option to select group
+                }),
+          );
         },
         title: 'Profile');
   }
@@ -69,6 +76,8 @@ class TargetPickerPage extends StatefulWidget {
   final PushRouteBuilder pushRoute;
   final bool showSearch;
   final bool showSong;
+  final bool showSongSearchHeader;
+  final bool showChooseGroupHeader;
 
   const TargetPickerPage(this.sheetContext, this.pageContext, this.pushRoute,
       {Key? key,
@@ -77,7 +86,9 @@ class TargetPickerPage extends StatefulWidget {
       this.maxCount,
       required this.buildTargetPage,
       this.showSearch = true,
-      this.showSong = true})
+      this.showSong = true,
+      this.showSongSearchHeader = false,
+      this.showChooseGroupHeader = false})
       : super(key: key);
 
   @override
@@ -91,32 +102,68 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (widget.showSongSearchHeader)
+          Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Share a Song",
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
+              )),
+        if (widget.showChooseGroupHeader)
+          Text("Choose a Group",
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                  )),
         if (widget.showSong)
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(height: 15),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    "https://picsum.photos/250?image=9",
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Text("Song",
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          fontWeight: FontWeight.w400,
-                        )),
-                const SizedBox(height: 2),
-                Text("Name",
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.w400,
-                        )),
-              ]),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFF969BB5), width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 15),
+                    ClipRRect(
+                      // borderRadius: BorderRadius.circular(8.0),
+                      child: Image.network(
+                        "https://picsum.photos/250?image=9",
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Song Name",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                          Text("Artist",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                        ],
+                      ),
+                    )
+                  ]),
+            ),
+          ),
         if (widget.showSearch)
           Container(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
@@ -135,7 +182,7 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
                 fillColor: Color(0xFF45495C),
                 enabledBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Color(0xFF303449), width: 1),
+                  borderSide: BorderSide(color: Color(0xFF969BB5), width: 1),
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -226,26 +273,53 @@ class ShareCommentPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(height: 15),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  "https://picsum.photos/250?image=9",
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xFF969BB5), width: 1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 15),
+                        ClipRRect(
+                          // borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            "https://picsum.photos/250?image=9",
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Song Name",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                              Text("Artist",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                      )),
+                            ],
+                          ),
+                        )
+                      ]),
                 ),
               ),
-              const SizedBox(height: 15),
-              Text("Song",
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                        fontWeight: FontWeight.w400,
-                      )),
-              const SizedBox(height: 2),
-              Text("Name",
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.w400,
-                      )),
               const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
