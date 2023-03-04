@@ -33,6 +33,15 @@ class HomeScreen extends StatelessWidget {
       ),
       body:
           ListView.builder(itemBuilder: (context, index) => const PostWidget()),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            // Add your onPressed code here!
+          },
+          backgroundColor: Colors.purple,
+          extendedTextStyle: const TextStyle(fontStyle: FontStyle.normal, fontSize: 17),
+          label: const Text('Post'),
+          icon: const Icon(Icons.add),
+      ),
     );
   }
 }

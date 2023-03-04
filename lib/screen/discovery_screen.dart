@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rice_music_sharing/widgets/outlined_button.dart';
 
+import '../widgets/playlist_card.dart';
+
 class DiscoveryScreen extends StatefulWidget {
   const DiscoveryScreen({Key? key}) : super(key: key);
 
@@ -164,6 +166,9 @@ class Delegate extends SliverPersistentHeaderDelegate {
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: TextField(
               keyboardType: TextInputType.text,
+              onSubmitted:(value) {
+                PlaylistCard;
+              },
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
                     color: Colors.black,
                   ),
