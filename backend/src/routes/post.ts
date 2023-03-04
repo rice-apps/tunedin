@@ -1,7 +1,7 @@
 import Router from '@koa/router';
 import Post from '../models/post';
 import User from '../models/user';
-import Comment from '../models/Comment';
+import Comment from '../models/comment';
 import mongodb from 'mongodb';
 import bodyParser from 'koa-bodyparser';
 
@@ -48,8 +48,6 @@ router.post('/:postID/like', async (ctx, next) => {
 	const requestBody = ctx.request.body as any;
 	const username = requestBody.username;
 	const dir = parseInt(requestBody.dir);
-	console.log(username);
-	console.log(dir);
 
 	if (post === null) {
 		console.log(`Could not find post with ID: ${ctx.params.postID}`);
@@ -62,7 +60,6 @@ router.post('/:postID/like', async (ctx, next) => {
 		const user = await User.findOneBy({
 			username: username,
 		});
-		console.log(user);
 		if (user === null) {
 			console.log(`Could not find user with name: ${username}`);
 			ctx.status = 404;
@@ -93,42 +90,75 @@ router.delete('/', async (ctx, next) => {
 
 //comment-related routes
 
+//Get all comments from a post
+router.get('/:postID/comments', async (ctx, next) => {
+	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
+	if (post === null) {
+		console.log(`No Post associated with ID: ${ctx.params.postID}`);
+		ctx.status = 404;
+		return;
+	}
+	const comments = post.comments;
+
+	ctx.body = comments;
+});
+
 //Get a comment from a specific post.
 router.get('/:postID/comments/:commentID', async (ctx, next) => {
-	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
-
-	const commentID = mongodb.ObjectId(ctx.params.commentID);
-	const comment = post.comments.find((id) => id === commentID);
-
+	const comment = await Comment.findOneBy(
+		mongodb.ObjectId(ctx.params.commentID)
+	);
+	if (comment == null) {
+		console.log(`No comment associated with ID: ${ctx.params.commendID}`);
+		ctx.status = 404;
+		return;
+	}
 	ctx.body = comment;
 });
 
 //add a comment to a post
-router.post('/:postID/comments/', async (ctx, next) => {
+// request body should contain bodyText
+router.post('/:postID/comments', async (ctx, next) => {
+	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
+	if (post === null) {
+		console.log(`No Post associated with ID: ${ctx.params.postID}`);
+		ctx.status = 404;
+		return;
+	}
+	// Create new comment
 	const comment = new Comment();
-	// Get comment data from request body
+
 	const requestBody = ctx.request.body as any;
 	const bodyText = requestBody.bodyText || '';
-	// assign fields to comment
 	comment.id = new mongodb.ObjectId();
 	comment.author = null; // TBD USING AUTH
 	comment.likedBy = [];
 	comment.bodyText = bodyText;
 
+	await Comment.create(comment);
 	await comment.save();
+	post.comments.push(comment.id);
+	await post.save();
+
 	ctx.body = comment;
 });
 
 //delete a comment
 router.delete('/:postID/comments/:commentID', async (ctx, next) => {
 	const postID = mongodb.ObjectId(ctx.params.postID);
-	const commentID = mongodb.ObjectId(ctx.params.commendID);
+	const commentID = mongodb.ObjectId(ctx.params.commentID);
 
 	const post = await Post.findOneBy(postID);
+	if (post === null) {
+		console.log('Post does not exist');
+	}
 	const comment = await Comment.findOneBy(commentID);
-
+	if (comment === null) {
+		console.log('Comment does not exist');
+	}
 	// filter comment from post by ID
-	post.comments = post.comments.filter((id) => id !== commentID);
+	post.comments = post.comments.filter((id) => !id.equals(commentID));
+	await post.save();
 	ctx.body = await Comment.remove(comment);
 });
 
@@ -138,7 +168,7 @@ router.delete('/:postID/comments/:commentID', async (ctx, next) => {
 		username: username of the person liking / unliking
 		dir: 1 if liking, 0 otherwise
 */
-router.post('/:postID/comments/:commentID', async (ctx, next) => {
+router.post('/:postID/comments/:commentID/like', async (ctx, next) => {
 	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
 	const comment = await Comment.findOneBy(
 		mongodb.ObjectId(ctx.params.commentID)
@@ -146,7 +176,7 @@ router.post('/:postID/comments/:commentID', async (ctx, next) => {
 
 	const requestBody = ctx.request.body as any;
 	const username = requestBody.username;
-	const dir = requestBody.dir;
+	const dir = parseInt(requestBody.dir);
 
 	if (post === null || comment === null) {
 		ctx.status = 404;
@@ -167,7 +197,7 @@ router.post('/:postID/comments/:commentID', async (ctx, next) => {
 		} else {
 			// if they unlike the post, remove them from the likedBy array
 			// this covers the case where they have not liked the post yet
-			comment.likedBy = comment.likedBy.filter((id) => id !== user.id);
+			comment.likedBy = comment.likedBy.filter((id) => !id.equals(user.id));
 		}
 		await comment.save();
 	}
