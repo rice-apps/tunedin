@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/post_provider.dart';
 
 class PostController {
-  final Ref _ref;
+  final WidgetRef _ref;
 
   PostController(this._ref);
 
