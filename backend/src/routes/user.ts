@@ -58,7 +58,7 @@ router.put('/:username/:name', async (ctx, next) => {
 		ctx.status = 400;
 	} else {
 		user.username = ctx.params.username; //replace with auth
-		user.name = ctx.params.name; 
+		user.name = ctx.params.name;
 		user.followers = [];
 		user.timeline = [];
 		await user.save();
