@@ -166,7 +166,7 @@ class Delegate extends SliverPersistentHeaderDelegate {
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: TextField(
               keyboardType: TextInputType.text,
-              onSubmitted:(value) {
+              onSubmitted: (value) {
                 PlaylistCard;
               },
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
