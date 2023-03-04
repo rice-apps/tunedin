@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tunedin">
-
+    
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Can query to see if Spotify is on device
     -->
@@ -9,7 +9,8 @@
    <application
         android:label="tunedin"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false">
         <activity
             android:name=".MainActivity"
             android:exported="true"

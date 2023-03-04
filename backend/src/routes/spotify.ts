@@ -1,12 +1,11 @@
 import SpotifyWebApi from 'spotify-web-api-node';
 import Router from '@koa/router';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '../config';
 
 var spotifyApi = new SpotifyWebApi({
-	clientId: process.env.CLIENT_ID,
-	clientSecret: process.env.CLIENT_SECRET,
-	redirectUri: process.env.REDIRECT_URI,
+	clientId: CLIENT_ID,
+	clientSecret: CLIENT_SECRET,
+	redirectUri: REDIRECT_URI,
 });
 
 const scopes = [
@@ -45,7 +44,6 @@ router.get('/login', async (ctx, next) => {
 router.get('/callback', async (ctx, next) => {
 	const error = ctx.query.error;
 	const code = ctx.query.code;
-	const state = ctx.query.state;
 
 	if (error) {
 		console.error('Callback Error:', error);
