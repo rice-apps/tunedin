@@ -12,13 +12,10 @@ const db = new DataSource({
 	username: process.env.MONGODB_USER,
 	password: process.env.MONGODB_PASSWORD,
 	database: process.env.MONGODB_DB,
-	// entities: [User, Post, Comment],
 	entities: [User, Post, Comment],
 	synchronize: true,
 	ssl: true,
 	authSource: 'admin',
 });
-
-db.initialize();
 
 export default db;
