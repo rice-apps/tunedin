@@ -6,10 +6,9 @@ import userRouter from './routes/user';
 import spotifyRouter from './routes/spotify';
 import postRouter from './routes/post';
 import authRouter from './routes/auth';
+import { jwt } from './jwt';
 
 await db.initialize();
-
-const jwt = require('./jwt');
 
 const PORT = 3000;
 

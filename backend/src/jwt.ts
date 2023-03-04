@@ -1,7 +1,7 @@
 import { JWT_SECRET } from './config';
 
-const koaJwt = require('koa-jwt');
+import koaJwt from 'koa-jwt';
 
-module.exports = koaJwt({
+export const jwt = koaJwt({
 	secret: JWT_SECRET,
 });

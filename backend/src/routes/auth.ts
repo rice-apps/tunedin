@@ -2,12 +2,12 @@ import Router from '@koa/router';
 import axios from 'axios';
 import User from '../models/user';
 import xml2js from 'xml2js';
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 import { stripPrefix } from 'xml2js/lib/processors';
 
 import { CAS_SERVICE_URL } from '../config';
 
-const jwt = require('koa-jwt');
-const crypto = require('crypto');
 const JWT_SECRET = crypto.randomBytes(20).toString('hex');
 
 /**
