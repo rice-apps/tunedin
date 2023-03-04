@@ -1,9 +1,55 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:image_stack/image_stack.dart';
+import 'package:rice_music_sharing/screen/profile_screen.dart';
 import 'package:rice_music_sharing/widgets/post_action_button.dart';
+import '../../constants.dart';
+import 'package:http/http.dart' as http;
+import '../models/user_model.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
+  // will take in a usermodel in the future
   const PostWidget({Key? key}) : super(key: key);
+
+  @override
+  State<PostWidget> createState() => _PostWidget();
+}
+
+class _PostWidget extends State<PostWidget> {
+  late Future<UserModel> currUser;
+  String postUser = "bananalegend"; /* temporary username */
+
+  UserModel temp = UserModel(
+      netID: "jx29", displayName: "Vivian", userName: "Vivian", following: []);
+
+  void navigateToUser(BuildContext context) async {
+    currUser = fetchUser();
+    final user = await currUser;
+    // final user = temp;
+    // request user from backend
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileScreen(userModel: user)),
+      );
+    }
+  }
+
+  Future<UserModel> fetchUser() async {
+    final response = await http.get(Uri.parse("$backendURL\\users\\$postUser"));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      // decode the response to be a user model
+      return UserModel.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load user');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +71,23 @@ class PostWidget extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CircleAvatar(
-                backgroundImage:
-                    NetworkImage("https://picsum.photos/250?image=9"),
-                radius: 18,
+              GestureDetector(
+                onTap: () {
+                  navigateToUser(context);
+                },
+                child: Container(
+                  width: 36.0,
+                  height: 36.0,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        "https://picsum.photos/250?image=9",
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 10,

@@ -31,6 +31,8 @@ dependencies:
   json_annotation: ^4.7.0
   image_stack: ^2.1.1
   flutter_svg: ^1.1.5
+  flutter_dotenv: ^5.0.2
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

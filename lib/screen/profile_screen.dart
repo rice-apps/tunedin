@@ -8,7 +8,6 @@ import '../models/user_model.dart';
 class ProfileScreen extends StatefulWidget {
   final UserModel userModel;
   const ProfileScreen({Key? key, required this.userModel}) : super(key: key);
-  //const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -77,7 +76,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                 height: 25,
               ),
               Text(
-                _userModel.userName ?? '',
+                // once model matches with backend, fix this
+                _userModel.userName ?? "name_not_found",
+                // "bananalegend",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
