@@ -48,7 +48,7 @@ router.get('/', async (ctx, next) => {
 	ctx.body = await User.find();
 });
 
-router.put('/:username', async (ctx, next) => {
+router.put('/:username/:name', async (ctx, next) => {
 	const user = new User();
 	/*
 	Check if user exists set ctx.status to 400 and return before creating 
@@ -57,8 +57,8 @@ router.put('/:username', async (ctx, next) => {
 	if (await User.findOneBy({ username: ctx.params.username })) {
 		ctx.status = 400;
 	} else {
-		user.username = ctx.params.username;
-		user.name = 'John Doe';
+		user.username = ctx.params.username; //replace with auth
+		user.name = ctx.params.name; 
 		user.followers = [];
 		user.timeline = [];
 		await user.save();
@@ -66,7 +66,7 @@ router.put('/:username', async (ctx, next) => {
 	}
 });
 
-router.post('/timeline/:username', async (ctx, next) => {
+router.post('/:username/timeline', async (ctx, next) => {
 	const user = await User.findOneBy({
 		username: ctx.params.username,
 	});

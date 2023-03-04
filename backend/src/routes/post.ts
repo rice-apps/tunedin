@@ -24,6 +24,7 @@ router.get('/:postID', async (ctx, next) => {
 	}
 	ctx.body = post;
 });
+
 router.post('/', async (ctx, next) => {
 	const post = new Post();
 	post.id = new mongodb.ObjectId();
