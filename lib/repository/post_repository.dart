@@ -4,8 +4,7 @@ import '../models/post_model.dart';
 class PostRepository {
   final ApiClient postApiClient;
 
-  PostRepository({required this.postApiClient})
-      : assert(postApiClient != null);
+  PostRepository({required this.postApiClient});
 
   Future<List<PostModel>> fetchPosts() async {
     return await postApiClient.http.get('/posts').then((response) {
@@ -19,20 +18,23 @@ class PostRepository {
     return await postApiClient.http.post('/posts', data: {
       'bodyText': bodyText,
       'musicUrl': musicUrl,
-    }
-    ).then((response) {
+    }).then((response) {
       return PostModel.fromJson(response.data);
     });
   }
 
   Future<PostModel> likePost(String? postId) async {
-    return await postApiClient.http.post('/posts/$postId/like').then((response) {
+    return await postApiClient.http
+        .post('/posts/$postId/like')
+        .then((response) {
       return PostModel.fromJson(response.data);
     });
   }
 
   Future<PostModel> unlikePost(String? postId) async {
-    return await postApiClient.http.post('/posts/$postId/unlike').then((response) {
+    return await postApiClient.http
+        .post('/posts/$postId/unlike')
+        .then((response) {
       return PostModel.fromJson(response.data);
     });
   }

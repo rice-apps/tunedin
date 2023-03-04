@@ -34,12 +34,11 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body:
-          ListView.builder(itemBuilder: (context, index) =>
-              ProviderScope(
+      body: ListView.builder(
+          itemBuilder: (context, index) => ProviderScope(
                 overrides: [
-                  postStateProvider.overrideWith( (ref) =>
-                    PostState(
+                  postStateProvider.overrideWith(
+                    (ref) => PostState(
                       PostModel(
                         netID: "123",
                         numLikes: 0,
@@ -50,8 +49,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
                 child: const PostWidget(),
-              )
-          ),
+              )),
     );
   }
 }
