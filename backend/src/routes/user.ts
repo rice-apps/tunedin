@@ -32,13 +32,29 @@ router.get('/:username/followers', async (ctx, next) => {
 	ctx.body = user.followers;
 });
 
+router.get('/:username/timeline', async (ctx, next) => {
+	const user = await User.findOneBy({
+		username: ctx.params.username,
+	});
+	if (user === null) {
+		ctx.status = 404;
+		return;
+	}
+	ctx.body = user.timeline;
+});
+
+//get all users
+router.get('/', async (ctx, next) => {
+	ctx.body = await User.find();
+});
+
 router.put('/:username', async (ctx, next) => {
 	const user = new User();
 	/*
 	Check if user exists set ctx.status to 400 and return before creating 
 	new user.
 	*/
-	if (User.findOneBy({ username: ctx.params.username })) {
+	if (await User.findOneBy({ username: ctx.params.username })) {
 		ctx.status = 400;
 	} else {
 		user.username = ctx.params.username;
@@ -50,7 +66,7 @@ router.put('/:username', async (ctx, next) => {
 	}
 });
 
-router.post('/:username/timeline', async (ctx, next) => {
+router.post('/timeline/:username', async (ctx, next) => {
 	const user = await User.findOneBy({
 		username: ctx.params.username,
 	});
@@ -74,6 +90,11 @@ router.post('/:username1/following/:username2', async (ctx, next) => {
 	});
 	if (user1 === null || user2 === null) {
 		ctx.status = 404;
+		return;
+	}
+	//check to see if user is already following user2
+	if (user2.followers.includes(user1.id)) {
+		ctx.status = 400;
 		return;
 	}
 	user2.followers.push(user1.id);
