@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'post_model.dart';
 
@@ -20,10 +20,12 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PostModel {
-  String get netID => throw _privateConstructorUsedError;
-  set netID(String value) => throw _privateConstructorUsedError;
-  int get numLikes => throw _privateConstructorUsedError;
-  set numLikes(int value) => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  set id(String value) => throw _privateConstructorUsedError;
+  UserModel get author => throw _privateConstructorUsedError;
+  set author(UserModel value) => throw _privateConstructorUsedError;
+  num get numLikes => throw _privateConstructorUsedError;
+  set numLikes(num value) => throw _privateConstructorUsedError;
   String get bodyText => throw _privateConstructorUsedError;
   set bodyText(String value) => throw _privateConstructorUsedError;
   String get musicURL => throw _privateConstructorUsedError;
@@ -40,7 +42,12 @@ abstract class $PostModelCopyWith<$Res> {
   factory $PostModelCopyWith(PostModel value, $Res Function(PostModel) then) =
       _$PostModelCopyWithImpl<$Res, PostModel>;
   @useResult
-  $Res call({String netID, int numLikes, String bodyText, String musicURL});
+  $Res call(
+      {String id,
+      UserModel author,
+      num numLikes,
+      String bodyText,
+      String musicURL});
 }
 
 /// @nodoc
@@ -56,20 +63,25 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? netID = null,
+    Object? id = null,
+    Object? author = null,
     Object? numLikes = null,
     Object? bodyText = null,
     Object? musicURL = null,
   }) {
     return _then(_value.copyWith(
-      netID: null == netID
-          ? _value.netID
-          : netID // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as UserModel,
       numLikes: null == numLikes
           ? _value.numLikes
           : numLikes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       bodyText: null == bodyText
           ? _value.bodyText
           : bodyText // ignore: cast_nullable_to_non_nullable
@@ -89,7 +101,12 @@ abstract class _$$_PostModelCopyWith<$Res> implements $PostModelCopyWith<$Res> {
       __$$_PostModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String netID, int numLikes, String bodyText, String musicURL});
+  $Res call(
+      {String id,
+      UserModel author,
+      num numLikes,
+      String bodyText,
+      String musicURL});
 }
 
 /// @nodoc
@@ -103,20 +120,25 @@ class __$$_PostModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? netID = null,
+    Object? id = null,
+    Object? author = null,
     Object? numLikes = null,
     Object? bodyText = null,
     Object? musicURL = null,
   }) {
     return _then(_$_PostModel(
-      netID: null == netID
-          ? _value.netID
-          : netID // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as UserModel,
       numLikes: null == numLikes
           ? _value.numLikes
           : numLikes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       bodyText: null == bodyText
           ? _value.bodyText
           : bodyText // ignore: cast_nullable_to_non_nullable
@@ -133,7 +155,8 @@ class __$$_PostModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
   _$_PostModel(
-      {required this.netID,
+      {required this.id,
+      required this.author,
       required this.numLikes,
       required this.bodyText,
       required this.musicURL});
@@ -142,9 +165,11 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
       _$$_PostModelFromJson(json);
 
   @override
-  String netID;
+  String id;
   @override
-  int numLikes;
+  UserModel author;
+  @override
+  num numLikes;
   @override
   String bodyText;
   @override
@@ -152,7 +177,7 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PostModel(netID: $netID, numLikes: $numLikes, bodyText: $bodyText, musicURL: $musicURL)';
+    return 'PostModel(id: $id, author: $author, numLikes: $numLikes, bodyText: $bodyText, musicURL: $musicURL)';
   }
 
   @override
@@ -160,7 +185,8 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'PostModel'))
-      ..add(DiagnosticsProperty('netID', netID))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('author', author))
       ..add(DiagnosticsProperty('numLikes', numLikes))
       ..add(DiagnosticsProperty('bodyText', bodyText))
       ..add(DiagnosticsProperty('musicURL', musicURL));
@@ -182,8 +208,9 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
 
 abstract class _PostModel implements PostModel {
   factory _PostModel(
-      {required String netID,
-      required int numLikes,
+      {required String id,
+      required UserModel author,
+      required num numLikes,
       required String bodyText,
       required String musicURL}) = _$_PostModel;
 
@@ -191,11 +218,14 @@ abstract class _PostModel implements PostModel {
       _$_PostModel.fromJson;
 
   @override
-  String get netID;
-  set netID(String value);
+  String get id;
+  set id(String value);
   @override
-  int get numLikes;
-  set numLikes(int value);
+  UserModel get author;
+  set author(UserModel value);
+  @override
+  num get numLikes;
+  set numLikes(num value);
   @override
   String get bodyText;
   set bodyText(String value);
