@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_stack/image_stack.dart';
 import 'package:rice_music_sharing/widgets/post_action_button.dart';
 
-class PostWidget extends StatelessWidget {
+import '../controllers/post_controller.dart';
+
+class PostWidget extends ConsumerStatefulWidget {
   const PostWidget({Key? key}) : super(key: key);
 
   @override
+  ConsumerState<PostWidget> createState() => PostWidgetState();
+}
+
+class PostWidgetState extends ConsumerState<PostWidget> {
+  late PostController controller = PostController(ref);
+
+  @override
   Widget build(BuildContext context) {
+    // final post = ref.watch(postStateProvider);
+
+    // you can use functions such like
+    // controller.likePost();
+    // and then await them using like a future builder
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,

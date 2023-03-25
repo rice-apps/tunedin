@@ -5,6 +5,8 @@ import db from './db';
 import userRouter from './routes/user';
 import spotifyRouter from './routes/spotify';
 import postRouter from './routes/post';
+import authRouter from './routes/auth';
+import { jwt } from './jwt';
 
 await db.initialize();
 
@@ -15,6 +17,11 @@ const indexRouter = new Router();
 indexRouter.get('/', (ctx, next) => {
 	ctx.body = {};
 });
+
+app.use(authRouter.routes());
+app.use(authRouter.allowedMethods());
+
+app.use(jwt);
 
 app.use(indexRouter.routes());
 app.use(indexRouter.allowedMethods());
