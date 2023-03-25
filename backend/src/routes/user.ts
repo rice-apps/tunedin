@@ -48,13 +48,14 @@ router.get('/', async (ctx, next) => {
 	ctx.body = await User.find();
 });
 
-router.put('/:name', async (ctx, next) => {
+router.put('/:username/:name', async (ctx, next) => {
 	const user = new User();
 	if (await User.findOneBy({ username: ctx.params.username })) {
 		ctx.status = 400;
 	} else {
-		user.username = ctx.state.user.id; //replace with auth
+		user.username = ctx.params.username;
 		user.name = ctx.params.name;
+		user.netid = ctx.state.user.netid;
 		user.followers = [];
 		user.timeline = [];
 		await user.save();
