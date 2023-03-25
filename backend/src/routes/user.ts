@@ -63,9 +63,9 @@ router.put('/:username/:name', async (ctx, next) => {
 	}
 });
 
-router.post('/:username/timeline', async (ctx, next) => {
+router.post('/timeline', async (ctx, next) => {
 	const user = await User.findOneBy({
-		username: ctx.params.username,
+		username: ctx.state.user.id,
 	});
 	if (user === null) {
 		ctx.status = 404;
