@@ -23,10 +23,8 @@ class ShareModalState extends State<ShareModal> {
             getTargetName: (index) => 'Song',
             getTargetIcon: (index) => const Icon(Icons.playlist_play),
             buildTargetPage: (index) => TargetPickerPage(
-                // TODO: Display song at top of "Profile or Group" page
-                sheetContext,
-                pageContext,
-                pushRoute,
+                sheetContext, pageContext, pushRoute,
+                showShareASongHeader: true,
                 getTargetIcon: (target) => DecoratedBox(
                     decoration: const BoxDecoration(
                       color: Color(0xFF45495C),
@@ -58,7 +56,6 @@ class ShareModalState extends State<ShareModal> {
                   } else {
                     return ShareCommentPage(sheetContext);
                   }
-                  // TODO: have this ShareCommentPage have an option to select group
                 }),
           );
         },
@@ -77,6 +74,7 @@ class TargetPickerPage extends StatefulWidget {
   final bool showSearch;
   final bool showSong;
   final bool showSongSearchHeader;
+  final bool showShareASongHeader;
   final bool showChooseGroupHeader;
 
   const TargetPickerPage(this.sheetContext, this.pageContext, this.pushRoute,
@@ -88,6 +86,7 @@ class TargetPickerPage extends StatefulWidget {
       this.showSearch = true,
       this.showSong = true,
       this.showSongSearchHeader = false,
+      this.showShareASongHeader = false,
       this.showChooseGroupHeader = false})
       : super(key: key);
 
@@ -103,19 +102,53 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
     return Column(
       children: [
         if (widget.showSongSearchHeader)
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Share a Song",
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.w400,
-                    ),
-              )),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Search for a song",
+                  style: Theme.of(context)
+                      .textTheme
+                      .apply(fontSizeFactor: 2.0)
+                      .displayMedium
+                      ?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                )),
+          ),
+        if (widget.showShareASongHeader)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Share a song",
+                  style: Theme.of(context)
+                      .textTheme
+                      .apply(fontSizeFactor: 2.0)
+                      .displayMedium
+                      ?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                )),
+          ),
         if (widget.showChooseGroupHeader)
-          Text("Choose a Group",
-              style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontWeight: FontWeight.w400,
-                  )),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Choose Group",
+                  style: Theme.of(context)
+                      .textTheme
+                      .apply(fontSizeFactor: 2.0)
+                      .displayMedium
+                      ?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                )),
+          ),
         if (widget.showSong)
           Padding(
             padding: const EdgeInsets.all(10),
@@ -140,7 +173,7 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -166,7 +199,8 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
           ),
         if (widget.showSearch)
           Container(
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 10),
             child: TextField(
               keyboardType: TextInputType.text,
               style: Theme.of(context).textTheme.displayMedium,
@@ -267,6 +301,21 @@ class ShareCommentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Add caption",
+              style: Theme.of(context)
+                  .textTheme
+                  .apply(fontSizeFactor: 2.0)
+                  .displayMedium
+                  ?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+            )),
+      ),
       Expanded(
         child: SingleChildScrollView(
           child: Column(
