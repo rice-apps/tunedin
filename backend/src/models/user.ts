@@ -1,9 +1,4 @@
-import {
-	Entity,
-	ObjectIdColumn,
-	Column,
-	BaseEntity,
-} from 'typeorm';
+import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
 import mongodb from 'mongodb';
 
 @Entity()

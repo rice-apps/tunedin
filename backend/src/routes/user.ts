@@ -32,9 +32,9 @@ router.get('/:username/followers', async (ctx, next) => {
 	ctx.body = user.followers;
 });
 
-router.get('/:username/timeline', async (ctx, next) => {
+router.get('/timeline', async (ctx, next) => {
 	const user = await User.findOneBy({
-		username: ctx.params.username,
+		username: ctx.state.user.id,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -48,16 +48,12 @@ router.get('/', async (ctx, next) => {
 	ctx.body = await User.find();
 });
 
-router.put('/:username/:name', async (ctx, next) => {
+router.put('/:name', async (ctx, next) => {
 	const user = new User();
-	/*
-	Check if user exists set ctx.status to 400 and return before creating 
-	new user.
-	*/
 	if (await User.findOneBy({ username: ctx.params.username })) {
 		ctx.status = 400;
 	} else {
-		user.username = ctx.params.username; //replace with auth
+		user.username = ctx.state.user.id; //replace with auth
 		user.name = ctx.params.name;
 		user.followers = [];
 		user.timeline = [];
@@ -81,9 +77,9 @@ router.post('/:username/timeline', async (ctx, next) => {
 	ctx.body = user.timeline;
 });
 
-router.post('/:username1/following/:username2', async (ctx, next) => {
+router.post('/following/:username2', async (ctx, next) => {
 	const user1 = await User.findOneBy({
-		username: ctx.params.username1,
+		username: ctx.state.user.id,
 	});
 	const user2 = await User.findOneBy({
 		username: ctx.params.username2,
@@ -103,9 +99,9 @@ router.post('/:username1/following/:username2', async (ctx, next) => {
 	ctx.body = user2.followers;
 });
 
-router.post('/:username1/unfollowing/:username2', async (ctx, next) => {
+router.post('/unfollowing/:username2', async (ctx, next) => {
 	const user1 = await User.findOneBy({
-		username: ctx.params.username1,
+		username: ctx.state.user.id,
 	});
 	const user2 = await User.findOneBy({
 		username: ctx.params.username2,
