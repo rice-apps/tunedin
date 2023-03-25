@@ -12,11 +12,13 @@ final postListProvider = FutureProvider.autoDispose<List<PostModel>>(
 enum PostStatus { loading, loaded, error, deleted }
 
 class PostState extends StateNotifier<PostModel> {
-  PostStatus _status = PostStatus.loading;
+  PostStatus status = PostStatus.loading;
   PostState(PostModel model) : super(model);
 
-  PostStatus get status => _status;
-  set status(PostStatus status) => _status = status;
+  setState(PostModel model) {
+    status = PostStatus.loaded;
+    super.state = model;
+  }
 }
 
 final postStateProvider =
