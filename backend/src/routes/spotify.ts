@@ -96,7 +96,9 @@ router.get('/search/:query', async (ctx, next) => {
 	}
 	const firstPage = queryResult.body.tracks.items;
 
-	ctx.body = queryResult.body.tracks;
+	const parsedPage = firstPage.map(({ id, name }) => ({ id, name }));
+
+	ctx.body = parsedPage;
 });
 
 export default router;
