@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rice_music_sharing/providers/user_provider.dart';
 import 'package:rice_music_sharing/widgets/outlined_button.dart';
 
-class DiscoveryScreen extends StatefulWidget {
+import '../data/models/user_model.dart';
+
+class DiscoveryScreen extends ConsumerStatefulWidget {
   const DiscoveryScreen({Key? key}) : super(key: key);
 
   @override
   DiscoveryScreenState createState() => DiscoveryScreenState();
 }
 
-class DiscoveryScreenState extends State<DiscoveryScreen>
+class DiscoveryScreenState extends ConsumerState<DiscoveryScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
@@ -29,6 +33,7 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
 
   @override
   Widget build(BuildContext context) {
+    final users = ref.watch(userListProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView(
@@ -109,17 +114,33 @@ class DiscoveryScreenState extends State<DiscoveryScreen>
               )),
           [
             SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    ((context, index) => const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 36, 0, 0),
-                        child: SongRow())),
-                    childCount: 100)),
+              delegate: (users.hasValue) ? SliverChildBuilderDelegate(
+                  ((context, index) => Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 36, 0, 0),
+                      child: SongRow(users.value!))),
+                  childCount: 5) :
+              SliverChildListDelegate(
+                  [
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  ]
+              ),
+            ),
             SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    ((context, index) => const Padding(
-                        padding: EdgeInsets.fromLTRB(0, 36, 0, 0),
-                        child: SongRow())),
-                    childCount: 100)),
+                delegate: (users.hasValue) ? SliverChildBuilderDelegate(
+                    ((context, index) => Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 36, 0, 0),
+                        child: SongRow(users.value!))),
+                    childCount: 5) :
+                      SliverChildListDelegate(
+                        [
+                          const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        ]
+                      ),
+            ),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
                     ((context, index) => const Padding(
@@ -204,7 +225,9 @@ class Delegate extends SliverPersistentHeaderDelegate {
 }
 
 class SongRow extends StatelessWidget {
-  const SongRow({Key? key}) : super(key: key);
+  final List<UserModel> users;
+
+  const SongRow(this.users, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -223,11 +246,11 @@ class SongRow extends StatelessWidget {
         child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: 10,
+          itemCount: users.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: EdgeInsets.fromLTRB(index == 0 ? 16 : 0, 0, 8, 0),
-              child: const FollowWidget(),
+              child: FollowWidget(users[index]),
             );
           },
         ),
@@ -303,7 +326,9 @@ class SongWidget extends StatelessWidget {
 }
 
 class FollowWidget extends StatefulWidget {
-  const FollowWidget({Key? key}) : super(key: key);
+  final UserModel user;
+
+  const FollowWidget(this.user, {Key? key}) : super(key: key);
 
   @override
   FollowWidgetState createState() => FollowWidgetState();
@@ -347,8 +372,8 @@ class FollowWidgetState extends State<FollowWidget> {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              "User Name",
+            Text(
+              widget.user.displayName ?? "User Name",
               style: TextStyle(color: Colors.white),
             ),
             const SizedBox(

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice_music_sharing/providers/http_provider.dart';
 
-import '../models/post_model.dart';
+import '../data/models/post_model.dart';
 import '../repository/post_repository.dart';
 
 final postRepositoryProvider = Provider<PostRepository>(

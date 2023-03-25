@@ -1,5 +1,5 @@
+import '../data/models/post_model.dart';
 import '../http/api_client.dart';
-import '../models/post_model.dart';
 
 class PostRepository {
   final ApiClient postApiClient;
