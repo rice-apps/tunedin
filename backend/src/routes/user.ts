@@ -23,11 +23,19 @@ router.get('/:username', async (ctx, next) => {
 
 router.put('/:username', async (ctx, next) => {
 	const user = new User();
-	user.username = ctx.params.username;
-	// add error handling for the same username
-	user.name = 'John Doe';
-	await user.save();
-	ctx.body = user;
+
+	/*
+	Check if user exists set ctx.status to 400 and return before creating 
+	new user.
+	*/
+	if (User.findOneBy({ username: ctx.params.username })) {
+		ctx.status = 400;
+	} else {
+		user.username = ctx.params.username;
+		user.displayName = 'John Doe';
+		await user.save();
+		ctx.body = user;
+	}
 });
 
 router.delete('/', async (ctx, next) => {
