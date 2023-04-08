@@ -23,6 +23,7 @@ router.get('/:username', async (ctx, next) => {
 
 router.put('/:username', async (ctx, next) => {
 	const user = new User();
+
 	/*
 	Check if user exists set ctx.status to 400 and return before creating 
 	new user.
@@ -31,7 +32,7 @@ router.put('/:username', async (ctx, next) => {
 		ctx.status = 400;
 	} else {
 		user.username = ctx.params.username;
-		user.displayname = 'John Doe';
+		user.displayName = 'John Doe';
 		await user.save();
 		ctx.body = user;
 	}
