@@ -28,7 +28,12 @@ router.get('/:postID', async (ctx, next) => {
 router.post('/', async (ctx, next) => {
 	const post = new Post();
 	post.id = new mongodb.ObjectId();
-	post.author = null; //This is dependent on Auth to determine the author
+	const authorID = ctx.state.user.id;
+	const author = await User.findOneBy(mongodb.ObjectId(authorID));
+	console.log(
+		`The Net ID of the author is: ${author.netid}\n They have display name: ${author.displayName}\n`
+	);
+	post.author = author;
 	post.likedBy = [];
 	post.comments = [];
 
