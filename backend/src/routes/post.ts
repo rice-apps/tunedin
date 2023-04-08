@@ -28,7 +28,7 @@ router.get('/:postID', async (ctx, next) => {
 router.post('/', async (ctx, next) => {
 	const post = new Post();
 	post.id = new mongodb.ObjectId();
-	post.author = null; //This is dependent on Auth to determine the author
+	post.author = ctx.state.user.id;
 	post.numLikes = 0;
 	post.author.posts.push(post.id);
 
@@ -70,12 +70,12 @@ router.post('/:postID/unlike', async (ctx, next) => {
 
 //delete post by postID
 router.delete('/:postID', async (ctx, next) => {
-	const post = Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
+	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
 	//get author of post
-	const author = User.findOneBy(mongodb.ObjectId((await post).author));
+	const author = await User.findOneBy(mongodb.ObjectId(post.author));
 	//remove post from author's posts
-	(await author).posts = (await author).posts.filter(async (id) => {
-		id !== (await post).id;
+	author.posts = author.posts.filter(async (id) => {
+		id !== post.id;
 	});
 });
 
