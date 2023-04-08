@@ -10,7 +10,6 @@ router.get('/', async (ctx, next) => {
 	ctx.body = await Group.find();
 });
 
-// Finds group by handle.
 router.get('/:grouphandle', async (ctx, next) => {
 	const group = await Group.findOneBy({
 		handle: ctx.params.grouphandle,
@@ -23,11 +22,9 @@ router.get('/:grouphandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
-//Create a new group with required group handle and display name.
-router.put('/:grouphandle/:displayname/:creatorhandle', async (ctx, next) => {
-	// once auth is set up, fix this to use object id provided by auth info.
+router.put('/:grouphandle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		handle: ctx.params.creatorhandle,
+		username: ctx.params.creatorhandle,
 	});
 	if (user === null) {
 		console.log('This user does not exist.');
@@ -35,9 +32,8 @@ router.put('/:grouphandle/:displayname/:creatorhandle', async (ctx, next) => {
 		return;
 	}
 	const group = new Group();
-	group.handle = ctx.params.grouphandle;
-	group.displayname = ctx.params.displayname;
-	//Create new user array for followers and members.
+	group.handle = ctx.state.user.handle;
+	group.displayname = ctx.state.user.displayname;
 	group.followers = [];
 	group.members = [user];
 	group.timeline = [];
@@ -45,8 +41,7 @@ router.put('/:grouphandle/:displayname/:creatorhandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
-// Add user to a group.
-router.put('/member/:grouphandle/:userhandle', async (ctx, next) => {
+router.put('/member/:grouphandle', async (ctx, next) => {
 	const group = await Group.findOneBy({
 		handle: ctx.params.grouphandle,
 	});
@@ -55,7 +50,7 @@ router.put('/member/:grouphandle/:userhandle', async (ctx, next) => {
 		return;
 	}
 	const user = await User.findOneBy({
-		handle: ctx.params.userhandle,
+		handle: ctx.state.user.handle,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -66,7 +61,6 @@ router.put('/member/:grouphandle/:userhandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
-// Add folower to group.
 router.put('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 	const group = await Group.findOneBy({
 		handle: ctx.params.grouphandle,
@@ -76,7 +70,7 @@ router.put('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 		return;
 	}
 	const user = await User.findOneBy({
-		handle: ctx.params.userhandle,
+		username: ctx.params.userhandle,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -87,19 +81,14 @@ router.put('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
-// Delete all groups.
 router.delete('/', async (ctx, next) => {
 	ctx.body = await Group.clear();
-	// const groups = await Group.find();
-	// ctx.body = await Group.remove(groups);
 });
 
-// Delete group by handle.
 router.delete('/:grouphandle', async (ctx, next) => {
 	Group.delete({ handle: ctx.params.grouphandle });
 });
 
-//Delete user from group by handle
 router.delete('/member/:grouphandle/:userhandle', async (ctx, next) => {
 	const group = await Group.findOneBy({
 		handle: ctx.params.grouphandle,
@@ -109,7 +98,7 @@ router.delete('/member/:grouphandle/:userhandle', async (ctx, next) => {
 		return;
 	}
 	const user = await User.findOneBy({
-		handle: ctx.params.userhandle,
+		username: ctx.params.userhandle,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -120,7 +109,6 @@ router.delete('/member/:grouphandle/:userhandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
-//Delete follower from group by handle
 router.delete('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 	const group = await Group.findOneBy({
 		handle: ctx.params.grouphandle,
@@ -130,7 +118,7 @@ router.delete('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 		return;
 	}
 	const user = await User.findOneBy({
-		handle: ctx.params.userhandle,
+		username: ctx.params.userhandle,
 	});
 	if (user === null) {
 		ctx.status = 404;
