@@ -11,9 +11,6 @@ class Comment extends BaseEntity {
 	author: User;
 
 	@Column()
-	numLikes: number;
-
-	@Column()
 	bodyText: string;
 
 	@Column()
