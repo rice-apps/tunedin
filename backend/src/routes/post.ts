@@ -26,7 +26,7 @@ router.get('/:postID', async (ctx, next) => {
 router.post('/', async (ctx, next) => {
 	const post = new Post();
 	post.id = new mongodb.ObjectId();
-	post.author = null; //This is dependent on Auth to determine the author
+	post.author = ctx.state.user.id;
 	post.numLikes = 0;
 
 	const requestBody = ctx.request.body as any;
@@ -65,7 +65,7 @@ router.post('/:postID/save', async (ctx, next) => {
 		ctx.status = 404;
 		return;
 	}
-	const user = null; //This is dependent on Auth to determine the author
+	const user = ctx.state.user.id;
 	user.savedPosts.push(post.id);
 	await user.save();
 	ctx.body = user.savedPosts;
