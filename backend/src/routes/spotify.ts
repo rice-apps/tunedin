@@ -62,6 +62,9 @@ router.get('/callback', async (ctx, next) => {
 	const refresh_token = authData.body['refresh_token'];
 	const expires_in = authData.body['expires_in'];
 
+	spotifyApi.setAccessToken(access_token);
+	spotifyApi.setRefreshToken(refresh_token);
+
 	console.log('Access Token:', access_token);
 	console.log('Refresh Token:', refresh_token);
 	console.log(
@@ -70,13 +73,36 @@ router.get('/callback', async (ctx, next) => {
 
 	ctx.body = 'Success! You can now close the window.';
 
-	//Refresh the access token before it expires
+	// Refresh the access token before it expires.
 	setInterval(async () => {
 		const data = await spotifyApi.refreshAccessToken();
 		const access_token = data.body['access_token'];
 
 		spotifyApi.setAccessToken(access_token);
 	}, (expires_in / 2) * 1000);
+});
+
+// Add a route for searching for a track on Spotify API.
+router.get('/search/:query', async (ctx, next) => {
+	const query = ctx.params.query;
+	var queryResult;
+	try {
+		queryResult = await spotifyApi.searchTracks(query);
+	} catch (error) {
+		console.log(`Received the following error from query: \n ${error}`);
+		ctx.body = `Receive the following error from query: ${error}`;
+		return;
+	}
+	const firstPage = queryResult?.body?.tracks?.items;
+
+	if (firstPage === undefined) {
+		ctx.body = [];
+		return;
+	}
+
+	const parsedPage = firstPage.map(({ id, name }) => ({ id, name }));
+
+	ctx.body = parsedPage;
 });
 
 export default router;
