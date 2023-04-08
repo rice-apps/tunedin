@@ -132,11 +132,14 @@ router.post('/:postID/comments', async (ctx, next) => {
 	}
 	// Create new comment
 	const comment = new Comment();
-
 	const requestBody = ctx.request.body as any;
 	const bodyText = requestBody.bodyText || '';
+
+	const authorID = ctx.state.user.id;
+	const author = await User.findOneBy(mongodb.ObjectId(authorID));
+
 	comment.id = new mongodb.ObjectId();
-	comment.author = null; // TBD USING AUTH
+	comment.author = author;
 	comment.likedBy = [];
 	comment.bodyText = bodyText;
 
