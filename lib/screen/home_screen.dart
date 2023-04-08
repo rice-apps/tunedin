@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/models/post_model.dart';
+import '../providers/post_provider.dart';
 import '../widgets/post_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -43,6 +46,22 @@ class HomeScreen extends StatelessWidget {
         label: const Text('Post'),
         icon: const Icon(Icons.add),
       ),
-    );
+    //   body: ListView.builder(
+    //       itemBuilder: (context, index) => ProviderScope(
+    //             overrides: [
+    //               postStateProvider.overrideWith(
+    //                 (ref) => PostState(
+    //                   PostModel(
+    //                     netID: "123",
+    //                     numLikes: 0,
+    //                     bodyText: "Hello World",
+    //                     musicURL: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+    //                   ),
+    //                 ),
+    //               ),
+    //             ],
+    //             child: const PostWidget(),
+    //           )),
+    // );
   }
 }

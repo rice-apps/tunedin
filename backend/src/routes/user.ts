@@ -31,7 +31,7 @@ router.put('/:username', async (ctx, next) => {
 		ctx.status = 400;
 	} else {
 		user.username = ctx.params.username;
-		user.name = 'John Doe';
+		user.displayname = 'John Doe';
 		await user.save();
 		ctx.body = user;
 	}

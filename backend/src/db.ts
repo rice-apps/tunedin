@@ -1,16 +1,20 @@
 import { DataSource } from 'typeorm';
 import User from './models/user';
 import Post from './models/post';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import {
+	MONGODB_HOST,
+	MONGODB_USER,
+	MONGODB_PASSWORD,
+	MONGODB_DB,
+} from './config';
 
 const db = new DataSource({
 	type: 'mongodb',
-	host: process.env.MONGODB_HOST,
+	host: MONGODB_HOST,
 	port: 27017,
-	username: process.env.MONGODB_USER,
-	password: process.env.MONGODB_PASSWORD,
-	database: process.env.MONGODB_DB,
+	username: MONGODB_USER,
+	password: MONGODB_PASSWORD,
+	database: MONGODB_DB,
 	entities: [User, Post],
 	ssl: true,
 	authSource: 'admin',
