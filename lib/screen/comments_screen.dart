@@ -28,7 +28,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const MyNavigationBar(),
+      bottomNavigationBar: MyNavigationBar(),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: ListView.builder(
         itemCount: _comments.length,
