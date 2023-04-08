@@ -4,7 +4,6 @@ import 'package:image_stack/image_stack.dart';
 import 'package:rice_music_sharing/widgets/post_action_button.dart';
 
 import '../controllers/post_controller.dart';
-import '../providers/post_provider.dart';
 
 class PostWidget extends ConsumerStatefulWidget {
   const PostWidget({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class PostWidgetState extends ConsumerState<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final post = ref.watch(postStateProvider);
+    // final post = ref.watch(postStateProvider);
 
     // you can use functions such like
     // controller.likePost();
