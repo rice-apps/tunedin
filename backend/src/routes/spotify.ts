@@ -77,7 +77,6 @@ router.get('/callback', async (ctx, next) => {
 
 	// Refresh the access token before it expires.
 	setInterval(async () => {
-		console.log('This just exectued');
 		const data = await spotifyApi.refreshAccessToken();
 		const access_token = data.body['access_token'];
 
