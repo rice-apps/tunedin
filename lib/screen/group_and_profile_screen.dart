@@ -86,26 +86,6 @@ class ProfileScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: !isGroup
                         ? [
-                            // Text(
-                            //   "200",
-                            //   style:
-                            //       Theme.of(context).textTheme.displaySmall?.copyWith(
-                            //             fontWeight: FontWeight.w600,
-                            //           ),
-                            // ),
-                            // Text(" Followers",
-                            //     style: Theme.of(context).textTheme.displaySmall),
-                            // const SizedBox(width: 25, height: 2),
-                            // Text(
-                            //   "200",
-                            //   style:
-                            //       Theme.of(context).textTheme.displaySmall?.copyWith(
-                            //             fontWeight: FontWeight.w600,
-                            //           ),
-                            // ),
-                            // Text(" Following",
-                            //     style: Theme.of(context).textTheme.displaySmall)
-
                             const SizedBox(
                               width: 100,
                               child: Text("Followers\n 200",
