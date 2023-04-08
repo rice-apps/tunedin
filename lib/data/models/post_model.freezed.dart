@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'post_model.dart';
 
@@ -25,10 +25,8 @@ mixin _$PostModel {
   int get numLikes => throw _privateConstructorUsedError;
   set numLikes(int value) => throw _privateConstructorUsedError;
   String get bodyText => throw _privateConstructorUsedError;
-  set bodyText(String value) =>
-      throw _privateConstructorUsedError; // required var comments,
-  String get musicURL =>
-      throw _privateConstructorUsedError; // required var comments,
+  set bodyText(String value) => throw _privateConstructorUsedError;
+  String get musicURL => throw _privateConstructorUsedError;
   set musicURL(String value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -149,7 +147,6 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
   int numLikes;
   @override
   String bodyText;
-// required var comments,
   @override
   String musicURL;
 
@@ -202,8 +199,8 @@ abstract class _PostModel implements PostModel {
   @override
   String get bodyText;
   set bodyText(String value);
-  @override // required var comments,
-  String get musicURL; // required var comments,
+  @override
+  String get musicURL;
   set musicURL(String value);
   @override
   @JsonKey(ignore: true)

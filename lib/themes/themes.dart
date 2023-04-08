@@ -11,13 +11,16 @@ class Themes {
           tertiary: Color(0xFF790D30),
           onTertiary: Colors.white,
           brightness: Brightness.dark,
-          background: Color(0xFF171924),
+          background: Color(0xFF141A2B),
           onBackground: Colors.white,
           error: Colors.pink,
           onError: Colors.white,
           surface: Color(0xFF202333),
           onSurface: Colors.white,
+          surfaceVariant: Color(0xFF303449),
+          onSurfaceVariant: Colors.white,
         ),
+        canvasColor: const Color(0xFF171924),
         brightness: Brightness.dark,
         cardTheme: CardTheme(
             clipBehavior: Clip.antiAlias,
@@ -34,15 +37,21 @@ class Themes {
           ),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         ),
-        fontFamily: 'Inter',
+        fontFamily: 'Poppins',
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFFFF417F),
         ),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
-              color: Colors.white, fontSize: 24, fontWeight: FontWeight.w600),
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+          ),
           labelLarge: TextStyle(
-              color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              height: 1.5),
           labelMedium: TextStyle(
               color: Colors.white, fontSize: 10, fontFamily: 'Poppins'),
           labelSmall: TextStyle(

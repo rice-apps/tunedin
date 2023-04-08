@@ -5,4 +5,8 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Can query to see if Spotify is on device
+    -->
+     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 </manifest>
