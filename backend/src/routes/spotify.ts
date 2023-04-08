@@ -93,8 +93,15 @@ router.get('/search/:query', async (ctx, next) => {
 		queryResult = await spotifyApi.searchTracks(query);
 	} catch (error) {
 		console.log(`Received the following error from query: \n ${error}`);
+		ctx.body = `Receive the following error from query: ${error}`;
+		return;
 	}
-	const firstPage = queryResult.body.tracks.items;
+	const firstPage = queryResult?.body?.tracks?.items;
+
+	if (firstPage === undefined) {
+		ctx.body = [];
+		return;
+	}
 
 	const parsedPage = firstPage.map(({ id, name }) => ({ id, name }));
 
