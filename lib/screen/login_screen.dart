@@ -19,7 +19,7 @@ class LoginScreen extends ConsumerWidget {
     void checkSignInStatus(AsyncValue<void> state) async {
       StorageRepository storage = StorageRepository();
 
-      if (await storage.readSecureData(keyUsername) != null) {
+      if (await storage.readSecureData(keyHandle) != null) {
         // nav to homepage
         Future.delayed(Duration.zero, () {
           Navigator.pushAndRemoveUntil(
