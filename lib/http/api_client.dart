@@ -3,8 +3,7 @@ import 'package:dio/dio.dart';
 class ApiClient {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl:
-          '', // TO:DO change this to an actual base url
+      baseUrl: '', // TO:DO change this to an actual base url
     ),
   );
 

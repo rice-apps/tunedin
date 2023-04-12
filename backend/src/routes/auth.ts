@@ -55,7 +55,7 @@ router.get('/', async (ctx, next) => {
 
 		ctx.body = {
 			token: token,
-			username: user.username,
+			handle: user.handle,
 		};
 	} else {
 		ctx.status = 401;

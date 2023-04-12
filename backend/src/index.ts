@@ -5,6 +5,7 @@ import db from './db';
 import userRouter from './routes/user';
 import spotifyRouter from './routes/spotify';
 import postRouter from './routes/post';
+import groupRoute from './routes/group';
 import authRouter from './routes/auth';
 import { jwt } from './jwt';
 
@@ -34,6 +35,9 @@ app.use(spotifyRouter.allowedMethods());
 
 app.use(postRouter.routes());
 app.use(postRouter.allowedMethods());
+//Add group router
+app.use(groupRoute.routes());
+app.use(groupRoute.allowedMethods());
 
 app.listen(PORT);
 

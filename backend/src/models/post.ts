@@ -24,6 +24,9 @@ class Post extends BaseEntity {
 	musicURL: string;
 
 	@Column()
+	createdAt: Date;
+
+	@Column()
 	likedBy: mongodb.ObjectId[];
 
 	@Column()
