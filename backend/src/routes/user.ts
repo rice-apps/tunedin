@@ -50,7 +50,7 @@ router.put('/:username/', async (ctx, next) => {
 	const user = new User();
 	const body = ctx.request.body as any;
 
-	if (await User.findOneBy({ username: ctx.params.username }) || !body) {
+	if ((await User.findOneBy({ username: ctx.params.username })) || !body) {
 		ctx.status = 400;
 	} else {
 		user.username = ctx.params.username;

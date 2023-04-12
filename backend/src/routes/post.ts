@@ -27,12 +27,12 @@ router.get('/:postID', async (ctx, next) => {
 router.post('/', async (ctx, next) => {
 	const post = new Post();
 	post.id = new mongodb.ObjectId();
-	post.author = await User.findOneBy(mongodb.ObjectId(ctx.state.user.id))
+	post.author = await User.findOneBy(mongodb.ObjectId(ctx.state.user.id));
 	post.numLikes = 0;
 	post.author.posts.push(post.id);
 
 	const requestBody = ctx.request.body as any;
-	const bodyText= requestBody.bodyText || '';
+	const bodyText = requestBody.bodyText || '';
 	const musicURL = requestBody.musicURL || '';
 
 	post.bodyText = bodyText;
