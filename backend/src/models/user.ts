@@ -1,11 +1,4 @@
-import {
-	Entity,
-	ObjectIdColumn,
-	Column,
-	BaseEntity,
-	ManyToMany,
-	JoinTable,
-} from 'typeorm';
+import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
 import mongodb from 'mongodb';
 
 @Entity()
@@ -20,14 +13,16 @@ class User extends BaseEntity {
 	username: string;
 
 	@Column()
-	displayName: string;
+	name: string;
 
-	@ManyToMany(() => User, (user) => user.followers)
-	@JoinTable()
-	following: User[];
+	@Column()
+	posts: mongodb.ObjectId[];
 
-	@ManyToMany(() => User, (user) => user.following)
-	followers: User[];
+	@Column()
+	followers: mongodb.ObjectId[];
+
+	@Column()
+	timeline: mongodb.ObjectId[];
 }
 
 export default User;
