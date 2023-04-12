@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+import 'package:rice_music_sharing/screen/group_and_profile_screen.dart';
+=======
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice_music_sharing/data/repositories/storage_repository.dart';
 import 'screen/home_screen.dart';
 import 'screen/login_screen.dart';
+>>>>>>> develop
 import 'themes/themes.dart';
 import '../constants.dart';
 import 'screen/discovery_screen.dart';
