@@ -1,9 +1,13 @@
 import Router from '@koa/router';
 import User from '../models/user';
+import Post from '../models/post';
+import bodyParser from 'koa-bodyparser';
 
 const router = new Router({
 	prefix: '/users',
 });
+
+router.use(bodyParser());
 
 router.get('/', async (ctx, next) => {
 	ctx.body = await User.find();
@@ -11,7 +15,7 @@ router.get('/', async (ctx, next) => {
 
 router.get('/:handle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		username: ctx.params.username,
+		handle: ctx.params.handle,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -20,12 +24,99 @@ router.get('/:handle', async (ctx, next) => {
 	ctx.body = user;
 });
 
-router.put('/newuser', async (ctx, next) => {
+router.get('/:handle/followers', async (ctx, next) => {
+	const user = await User.findOneBy({
+		handle: ctx.params.handle,
+	});
+	if (user === null) {
+		ctx.status = 404;
+		return;
+	}
+	ctx.body = user.followers;
+});
+
+router.get('/timeline', async (ctx, next) => {
+	const user = await User.findOneBy({
+		id: ctx.state.user.id,
+	});
+	if (user === null) {
+		ctx.status = 404;
+		return;
+	}
+	ctx.body = user.timeline;
+});
+
+router.put('/:handle/', async (ctx, next) => {
 	const user = new User();
-	user.handle = ctx.state.user.handle;
-	user.displayname = ctx.state.user.displayname;
-	await user.save();
-	ctx.body = user;
+	const body = ctx.request.body as any;
+
+	if ((await User.findOneBy({ handle: ctx.params.handle })) || !body) {
+		ctx.status = 400;
+	} else {
+		user.handle = ctx.params.handle;
+		user.name = body.name;
+		user.netid = body.netid;
+		user.followers = [];
+		user.timeline = [];
+		await user.save();
+		ctx.body = user;
+	}
+});
+
+router.put('/:handle/edit', async (ctx, next) => {
+	const user = await User.findOneBy({ handle: ctx.params.handle });
+	const body = ctx.request.body as any;
+
+	if (!user || !body) {
+		ctx.status = 400;
+	} else {
+		user.name = body.name;
+		await user.save();
+		ctx.body = user;
+	}
+});
+
+router.post('/follow/:handle', async (ctx, next) => {
+	const user = await User.findOneBy({
+		id: ctx.state.user.id,
+	});
+	const following = await User.findOneBy({
+		handle: ctx.params.handle,
+	});
+	if (user === null || following === null) {
+		ctx.status = 404;
+		return;
+	}
+	//check to see if user is already following them
+	if (following.followers.includes(user.id)) {
+		ctx.status = 400;
+		return;
+	}
+	following.followers.push(user.id);
+	await following.save();
+	user.timeline = user.timeline.concat(following.posts);
+	ctx.body = following.followers;
+});
+
+router.post('/unfollow/:handle', async (ctx, next) => {
+	const user = await User.findOneBy({
+		id: ctx.state.user.id,
+	});
+	const unfollowing = await User.findOneBy({
+		handle: ctx.params.handle,
+	});
+	if (user === null || unfollowing === null) {
+		ctx.status = 404;
+		return;
+	}
+	unfollowing.followers = unfollowing.followers.filter((id) => id !== user.id);
+	await unfollowing.save();
+	//remove all postIDs from user.timeline authored by unfollowing
+	user.timeline = user.timeline.filter(async (id) => {
+		const post = await Post.findOneBy(id);
+		return post.author !== unfollowing.id;
+	});
+	ctx.body = unfollowing.followers;
 });
 
 router.delete('/', async (ctx, next) => {
@@ -35,7 +126,7 @@ router.delete('/', async (ctx, next) => {
 
 router.delete('/:handle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		username: ctx.params.username,
+		handle: ctx.params.handle,
 	});
 	if (user === null) {
 		ctx.status = 404;

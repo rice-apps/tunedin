@@ -6,11 +6,23 @@ class User extends BaseEntity {
 	@ObjectIdColumn()
 	id: typeof mongodb.ObjectId;
 
-	@Column()
-	username: string;
+	@Column({ unique: true })
+	netid: string;
 
 	@Column()
-	displayname: string;
+	handle: string;
+
+	@Column()
+	name: string;
+
+	@Column()
+	posts: mongodb.ObjectId[];
+
+	@Column()
+	followers: mongodb.ObjectId[];
+
+	@Column()
+	timeline: mongodb.ObjectId[];
 }
 
 export default User;

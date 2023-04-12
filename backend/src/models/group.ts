@@ -18,7 +18,7 @@ class Group extends BaseEntity {
 	handle: string;
 
 	@Column()
-	displayname: string;
+	name: string;
 
 	@Column()
 	description: string;
