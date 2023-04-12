@@ -50,12 +50,12 @@ router.put('/:handle/', async (ctx, next) => {
 	const user = new User();
 	const body = ctx.request.body as any;
 
-	if ((await User.findOneBy({ handle: ctx.params.handle })) || !body) {
+	if (await User.findOneBy({ handle: ctx.params.handle })) {
 		ctx.status = 400;
 	} else {
 		user.handle = ctx.params.handle;
-		user.name = body.name;
-		user.netid = body.netid;
+		user.name = body.name || '';
+		user.netid = body.netid || '';
 		user.followers = [];
 		user.timeline = [];
 		await user.save();
@@ -113,7 +113,7 @@ router.post('/unfollow/:handle', async (ctx, next) => {
 	await unfollowing.save();
 	//remove all postIDs from user.timeline authored by unfollowing
 	user.timeline = user.timeline.filter(async (id) => {
-		const post = await Post.findOneBy(id);
+		const post = await Post.findOneBy({ id: id });
 		return post.author !== unfollowing.id;
 	});
 	ctx.body = unfollowing.followers;

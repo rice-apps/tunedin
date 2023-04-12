@@ -1,11 +1,4 @@
-import {
-	Entity,
-	ObjectIdColumn,
-	BaseEntity,
-	Column,
-	ManyToMany,
-	JoinTable,
-} from 'typeorm';
+import { Entity, ObjectIdColumn, BaseEntity, Column } from 'typeorm';
 import User from './user';
 import mongodb from 'mongodb';
 

@@ -2,6 +2,8 @@ import { DataSource } from 'typeorm';
 import User from './models/user';
 import Post from './models/post';
 import Group from './models/group';
+import Comment from './models/comment';
+
 import {
 	MONGODB_HOST,
 	MONGODB_USER,
@@ -16,7 +18,8 @@ const db = new DataSource({
 	username: MONGODB_USER,
 	password: MONGODB_PASSWORD,
 	database: MONGODB_DB,
-	entities: [User, Post, Group],
+	entities: [User, Post, Group, Comment],
+	synchronize: true,
 	ssl: true,
 	authSource: 'admin',
 });
