@@ -10,7 +10,7 @@ class User extends BaseEntity {
 	netid: string;
 
 	@Column()
-	username: string;
+	handle: string;
 
 	@Column()
 	name: string;

@@ -27,9 +27,9 @@ class AuthRepository {
     final result = json.decode(response.body);
 
     if (result != null && result['success']) {
-      // save this user's token and username
+      // save this user's token and handle
       storage.writeSecureData(keyToken, result['token']);
-      storage.writeSecureData(keyUsername, result['username']);
+      storage.writeSecureData(keyHandle, result['handle']);
     } else if (!result['success']) {
       throw Exception(result['message']);
     } else {
@@ -42,10 +42,10 @@ class AuthRepository {
   }
 
   Future<UserModel?> get user async {
-    String? username = await storage.readSecureData(keyUsername);
-    if (username != null) {
+    String? handle = await storage.readSecureData(keyHandle);
+    if (handle != null) {
       final response =
-          await client.get(Uri.parse('$baseUrl/users/$username'), headers: {
+          await client.get(Uri.parse('$baseUrl/users/$handle'), headers: {
         'Authorization': 'Bearer $_token',
       });
       final result = json.decode(response.body);

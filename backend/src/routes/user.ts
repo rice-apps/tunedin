@@ -13,9 +13,9 @@ router.get('/', async (ctx, next) => {
 	ctx.body = await User.find();
 });
 
-router.get('/:username', async (ctx, next) => {
+router.get('/:handle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		username: ctx.params.username,
+		handle: ctx.params.handle,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -24,9 +24,9 @@ router.get('/:username', async (ctx, next) => {
 	ctx.body = user;
 });
 
-router.get('/:username/followers', async (ctx, next) => {
+router.get('/:handle/followers', async (ctx, next) => {
 	const user = await User.findOneBy({
-		username: ctx.params.username,
+		handle: ctx.params.handle,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -46,14 +46,14 @@ router.get('/timeline', async (ctx, next) => {
 	ctx.body = user.timeline;
 });
 
-router.put('/:username/', async (ctx, next) => {
+router.put('/:handle/', async (ctx, next) => {
 	const user = new User();
 	const body = ctx.request.body as any;
 
-	if ((await User.findOneBy({ username: ctx.params.username })) || !body) {
+	if ((await User.findOneBy({ handle: ctx.params.handle })) || !body) {
 		ctx.status = 400;
 	} else {
-		user.username = ctx.params.username;
+		user.handle = ctx.params.handle;
 		user.name = body.name;
 		user.netid = body.netid;
 		user.followers = [];
@@ -63,52 +63,76 @@ router.put('/:username/', async (ctx, next) => {
 	}
 });
 
-router.post('/follow/:username2', async (ctx, next) => {
-	const user1 = await User.findOneBy({
+router.put('/:handle/edit', async (ctx, next) => {
+	const user = await User.findOneBy({ handle: ctx.params.handle });
+	const body = ctx.request.body as any;
+
+	if (!user || !body) {
+		ctx.status = 400;
+	} else {
+		user.name = body.name;
+		await user.save();
+		ctx.body = user;
+	}
+});
+
+router.post('/follow/:handle', async (ctx, next) => {
+	const user = await User.findOneBy({
 		id: ctx.state.user.id,
 	});
-	const user2 = await User.findOneBy({
-		username: ctx.params.username2,
+	const following = await User.findOneBy({
+		handle: ctx.params.handle,
 	});
-	if (user1 === null || user2 === null) {
+	if (user === null || following === null) {
 		ctx.status = 404;
 		return;
 	}
-	//check to see if user is already following user2
-	if (user2.followers.includes(user1.id)) {
+	//check to see if user is already following them
+	if (following.followers.includes(user.id)) {
 		ctx.status = 400;
 		return;
 	}
-	user2.followers.push(user1.id);
-	await user2.save();
-	user1.timeline = user1.timeline.concat(user2.posts);
-	ctx.body = user2.followers;
+	following.followers.push(user.id);
+	await following.save();
+	user.timeline = user.timeline.concat(following.posts);
+	ctx.body = following.followers;
 });
 
-router.post('/unfollow/:username2', async (ctx, next) => {
-	const user1 = await User.findOneBy({
+router.post('/unfollow/:handle', async (ctx, next) => {
+	const user = await User.findOneBy({
 		id: ctx.state.user.id,
 	});
-	const user2 = await User.findOneBy({
-		username: ctx.params.username2,
+	const unfollowing = await User.findOneBy({
+		handle: ctx.params.handle,
 	});
-	if (user1 === null || user2 === null) {
+	if (user === null || unfollowing === null) {
 		ctx.status = 404;
 		return;
 	}
-	user2.followers = user2.followers.filter((id) => id !== user1.id);
-	await user2.save();
-	//remove all postIDs from user1.timeline authored by user2
-	user1.timeline = user1.timeline.filter(async (id) => {
+	unfollowing.followers = unfollowing.followers.filter((id) => id !== user.id);
+	await unfollowing.save();
+	//remove all postIDs from user.timeline authored by unfollowing
+	user.timeline = user.timeline.filter(async (id) => {
 		const post = await Post.findOneBy(id);
-		return post.author !== user2.id;
+		return post.author !== unfollowing.id;
 	});
-	ctx.body = user2.followers;
+	ctx.body = unfollowing.followers;
 });
 
 router.delete('/', async (ctx, next) => {
 	const users = await User.find();
 	ctx.body = await User.remove(users);
+});
+
+router.delete('/:handle', async (ctx, next) => {
+	const user = await User.findOneBy({
+		handle: ctx.params.handle,
+	});
+	if (user === null) {
+		ctx.status = 404;
+		return;
+	}
+	ctx.body = await User.remove(user);
 });
 
 export default router;
