@@ -3,7 +3,6 @@ import Post from '../models/post';
 import User from '../models/user';
 import mongodb from 'mongodb';
 import bodyParser from 'koa-bodyparser';
-import { MetadataWithSuchNameAlreadyExistsError } from 'typeorm';
 
 const router = new Router({
 	prefix: '/posts',
@@ -28,12 +27,12 @@ router.get('/:postID', async (ctx, next) => {
 router.post('/', async (ctx, next) => {
 	const post = new Post();
 	post.id = new mongodb.ObjectId();
-	post.author = ctx.state.user.id;
+	post.author = await User.findOneBy(mongodb.ObjectId(ctx.state.user.id))
 	post.numLikes = 0;
 	post.author.posts.push(post.id);
 
 	const requestBody = ctx.request.body as any;
-	const bodyText = requestBody.bodyText || '';
+	const bodyText= requestBody.bodyText || '';
 	const musicURL = requestBody.musicURL || '';
 
 	post.bodyText = bodyText;
@@ -48,6 +47,7 @@ router.post('/', async (ctx, next) => {
 	ctx.body = post;
 });
 router.post('/:postID/like', async (ctx, next) => {
+	// need to add field of liked posts to user model
 	const post = await Post.findOneBy(mongodb.ObjectId(ctx.params.postID));
 	if (post === null) {
 		ctx.status = 404;
@@ -77,6 +77,14 @@ router.delete('/:postID', async (ctx, next) => {
 	author.posts = author.posts.filter(async (id) => {
 		id !== post.id;
 	});
+
+	for (let i = 0; i < post.author.followers.length; i++) {
+		const follower = post.author.followers[i];
+		// filter followers' timelines to not include this post
+		follower.timeline = follower.timeline.filter(async (p: Post) => {
+			return p.id !== post.id;
+		});
+	}
 });
 
 router.delete('/', async (ctx, next) => {

@@ -1,10 +1,13 @@
 import Router from '@koa/router';
 import User from '../models/user';
 import Post from '../models/post';
+import bodyParser from 'koa-bodyparser';
 
 const router = new Router({
 	prefix: '/users',
 });
+
+router.use(bodyParser());
 
 router.get('/', async (ctx, next) => {
 	ctx.body = await User.find();
@@ -34,7 +37,7 @@ router.get('/:username/followers', async (ctx, next) => {
 
 router.get('/timeline', async (ctx, next) => {
 	const user = await User.findOneBy({
-		username: ctx.state.user.id,
+		id: ctx.state.user.id,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -43,19 +46,16 @@ router.get('/timeline', async (ctx, next) => {
 	ctx.body = user.timeline;
 });
 
-//get all users
-router.get('/', async (ctx, next) => {
-	ctx.body = await User.find();
-});
-
-router.put('/:username/:name', async (ctx, next) => {
+router.put('/:username/', async (ctx, next) => {
 	const user = new User();
-	if (await User.findOneBy({ username: ctx.params.username })) {
+	const body = ctx.request.body as any;
+
+	if (await User.findOneBy({ username: ctx.params.username }) || !body) {
 		ctx.status = 400;
 	} else {
 		user.username = ctx.params.username;
-		user.name = ctx.params.name;
-		user.netid = ctx.state.user.netid;
+		user.name = body.name;
+		user.netid = body.netid;
 		user.followers = [];
 		user.timeline = [];
 		await user.save();
@@ -63,24 +63,9 @@ router.put('/:username/:name', async (ctx, next) => {
 	}
 });
 
-router.post('/timeline', async (ctx, next) => {
-	const user = await User.findOneBy({
-		username: ctx.state.user.id,
-	});
-	if (user === null) {
-		ctx.status = 404;
-		return;
-	}
-	const requestBody = ctx.request.body as any;
-	const postID = requestBody.postID;
-	user.timeline.push(postID);
-	await user.save();
-	ctx.body = user.timeline;
-});
-
-router.post('/following/:username2', async (ctx, next) => {
+router.post('/follow/:username2', async (ctx, next) => {
 	const user1 = await User.findOneBy({
-		username: ctx.state.user.id,
+		id: ctx.state.user.id,
 	});
 	const user2 = await User.findOneBy({
 		username: ctx.params.username2,
@@ -100,9 +85,9 @@ router.post('/following/:username2', async (ctx, next) => {
 	ctx.body = user2.followers;
 });
 
-router.post('/unfollowing/:username2', async (ctx, next) => {
+router.post('/unfollow/:username2', async (ctx, next) => {
 	const user1 = await User.findOneBy({
-		username: ctx.state.user.id,
+		id: ctx.state.user.id,
 	});
 	const user2 = await User.findOneBy({
 		username: ctx.params.username2,
