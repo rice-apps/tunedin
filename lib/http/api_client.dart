@@ -1,11 +1,29 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
-class ApiClient {
-  final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: '', // TO:DO change this to an actual base url
-    ),
-  );
+import '../constants.dart';
+import '../data/repositories/storage_repository.dart';
 
-  Dio get http => _dio;
+final String baseUrl = Platform.isAndroid ? backendURLAndroid : backendURL;
+
+StorageRepository storage = StorageRepository();
+
+Future<String?> get _token async {
+  String? token = await storage.readSecureData(keyToken);
+  return token;
+}
+
+class ApiClient {
+  Future<Dio> getDio() async {
+    final token = await _token;
+    Map<String, dynamic> header = {
+      'Authorization': 'Bearer $token',
+    };
+
+    final options = BaseOptions(baseUrl: baseUrl, headers: header);
+    return Dio(options);
+  }
+
+  Future<Dio> get http async => await getDio();
 }

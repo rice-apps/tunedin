@@ -11,45 +11,54 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.background,
-        title: Text(
-          "TunedIn",
-          style: Theme.of(context).textTheme.titleLarge,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          title: Text(
+            "TunedIn",
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.add,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.notifications,
+              ),
+              onPressed: () {},
+            ),
+          ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-            ),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.notifications,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: ListView.builder(
-          itemBuilder: (context, index) => ProviderScope(
-                overrides: [
-                  postStateProvider.overrideWith(
-                    (ref) => PostState(
-                      PostModel(
-                        netID: "123",
-                        numLikes: 0,
-                        bodyText: "Hello World",
-                        musicURL: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
-                      ),
-                    ),
-                  ),
-                ],
-                child: const PostWidget(),
-              )),
-    );
+        body: const PostScroll());
+  }
+}
+
+class PostScroll extends ConsumerWidget {
+  const PostScroll({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final posts = ref.watch(postListProvider);
+    return posts.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Text('Error: $err'),
+        data: (posts) {
+          return ListView.builder(
+              itemCount: posts.length,
+              itemBuilder: (BuildContext context, int idx) {
+                final PostModel post = posts[idx];
+                return ProviderScope(
+                  overrides: [
+                    postStateProvider.overrideWith((ref) => PostState(post))
+                  ],
+                  child: const PostWidget(),
+                );
+              });
+        });
   }
 }

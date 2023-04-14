@@ -1,14 +1,17 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rice_music_sharing/data/repositories/storage_repository.dart';
-import 'package:rice_music_sharing/screen/home_screen.dart';
 import 'package:rice_music_sharing/screen/login_screen_controller.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../../constants.dart';
+import '../main.dart';
 
-var casLoginURL =
+final String baseUrl = Platform.isAndroid ? backendURLAndroid : backendURL;
+
+const casLoginURL =
     'https://idp.rice.edu/idp/profile/cas/login?service=$backendURL/';
 
 class LoginScreen extends ConsumerWidget {
@@ -17,14 +20,17 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void checkSignInStatus(AsyncValue<void> state) async {
+      if (state.isLoading) {
+        return;
+      }
       StorageRepository storage = StorageRepository();
-
-      if (await storage.readSecureData(keyHandle) != null) {
+      final handle = await storage.readSecureData(keyHandle);
+      if (handle != null) {
         // nav to homepage
         Future.delayed(Duration.zero, () {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const TunedIn()),
               (Route<dynamic> route) => false);
         });
       } else {
@@ -32,7 +38,7 @@ class LoginScreen extends ConsumerWidget {
         Future.delayed(Duration.zero, () {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const TunedIn()),
               (Route<dynamic> route) => false);
         });
       }

@@ -1,7 +1,9 @@
 import Router from '@koa/router';
 import User from '../models/user';
 import Post from '../models/post';
+import mongodb from 'mongodb';
 import bodyParser from 'koa-bodyparser';
+import db from '../db';
 
 const router = new Router({
 	prefix: '/users',
@@ -35,15 +37,26 @@ router.get('/:handle/followers', async (ctx, next) => {
 	ctx.body = user.followers;
 });
 
-router.get('/timeline', async (ctx, next) => {
-	const user = await User.findOneBy({
-		id: ctx.state.user.id,
-	});
+router.get('/:handle/timeline', async (ctx, next) => {
+	const user = await User.findOne(mongodb.ObjectId(ctx.state.user.id));
 	if (user === null) {
 		ctx.status = 404;
 		return;
 	}
-	ctx.body = user.timeline;
+
+	const postIDs = user.timeline;
+
+	const timeline = await db.getRepository(Post).find({
+		where: {
+			id: { $in: postIDs },
+		},
+		order: {
+			createdAt: 'DESC',
+		},
+		take: 30,
+	});
+
+	ctx.body = timeline;
 });
 
 router.put('/:handle/', async (ctx, next) => {
@@ -78,7 +91,7 @@ router.put('/:handle/edit', async (ctx, next) => {
 
 router.post('/follow/:handle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		id: ctx.state.user.id,
+		id: mongodb.ObjectId(ctx.state.user.id),
 	});
 	const following = await User.findOneBy({
 		handle: ctx.params.handle,
@@ -100,7 +113,7 @@ router.post('/follow/:handle', async (ctx, next) => {
 
 router.post('/unfollow/:handle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		id: ctx.state.user.id,
+		id: mongodb.ObjectId(ctx.state.user.id),
 	});
 	const unfollowing = await User.findOneBy({
 		handle: ctx.params.handle,

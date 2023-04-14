@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class PostSongDetails extends StatelessWidget {
   const PostSongDetails({super.key});
-
+  // add SongModel as input
   @override
   Widget build(BuildContext context) {
     return Column(
