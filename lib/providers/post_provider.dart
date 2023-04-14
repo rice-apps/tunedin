@@ -23,4 +23,4 @@ class PostState extends StateNotifier<PostModel> {
 
 final postStateProvider =
     StateNotifierProvider.autoDispose<PostState, PostModel>(
-        throw UnimplementedError());
+        (_) => throw UnimplementedError());

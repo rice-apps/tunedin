@@ -3,8 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable(explicitToJson: true)
 class UserModel {
   String? netID;
-  String? displayName;
-  String? userName;
+  String? name;
+  String? handle;
 
   List<UserModel>? following;
   List<UserModel>? followers;
@@ -13,8 +13,8 @@ class UserModel {
 
   UserModel(
       {required this.netID,
-      required this.displayName,
-      required this.userName,
+      required this.name,
+      required this.handle,
       required this.following,
       required this.followers,
       required this.token});
@@ -22,8 +22,8 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
         netID: json['netid'],
-        displayName: json['displayname'],
-        userName: json['username'],
+        name: json['name'],
+        handle: json['handle'],
         following: json['following'],
         followers: json['followers'],
         token: json['token']);
@@ -31,8 +31,8 @@ class UserModel {
 
   Map<String, dynamic> toJson() => {
         'netid': netID,
-        'displayname': displayName,
-        'username': userName,
+        'name': name,
+        'handle': handle,
         'following': following,
         'followers': followers,
         'token': token

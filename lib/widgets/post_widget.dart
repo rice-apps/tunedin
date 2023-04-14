@@ -3,21 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_stack/image_stack.dart';
 import 'package:rice_music_sharing/widgets/post_action_button.dart';
 
-import '../controllers/post_controller.dart';
+// import '../controllers/post_controller.dart';
+import '../providers/post_provider.dart';
 
-class PostWidget extends ConsumerStatefulWidget {
+class PostWidget extends ConsumerWidget {
   const PostWidget({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<PostWidget> createState() => PostWidgetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // late PostController controller = PostController(ref);
 
-class PostWidgetState extends ConsumerState<PostWidget> {
-  late PostController controller = PostController(ref);
-
-  @override
-  Widget build(BuildContext context) {
-    // final post = ref.watch(postStateProvider);
+    final post = ref.watch(postStateProvider);
 
     // you can use functions such like
     // controller.likePost();
@@ -54,7 +50,7 @@ class PostWidgetState extends ConsumerState<PostWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "David shared to Will Rice College",
+                    "${post.author.name} shared to Will Rice College",
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.w500,
                         ),
@@ -125,12 +121,11 @@ class PostWidgetState extends ConsumerState<PostWidget> {
           ),
           RichText(
               text: TextSpan(
-            text: 'David ',
+            text: '${post.author.name} ',
             style: Theme.of(context).textTheme.labelLarge,
             children: <TextSpan>[
               TextSpan(
-                text:
-                    'I love this song! Throwback to the early 2000s. Anyone else miss Katy Perry? I love this song! Throwback to the early 2000s. Anyone else miss Katy Perry?',
+                text: post.bodyText,
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge

@@ -3,12 +3,10 @@ import axios from 'axios';
 import User from '../models/user';
 import xml2js from 'xml2js';
 import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
+import { JWT_SECRET } from '../jwt';
 import { stripPrefix } from 'xml2js/lib/processors';
 
 import { CAS_SERVICE_URL } from '../config';
-
-const JWT_SECRET = crypto.randomBytes(20).toString('hex');
 
 /**
  * Parser used for XML response by CAS

@@ -26,11 +26,11 @@ class AuthRepository {
     );
     final result = json.decode(response.body);
 
-    if (result != null && result['success']) {
+    if (result != null && result['token'] != null) {
       // save this user's token and handle
       storage.writeSecureData(keyToken, result['token']);
       storage.writeSecureData(keyHandle, result['handle']);
-    } else if (!result['success']) {
+    } else if (result['token'] == null) {
       throw Exception(result['message']);
     } else {
       throw Exception('Unknown sign-in error.');
