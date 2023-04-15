@@ -16,10 +16,10 @@ class PostRepository {
     });
   }
 
-  Future<PostModel> createPost(String? bodyText, String? musicUrl) async {
+  Future<PostModel> createPost(String? bodyText, String? musicURL) async {
     return await postApiClient.http.then((dio) => dio.post('/posts', data: {
           'bodyText': bodyText,
-          'musicUrl': musicUrl,
+          'musicURL': musicURL,
         }).then((response) {
           return PostModel.fromJson(response.data);
         }));

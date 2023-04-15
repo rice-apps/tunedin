@@ -23,7 +23,7 @@ router.get('/:grouphandle', async (ctx, next) => {
 
 router.put('/:grouphandle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		id: ctx.user.state.id,
+		_id: ctx.user.state.id,
 	});
 	if (user === null) {
 		console.log('This user does not exist.');
@@ -54,7 +54,7 @@ router.put('/join/:grouphandle', async (ctx, next) => {
 		return;
 	}
 	const user = await User.findOneBy({
-		id: ctx.state.user.id,
+		_id: ctx.state.user.id,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -74,7 +74,7 @@ router.put('/follow/:grouphandle', async (ctx, next) => {
 		return;
 	}
 	const user = await User.findOneBy({
-		id: ctx.state.user.id,
+		_id: ctx.state.user.id,
 	});
 	if (user === null) {
 		ctx.status = 404;
@@ -108,7 +108,7 @@ router.delete('/member/:grouphandle/:userhandle', async (ctx, next) => {
 		ctx.status = 404;
 		return;
 	}
-	group.members = group.members.filter((member) => member.id !== user.id);
+	group.members = group.members.filter((member) => member._id !== user._id);
 	await group.save();
 	ctx.body = group;
 });
@@ -129,7 +129,7 @@ router.delete('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 		return;
 	}
 	group.followers = group.followers.filter(
-		(follower) => follower.id !== user.id
+		(follower) => follower._id !== user._id
 	);
 	await group.save();
 	ctx.body = group;

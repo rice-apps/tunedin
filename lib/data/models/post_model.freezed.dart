@@ -20,7 +20,9 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PostModel {
+  @JsonKey(name: '_id')
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: '_id')
   set id(String value) => throw _privateConstructorUsedError;
   UserModel get author => throw _privateConstructorUsedError;
   set author(UserModel value) => throw _privateConstructorUsedError;
@@ -47,7 +49,7 @@ abstract class $PostModelCopyWith<$Res> {
       _$PostModelCopyWithImpl<$Res, PostModel>;
   @useResult
   $Res call(
-      {String id,
+      {@JsonKey(name: '_id') String id,
       UserModel author,
       List<String> likedBy,
       int? numLikes,
@@ -118,7 +120,7 @@ abstract class _$$_PostModelCopyWith<$Res> implements $PostModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {@JsonKey(name: '_id') String id,
       UserModel author,
       List<String> likedBy,
       int? numLikes,
@@ -183,7 +185,7 @@ class __$$_PostModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
   _$_PostModel(
-      {required this.id,
+      {@JsonKey(name: '_id') required this.id,
       required this.author,
       required this.likedBy,
       this.numLikes,
@@ -195,6 +197,7 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
       _$$_PostModelFromJson(json);
 
   @override
+  @JsonKey(name: '_id')
   String id;
   @override
   UserModel author;
@@ -244,7 +247,7 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
 
 abstract class _PostModel implements PostModel {
   factory _PostModel(
-      {required String id,
+      {@JsonKey(name: '_id') required String id,
       required UserModel author,
       required List<String> likedBy,
       int? numLikes,
@@ -256,7 +259,9 @@ abstract class _PostModel implements PostModel {
       _$_PostModel.fromJson;
 
   @override
+  @JsonKey(name: '_id')
   String get id;
+  @JsonKey(name: '_id')
   set id(String value);
   @override
   UserModel get author;

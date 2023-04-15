@@ -30,6 +30,9 @@ dependencies:
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
   image_stack: ^2.1.1
+  sheet: ^0.0.4+1
+  page_transition: ^2.0.9
+  flutter_keyboard_visibility: ^5.4.0
   flutter_svg: ^1.1.6
   http: ^0.13.5
   permission_handler: ^9.2.0

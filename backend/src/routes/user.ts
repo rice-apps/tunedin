@@ -48,7 +48,7 @@ router.get('/:handle/timeline', async (ctx, next) => {
 
 	const timeline = await db.getRepository(Post).find({
 		where: {
-			id: { $in: postIDs },
+			_id: { $in: postIDs },
 		},
 		order: {
 			createdAt: 'DESC',
@@ -91,7 +91,7 @@ router.put('/:handle/edit', async (ctx, next) => {
 
 router.post('/follow/:handle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		id: mongodb.ObjectId(ctx.state.user.id),
+		_id: mongodb.ObjectId(ctx.state.user.id),
 	});
 	const following = await User.findOneBy({
 		handle: ctx.params.handle,
@@ -101,11 +101,11 @@ router.post('/follow/:handle', async (ctx, next) => {
 		return;
 	}
 	//check to see if user is already following them
-	if (following.followers.includes(user.id)) {
+	if (following.followers.includes(user._id)) {
 		ctx.status = 400;
 		return;
 	}
-	following.followers.push(user.id);
+	following.followers.push(user._id);
 	await following.save();
 	user.timeline = user.timeline.concat(following.posts);
 	ctx.body = following.followers;
@@ -113,7 +113,7 @@ router.post('/follow/:handle', async (ctx, next) => {
 
 router.post('/unfollow/:handle', async (ctx, next) => {
 	const user = await User.findOneBy({
-		id: mongodb.ObjectId(ctx.state.user.id),
+		_id: mongodb.ObjectId(ctx.state.user.id),
 	});
 	const unfollowing = await User.findOneBy({
 		handle: ctx.params.handle,
@@ -122,12 +122,12 @@ router.post('/unfollow/:handle', async (ctx, next) => {
 		ctx.status = 404;
 		return;
 	}
-	unfollowing.followers = unfollowing.followers.filter((id) => id !== user.id);
+	unfollowing.followers = unfollowing.followers.filter((id) => id !== user._id);
 	await unfollowing.save();
 	//remove all postIDs from user.timeline authored by unfollowing
 	user.timeline = user.timeline.filter(async (id) => {
-		const post = await Post.findOneBy({ id: id });
-		return post.author !== unfollowing.id;
+		const post = await Post.findOneBy({ _id: id });
+		return post.author !== unfollowing._id;
 	});
 	ctx.body = unfollowing.followers;
 });

@@ -95,7 +95,7 @@ const authenticateTicket = async (ticket) => {
 const createToken = (user: User): string => {
 	const token = jwt.sign(
 		{
-			id: user.id,
+			id: user._id,
 			netid: user.netid,
 		},
 		JWT_SECRET,

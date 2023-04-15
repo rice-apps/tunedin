@@ -5,7 +5,7 @@ import User from './user';
 @Entity()
 class Comment extends BaseEntity {
 	@ObjectIdColumn()
-	id: typeof mongodb.ObjectId;
+	_id: typeof mongodb.ObjectId;
 
 	@Column()
 	author: User;

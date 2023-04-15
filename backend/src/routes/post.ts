@@ -17,7 +17,7 @@ router.get('/', async (ctx, next) => {
 
 router.get('/:postID', async (ctx, next) => {
 	const post = await Post.findOneBy({
-		id: mongodb.ObjectId(ctx.params.postID),
+		_id: mongodb.ObjectId(ctx.params.postID),
 	});
 
 	if (post === null) {
@@ -29,13 +29,14 @@ router.get('/:postID', async (ctx, next) => {
 
 router.post('/', async (ctx, next) => {
 	const post = new Post();
-	post.id = new mongodb.ObjectId();
+	post._id = new mongodb.ObjectId();
 	post.author = await User.findOneBy({
-		id: mongodb.ObjectId(ctx.state.user.id),
+		_id: mongodb.ObjectId(ctx.state.user.id),
 	});
 	post.likedBy = [];
 	post.comments = [];
-	post.author.posts.push(post.id);
+	post.author.posts.push(post._id);
+	post.author.timeline.push(post._id);
 
 	const requestBody = ctx.request.body as any;
 	const bodyText = requestBody.bodyText || '';
@@ -46,21 +47,21 @@ router.post('/', async (ctx, next) => {
 	post.createdAt = new Date();
 
 	for (let i = 0; i < post.author.followers.length; i++) {
-		post.author.followers[i].timeline.push(post.id);
+		post.author.followers[i].timeline.push(post._id);
 	}
-
+	await post.author.save();
 	ctx.body = await post.save();
 });
 
 router.post('/:postID/like', async (ctx, next) => {
 	// need to add field of liked posts to user model
 	const post = await Post.findOneBy({
-		id: mongodb.ObjectId(ctx.params.postID),
+		_id: mongodb.ObjectId(ctx.params.postID),
 	});
 
 	const requestBody = ctx.request.body as any;
 	const user = await User.findOneBy({
-		id: mongodb.ObjectId(ctx.state.user.id),
+		_id: mongodb.ObjectId(ctx.state.user.id),
 	});
 	const dir = parseInt(requestBody.dir);
 
@@ -75,11 +76,11 @@ router.post('/:postID/like', async (ctx, next) => {
 	// currently, we have no way of identifying based off the request given
 	// so we will just use the handle parameter to identify the user
 	if (dir === 1) {
-		console.log(`Num post likes: ${post.likedBy.push(user.id)}`);
+		console.log(`Num post likes: ${post.likedBy.push(user._id)}`);
 	} else {
 		// if they unlike the post, remove them from the likedBy array
 		// this covers the case where they have not liked the post yet
-		post.likedBy = post.likedBy.filter((id) => !id.equals(user.id));
+		post.likedBy = post.likedBy.filter((id) => !id.equals(user._id));
 	}
 	await post.save();
 	ctx.body = post;
@@ -88,7 +89,7 @@ router.post('/:postID/like', async (ctx, next) => {
 // delete a post by id
 router.delete('/:postID', async (ctx, next) => {
 	const post = await Post.findOneBy({
-		id: mongodb.ObjectId(ctx.params.postID),
+		_id: mongodb.ObjectId(ctx.params.postID),
 	});
 	ctx.body = await Post.remove(post);
 });
@@ -103,7 +104,7 @@ router.delete('/', async (ctx, next) => {
 //Get all comments from a post
 router.get('/:postID/comments', async (ctx, next) => {
 	const post = await Post.findOneBy({
-		id: mongodb.ObjectId(ctx.params.postID),
+		_id: mongodb.ObjectId(ctx.params.postID),
 	});
 	if (post === null) {
 		console.log(`No Post associated with ID: ${ctx.params.postID}`);
@@ -117,7 +118,7 @@ router.get('/:postID/comments', async (ctx, next) => {
 //Get a comment from a specific post.
 router.get('/:postID/comments/:commentID', async (ctx, next) => {
 	const comment = await Comment.findOneBy({
-		id: mongodb.ObjectId(ctx.params.commentID),
+		_id: mongodb.ObjectId(ctx.params.commentID),
 	});
 	if (comment == null) {
 		console.log(`No comment associated with ID: ${ctx.params.commendID}`);
@@ -131,7 +132,7 @@ router.get('/:postID/comments/:commentID', async (ctx, next) => {
 // request body should contain bodyText
 router.post('/:postID/comments', async (ctx, next) => {
 	const post = await Post.findOneBy({
-		id: mongodb.ObjectId(ctx.params.postID),
+		_id: mongodb.ObjectId(ctx.params.postID),
 	});
 	if (post === null) {
 		console.log(`No Post associated with ID: ${ctx.params.postID}`);
@@ -143,16 +144,16 @@ router.post('/:postID/comments', async (ctx, next) => {
 
 	const requestBody = ctx.request.body as any;
 	const bodyText = requestBody.bodyText || '';
-	comment.id = new mongodb.ObjectId();
+	comment._id = new mongodb.ObjectId();
 	comment.author = await User.findOneBy({
-		id: mongodb.ObjectId(ctx.state.user.id),
+		_id: mongodb.ObjectId(ctx.state.user.id),
 	});
 	comment.likedBy = [];
 	comment.bodyText = bodyText;
 
 	await Comment.create(comment);
 	await comment.save();
-	post.comments.push(comment.id);
+	post.comments.push(comment._id);
 	await post.save();
 
 	ctx.body = comment;
@@ -163,11 +164,11 @@ router.delete('/:postID/comments/:commentID', async (ctx, next) => {
 	const postID = mongodb.ObjectId(ctx.params.postID);
 	const commentID = mongodb.ObjectId(ctx.params.commentID);
 
-	const post = await Post.findOneBy({ id: postID });
+	const post = await Post.findOneBy({ _id: postID });
 	if (post === null) {
 		console.log('Post does not exist');
 	}
-	const comment = await Comment.findOneBy({ id: commentID });
+	const comment = await Comment.findOneBy({ _id: commentID });
 	if (comment === null) {
 		console.log('Comment does not exist');
 	}
@@ -180,20 +181,20 @@ router.delete('/:postID/comments/:commentID', async (ctx, next) => {
 //delete post by postID
 router.delete('/:postID', async (ctx, next) => {
 	const post = await Post.findOneBy({
-		id: mongodb.ObjectId(ctx.params.postID),
+		_id: mongodb.ObjectId(ctx.params.postID),
 	});
 	//get author of post
-	const author = await User.findOneBy({ id: mongodb.ObjectId(post.author) });
+	const author = await User.findOneBy({ _id: mongodb.ObjectId(post.author) });
 	//remove post from author's posts
 	author.posts = author.posts.filter(async (id) => {
-		id !== post.id;
+		id !== post._id;
 	});
 
 	for (let i = 0; i < post.author.followers.length; i++) {
 		const follower = post.author.followers[i];
 		// filter followers' timelines to not include this post
 		follower.timeline = follower.timeline.filter(async (p: Post) => {
-			return p.id !== post.id;
+			return p._id !== post._id;
 		});
 	}
 });

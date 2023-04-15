@@ -20,4 +20,8 @@ class PostController {
     _ref.read(postRepositoryProvider).deletePost(postId).then((value) =>
         _ref.read(postStateProvider.notifier).status = PostStatus.deleted);
   }
+
+  Future<void> createPost(String? bodyText, String? musicURL) async {
+    _ref.read(postRepositoryProvider).createPost(bodyText, musicURL);
+  }
 }

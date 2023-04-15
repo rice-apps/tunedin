@@ -5,7 +5,7 @@ import mongodb from 'mongodb';
 @Entity()
 class Group extends BaseEntity {
 	@ObjectIdColumn()
-	id: typeof mongodb.ObjectId;
+	_id: typeof mongodb.ObjectId;
 
 	@Column()
 	handle: string;

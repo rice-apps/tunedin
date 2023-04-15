@@ -19,20 +19,6 @@ class HomeScreen extends StatelessWidget {
             "TunedIn",
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.add,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.notifications,
-              ),
-              onPressed: () {},
-            ),
-          ],
         ),
         body: const PostScroll());
   }

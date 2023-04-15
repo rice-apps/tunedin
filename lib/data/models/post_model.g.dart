@@ -7,7 +7,7 @@ part of 'post_model.dart';
 // **************************************************************************
 
 _$_PostModel _$$_PostModelFromJson(Map<String, dynamic> json) => _$_PostModel(
-      id: json['id'] as String,
+      id: json['_id'] as String,
       author: UserModel.fromJson(json['author'] as Map<String, dynamic>),
       likedBy:
           (json['likedBy'] as List<dynamic>).map((e) => e as String).toList(),
@@ -20,7 +20,7 @@ _$_PostModel _$$_PostModelFromJson(Map<String, dynamic> json) => _$_PostModel(
 
 Map<String, dynamic> _$$_PostModelToJson(_$_PostModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'author': instance.author,
       'likedBy': instance.likedBy,
       'numLikes': instance.numLikes,

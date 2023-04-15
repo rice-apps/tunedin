@@ -21,11 +21,11 @@ class PostWidget extends ConsumerWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
-        borderRadius: BorderRadius.circular(10),
+        color: Theme.of(context).colorScheme.background,
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: Theme.of(context).colorScheme.surfaceVariant,
-          width: 1,
+          width: 2,
         ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -74,11 +74,11 @@ class PostWidget extends ConsumerWidget {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.favorite_border),
+                icon: const Icon(Icons.favorite_border, size: 30),
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.comment_outlined),
+                icon: const Icon(Icons.messenger_outline, size: 30),
               ),
             ],
           ),
@@ -111,7 +111,7 @@ class PostWidget extends ConsumerWidget {
                 width: 10,
               ),
               Text(
-                "Liked by David, Will Rice College, and 2 others",
+                "Liked by David and 35 others",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ],

@@ -17,7 +17,7 @@ import mongodb from 'mongodb';
 @Entity()
 class Playlist extends BaseEntity {
 	@ObjectIdColumn()
-	id: typeof mongodb.ObjectID;
+	_id: typeof mongodb.ObjectID;
 
 	@Column()
 	name: string;

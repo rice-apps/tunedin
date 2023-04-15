@@ -8,7 +8,8 @@ part 'post_model.g.dart';
 @unfreezed
 class PostModel with _$PostModel {
   factory PostModel({
-    required String id,
+    // ignore: invalid_annotation_target
+    @JsonKey(name: '_id') required String id,
     required UserModel author,
     required List<String> likedBy,
     int? numLikes,

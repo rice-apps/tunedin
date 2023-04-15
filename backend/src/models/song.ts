@@ -8,7 +8,7 @@ import mongodb from 'mongodb';
 @Entity()
 class Song extends BaseEntity {
 	@ObjectIdColumn()
-	id: typeof mongodb.ObjectID;
+	_id: typeof mongodb.ObjectID;
 }
 
 export default Song;
