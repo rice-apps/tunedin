@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'post_model.dart';
 
@@ -20,15 +20,21 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PostModel {
-  String get netID => throw _privateConstructorUsedError;
-  set netID(String value) => throw _privateConstructorUsedError;
-  int get numLikes => throw _privateConstructorUsedError;
-  set numLikes(int value) => throw _privateConstructorUsedError;
+  @JsonKey(name: '_id')
+  String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: '_id')
+  set id(String value) => throw _privateConstructorUsedError;
+  UserModel get author => throw _privateConstructorUsedError;
+  set author(UserModel value) => throw _privateConstructorUsedError;
+  List<String> get likedBy => throw _privateConstructorUsedError;
+  set likedBy(List<String> value) => throw _privateConstructorUsedError;
+  int? get numLikes => throw _privateConstructorUsedError;
+  set numLikes(int? value) => throw _privateConstructorUsedError;
+  List<String> get comments => throw _privateConstructorUsedError;
+  set comments(List<String> value) => throw _privateConstructorUsedError;
   String get bodyText => throw _privateConstructorUsedError;
-  set bodyText(String value) =>
-      throw _privateConstructorUsedError; // required var comments,
-  String get musicURL =>
-      throw _privateConstructorUsedError; // required var comments,
+  set bodyText(String value) => throw _privateConstructorUsedError;
+  String get musicURL => throw _privateConstructorUsedError;
   set musicURL(String value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +48,14 @@ abstract class $PostModelCopyWith<$Res> {
   factory $PostModelCopyWith(PostModel value, $Res Function(PostModel) then) =
       _$PostModelCopyWithImpl<$Res, PostModel>;
   @useResult
-  $Res call({String netID, int numLikes, String bodyText, String musicURL});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      UserModel author,
+      List<String> likedBy,
+      int? numLikes,
+      List<String> comments,
+      String bodyText,
+      String musicURL});
 }
 
 /// @nodoc
@@ -58,20 +71,35 @@ class _$PostModelCopyWithImpl<$Res, $Val extends PostModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? netID = null,
-    Object? numLikes = null,
+    Object? id = null,
+    Object? author = null,
+    Object? likedBy = null,
+    Object? numLikes = freezed,
+    Object? comments = null,
     Object? bodyText = null,
     Object? musicURL = null,
   }) {
     return _then(_value.copyWith(
-      netID: null == netID
-          ? _value.netID
-          : netID // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      numLikes: null == numLikes
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+      likedBy: null == likedBy
+          ? _value.likedBy
+          : likedBy // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      numLikes: freezed == numLikes
           ? _value.numLikes
           : numLikes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      comments: null == comments
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       bodyText: null == bodyText
           ? _value.bodyText
           : bodyText // ignore: cast_nullable_to_non_nullable
@@ -91,7 +119,14 @@ abstract class _$$_PostModelCopyWith<$Res> implements $PostModelCopyWith<$Res> {
       __$$_PostModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String netID, int numLikes, String bodyText, String musicURL});
+  $Res call(
+      {@JsonKey(name: '_id') String id,
+      UserModel author,
+      List<String> likedBy,
+      int? numLikes,
+      List<String> comments,
+      String bodyText,
+      String musicURL});
 }
 
 /// @nodoc
@@ -105,20 +140,35 @@ class __$$_PostModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? netID = null,
-    Object? numLikes = null,
+    Object? id = null,
+    Object? author = null,
+    Object? likedBy = null,
+    Object? numLikes = freezed,
+    Object? comments = null,
     Object? bodyText = null,
     Object? musicURL = null,
   }) {
     return _then(_$_PostModel(
-      netID: null == netID
-          ? _value.netID
-          : netID // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      numLikes: null == numLikes
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+      likedBy: null == likedBy
+          ? _value.likedBy
+          : likedBy // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      numLikes: freezed == numLikes
           ? _value.numLikes
           : numLikes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      comments: null == comments
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       bodyText: null == bodyText
           ? _value.bodyText
           : bodyText // ignore: cast_nullable_to_non_nullable
@@ -135,8 +185,11 @@ class __$$_PostModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
   _$_PostModel(
-      {required this.netID,
-      required this.numLikes,
+      {@JsonKey(name: '_id') required this.id,
+      required this.author,
+      required this.likedBy,
+      this.numLikes,
+      required this.comments,
       required this.bodyText,
       required this.musicURL});
 
@@ -144,18 +197,24 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
       _$$_PostModelFromJson(json);
 
   @override
-  String netID;
+  @JsonKey(name: '_id')
+  String id;
   @override
-  int numLikes;
+  UserModel author;
+  @override
+  List<String> likedBy;
+  @override
+  int? numLikes;
+  @override
+  List<String> comments;
   @override
   String bodyText;
-// required var comments,
   @override
   String musicURL;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PostModel(netID: $netID, numLikes: $numLikes, bodyText: $bodyText, musicURL: $musicURL)';
+    return 'PostModel(id: $id, author: $author, likedBy: $likedBy, numLikes: $numLikes, comments: $comments, bodyText: $bodyText, musicURL: $musicURL)';
   }
 
   @override
@@ -163,8 +222,11 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'PostModel'))
-      ..add(DiagnosticsProperty('netID', netID))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('author', author))
+      ..add(DiagnosticsProperty('likedBy', likedBy))
       ..add(DiagnosticsProperty('numLikes', numLikes))
+      ..add(DiagnosticsProperty('comments', comments))
       ..add(DiagnosticsProperty('bodyText', bodyText))
       ..add(DiagnosticsProperty('musicURL', musicURL));
   }
@@ -185,8 +247,11 @@ class _$_PostModel with DiagnosticableTreeMixin implements _PostModel {
 
 abstract class _PostModel implements PostModel {
   factory _PostModel(
-      {required String netID,
-      required int numLikes,
+      {@JsonKey(name: '_id') required String id,
+      required UserModel author,
+      required List<String> likedBy,
+      int? numLikes,
+      required List<String> comments,
       required String bodyText,
       required String musicURL}) = _$_PostModel;
 
@@ -194,16 +259,27 @@ abstract class _PostModel implements PostModel {
       _$_PostModel.fromJson;
 
   @override
-  String get netID;
-  set netID(String value);
+  @JsonKey(name: '_id')
+  String get id;
+  @JsonKey(name: '_id')
+  set id(String value);
   @override
-  int get numLikes;
-  set numLikes(int value);
+  UserModel get author;
+  set author(UserModel value);
+  @override
+  List<String> get likedBy;
+  set likedBy(List<String> value);
+  @override
+  int? get numLikes;
+  set numLikes(int? value);
+  @override
+  List<String> get comments;
+  set comments(List<String> value);
   @override
   String get bodyText;
   set bodyText(String value);
-  @override // required var comments,
-  String get musicURL; // required var comments,
+  @override
+  String get musicURL;
   set musicURL(String value);
   @override
   @JsonKey(ignore: true)

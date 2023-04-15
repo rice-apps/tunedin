@@ -6,18 +6,22 @@ class Themes {
         colorScheme: const ColorScheme(
           primary: Color(0xFF171924),
           onPrimary: Colors.white,
-          secondary: Color(0xFF202333),
+          secondary: Color(0xFF242B43),
           onSecondary: Colors.white,
-          tertiary: Color(0xFF790D30),
+          tertiary: Color(0xFFE197FA),
           onTertiary: Colors.white,
           brightness: Brightness.dark,
-          background: Color(0xFF171924),
+          background: Color(0xFF131B2D),
           onBackground: Colors.white,
           error: Colors.pink,
           onError: Colors.white,
           surface: Color(0xFF202333),
           onSurface: Colors.white,
+          surfaceVariant: Color(0xFF6D7189),
+          onSurfaceVariant: Colors.white,
+          outline: Color(0xFF3C4052),
         ),
+        canvasColor: const Color(0xFF131B2D),
         brightness: Brightness.dark,
         cardTheme: CardTheme(
             clipBehavior: Clip.antiAlias,
@@ -40,7 +44,7 @@ class Themes {
               const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             ),
             textStyle: MaterialStateProperty.all<TextStyle>(
-              TextStyle(
+              const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -48,15 +52,21 @@ class Themes {
             ),
           ),
         ),
-        fontFamily: 'Inter',
+        fontFamily: 'Poppins',
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFFFF417F),
         ),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
-              color: Colors.white, fontSize: 24, fontWeight: FontWeight.w600),
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+          ),
           labelLarge: TextStyle(
-              color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              height: 1.5),
           labelMedium: TextStyle(
               color: Colors.white, fontSize: 10, fontFamily: 'Poppins'),
           labelSmall: TextStyle(

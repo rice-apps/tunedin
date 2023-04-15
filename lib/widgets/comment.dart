@@ -46,7 +46,7 @@ class _CommentState extends State<Comment> {
                         fontWeight: FontWeight.w600,
                       ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
@@ -79,11 +79,11 @@ class _CommentState extends State<Comment> {
                       Icon(Icons.favorite,
                           color: _isNotLiked
                               ? Colors.transparent
-                              : Color(0xFFFF417F)),
+                              : const Color(0xFFFF417F)),
                       Icon(Icons.favorite_border,
                           color: _isNotLiked
-                              ? Color(0xFF878D9E)
-                              : Color(0xFFFF417F)),
+                              ? const Color(0xFF878D9E)
+                              : const Color(0xFFFF417F)),
                     ],
                   ),
                   onPressed: () {
@@ -105,7 +105,7 @@ class _CommentState extends State<Comment> {
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                    foregroundColor: Color(0xFF878D9E),
+                    foregroundColor: const Color(0xFF878D9E),
                   ),
                   onPressed: () {},
                   child: Text(
@@ -148,11 +148,11 @@ class LinePaint extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color(0xFF303449)
+      ..color = const Color(0xFF303449)
       ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
-    canvas.drawLine(Offset(0, 0), Offset(20, 0), paint);
+    canvas.drawLine(const Offset(0, 0), const Offset(20, 0), paint);
   }
 
   @override

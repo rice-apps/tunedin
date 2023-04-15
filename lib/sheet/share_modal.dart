@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice_music_sharing/sheet/tunedin_bottom_sheet.dart';
+
+import '../controllers/post_controller.dart';
 
 class ShareModal extends StatefulWidget {
   const ShareModal({super.key});
@@ -10,6 +13,9 @@ class ShareModal extends StatefulWidget {
 }
 
 class ShareModalState extends State<ShareModal> {
+  GlobalKey<FormState> postFormKey = GlobalKey<FormState>();
+  TextEditingController captionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return TunedInBottomSheet(
@@ -20,7 +26,7 @@ class ShareModalState extends State<ShareModal> {
             pushRoute,
             showSong: false,
             showSongSearchHeader: true,
-            getTargetName: (index) => 'Song',
+            getTargetName: (index) => 'Song Name',
             getTargetIcon: (index) => const Icon(Icons.playlist_play),
             buildTargetPage: (index) => TargetPickerPage(
                 sheetContext, pageContext, pushRoute,
@@ -50,11 +56,13 @@ class ShareModalState extends State<ShareModal> {
                       getTargetName: (index) => 'Will Rice College',
                       getTargetIcon: (index) => const Icon(Icons.school),
                       buildTargetPage: (int index) {
-                        return ShareCommentPage(sheetContext);
+                        return ShareCommentPage(
+                            sheetContext, postFormKey, captionController);
                       },
                     );
                   } else {
-                    return ShareCommentPage(sheetContext);
+                    return ShareCommentPage(
+                        sheetContext, postFormKey, captionController);
                   }
                 }),
           );
@@ -153,9 +161,9 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFF969BB5), width: 1),
+                border: Border.all(color: const Color(0xFF969BB5), width: 1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -164,7 +172,6 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
                   children: [
                     const SizedBox(height: 15),
                     ClipRRect(
-                      // borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
                         "https://picsum.photos/250?image=9",
                         width: 80,
@@ -173,7 +180,7 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -210,10 +217,10 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
                 hintStyle: Theme.of(context)
                     .textTheme
                     .displayMedium
-                    ?.copyWith(color: Color(0xFFA1A9BC)),
+                    ?.copyWith(color: const Color(0xFFA1A9BC)),
                 prefixIcon: const Icon(Icons.search, color: Color(0xFFA1A9BC)),
                 filled: true,
-                fillColor: Color(0xFF45495C),
+                fillColor: const Color(0xFF45495C),
                 enabledBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   borderSide: BorderSide(color: Color(0xFF969BB5), width: 1),
@@ -243,6 +250,7 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
                             ),
                       ),
                       leading: widget.getTargetIcon(index),
+                      // song/group select
                       trailing: Radio(
                         value: index,
                         groupValue: _selectedIndex,
@@ -264,7 +272,7 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
-                  border: Border(
+                  border: const Border(
                     top: BorderSide(
                       width: 0.5,
                       color: Colors.grey,
@@ -294,127 +302,148 @@ class _TargetPickerPageState extends State<TargetPickerPage> {
   }
 }
 
-class ShareCommentPage extends StatelessWidget {
+class ShareCommentPage extends ConsumerWidget {
   final BuildContext sheetContext;
-  const ShareCommentPage(this.sheetContext, {super.key});
+  final GlobalKey<FormState> postFormKey;
+  final TextEditingController captionController;
+
+  const ShareCommentPage(
+      this.sheetContext, this.postFormKey, this.captionController,
+      {super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-        child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Add caption",
-              style: Theme.of(context)
-                  .textTheme
-                  .apply(fontSizeFactor: 2.0)
-                  .displayMedium
-                  ?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-            )),
-      ),
-      Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF969BB5), width: 1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 15),
-                        ClipRRect(
-                          // borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            "https://picsum.photos/250?image=9",
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Song Name",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayMedium
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                              Text("Artist",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                            ],
-                          ),
-                        )
-                      ]),
-                ),
-              ),
-              const SizedBox(height: 15),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: TextField(
-                  style: Theme.of(context).textTheme.displaySmall,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 10,
-                  maxLength: 1000,
-                  decoration: InputDecoration(
-                      counterStyle: Theme.of(context).textTheme.displaySmall,
-                      hintText: 'Share your thoughts...',
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .displayMedium
-                          ?.copyWith(color: Color(0xFF969BB5))),
-                ),
-              ),
-            ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    late PostController controller = PostController(ref);
+    return Form(
+        key: postFormKey,
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Add caption",
+                  style: Theme.of(context)
+                      .textTheme
+                      .apply(fontSizeFactor: 2.0)
+                      .displayMedium
+                      ?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                )),
           ),
-        ),
-      ),
-      KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
-        if (!isKeyboardVisible) {
-          return Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              border: const Border(
-                top: BorderSide(
-                  width: 0.5,
-                  color: Colors.grey,
-                ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: const Color(0xFF969BB5), width: 1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 15),
+                            ClipRRect(
+                              // borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                "https://picsum.photos/250?image=9",
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Song Name",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          )),
+                                  Text("Artist",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                          )),
+                                ],
+                              ),
+                            )
+                          ]),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: TextFormField(
+                        controller: captionController,
+                        style: Theme.of(context).textTheme.displaySmall,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 10,
+                        maxLength: 1000,
+                        decoration: InputDecoration(
+                            counterStyle:
+                                Theme.of(context).textTheme.displaySmall,
+                            hintText: 'Add caption...',
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .displayMedium
+                                ?.copyWith(color: const Color(0xFF969BB5))),
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        }),
+                  ),
+                ],
               ),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-            child: ElevatedButton(
-              onPressed: () {
-                // implement networking here
-                Navigator.of(sheetContext).pop();
-              },
-              child: const Text('Send'),
-            ),
-          );
-        }
-        return const SizedBox.shrink();
-      }),
-    ]);
+          ),
+          KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+            if (!isKeyboardVisible) {
+              return Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                  border: const Border(
+                    top: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                child: ElevatedButton(
+                  onPressed: () {
+                    final form = postFormKey.currentState!;
+                    if (form.validate()) {
+                      controller.createPost(captionController.text,
+                          "https://open.spotify.com/track/6AOdKVvWB8Ulb3lGCnyPBY?si=56a9bd1fe20743ba");
+                      Navigator.of(sheetContext).pop();
+                    }
+                  },
+                  child: const Text('Send'),
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          }),
+        ]));
   }
 }

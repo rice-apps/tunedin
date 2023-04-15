@@ -1,16 +1,28 @@
-import { Entity, ObjectIdColumn, ObjectID, Column, BaseEntity } from 'typeorm';
-import db from '../db';
+import { Entity, ObjectIdColumn, Column, BaseEntity } from 'typeorm';
+import mongodb from 'mongodb';
 
 @Entity()
 class User extends BaseEntity {
 	@ObjectIdColumn()
-	id: typeof ObjectID;
+	_id: typeof mongodb.ObjectId;
+
+	@Column({ unique: true })
+	netid: string;
 
 	@Column()
-	username: string;
+	handle: string;
 
 	@Column()
 	name: string;
+
+	@Column()
+	posts: mongodb.ObjectId[];
+
+	@Column()
+	followers: mongodb.ObjectId[];
+
+	@Column()
+	timeline: mongodb.ObjectId[];
 }
 
 export default User;
