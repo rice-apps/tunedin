@@ -51,6 +51,9 @@ router.get('/', async (ctx, next) => {
 		}
 
 		// Get a new jwt token for the user
+
+		// this is a test.
+
 		const token = createToken(user);
 
 		ctx.body = {
