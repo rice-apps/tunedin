@@ -135,4 +135,33 @@ router.delete('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
+router.delete('/member/:admin/:grouphandle/:userhandle', async (ctx, next) => {
+	const group = await Group.findOneBy({
+		handle: ctx.params.grouphandle,
+	});
+	if (group === null) {
+		ctx.status = 404;
+		return;
+	}
+	const user = await User.findOneBy({
+		handle: ctx.params.userhandle,
+	});
+
+	const admins = group.admin
+	
+	if (user === null) {
+		ctx.status = 404;
+		return;
+	}
+
+	if (!admins.includes(ctx.params.admin)) {
+		ctx.status = 404;
+		return;
+	}
+	
+	group.members = group.members.filter((member) => member._id !== user._id);
+	await group.save();
+	ctx.body = group;
+});
+
 export default router;
