@@ -26,6 +26,10 @@ class Group extends BaseEntity {
 
 	@Column()
 	timeline: mongodb.ObjectId[];
+
+	@Column()
+	admin: User[];
+
 }
 
 export default Group;
