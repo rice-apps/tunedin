@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_stack/image_stack.dart';
+import 'package:rice_music_sharing/data/models/post_model.dart';
 import 'package:rice_music_sharing/widgets/post_action_button.dart';
 
 // import '../controllers/post_controller.dart';
+import '../data/models/user_model.dart';
 import '../providers/post_provider.dart';
 
 class PostWidget extends ConsumerWidget {
@@ -13,7 +15,15 @@ class PostWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // late PostController controller = PostController(ref);
 
-    final post = ref.watch(postStateProvider);
+    final post = PostModel(
+      id: "",
+      author: UserModel(name: "", netID: "", handle: "", token: ""),
+      likedBy: [],
+      comments: [],
+      numLikes: 0,
+      bodyText:"",
+      musicURL: ""
+    ); //ref.watch(postStateProvider);
 
     // you can use functions such like
     // controller.likePost();
@@ -60,8 +70,16 @@ class PostWidget extends ConsumerWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],
-              )
-            ],
+              ),
+              Spacer(),
+              Center(
+          child: IconButton(
+          icon: Icon(Icons.delete_outline),
+          iconSize: 20,
+          color: Color.fromARGB(255, 255, 255, 255),
+          onPressed: () {},
+          ),
+          ),],
           ),
           const SizedBox(
             height: 20,
@@ -137,7 +155,7 @@ class PostWidget extends ConsumerWidget {
             height: 10,
           ),
           Text(
-            "View 2 comments",
+            "View 4 comments",
             style: Theme.of(context).textTheme.displaySmall,
           )
         ],

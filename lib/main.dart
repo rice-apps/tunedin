@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rice_music_sharing/data/models/post_model.dart';
+import 'package:rice_music_sharing/providers/post_provider.dart';
 import 'package:rice_music_sharing/sheet/share_modal.dart';
+import 'package:rice_music_sharing/widgets/post_widget.dart';
 
+import 'data/models/user_model.dart';
 import 'themes/themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rice_music_sharing/data/repositories/storage_repository.dart';
@@ -12,11 +16,16 @@ import 'screen/personal_account_screen.dart';
 import 'themes/tunedin_icon_icons.dart';
 
 void main() async {
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  runApp(ProviderScope(
+      child: MaterialApp(
+          theme: Themes.darkTheme,
+          title: 'Welcome to TunedIn',
+          home: Scaffold(
+              body: ListView.builder(
+                  itemCount: 100,
+                  itemBuilder: (BuildContext context, int idx) {
+                    return PostWidget();
+                  })))));
 }
 
 class MyApp extends StatelessWidget {
