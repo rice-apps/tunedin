@@ -16,14 +16,13 @@ class PostWidget extends ConsumerWidget {
     // late PostController controller = PostController(ref);
 
     final post = PostModel(
-      id: "",
-      author: UserModel(name: "", netID: "", handle: "", token: ""),
-      likedBy: [],
-      comments: [],
-      numLikes: 0,
-      bodyText:"",
-      musicURL: ""
-    ); //ref.watch(postStateProvider);
+        id: "",
+        author: UserModel(name: "", netID: "", handle: "", token: ""),
+        likedBy: [],
+        comments: [],
+        numLikes: 0,
+        bodyText: "",
+        musicURL: ""); //ref.watch(postStateProvider);
 
     // you can use functions such like
     // controller.likePost();
@@ -73,13 +72,89 @@ class PostWidget extends ConsumerWidget {
               ),
               Spacer(),
               Center(
-          child: IconButton(
-          icon: Icon(Icons.delete_outline),
-          iconSize: 20,
-          color: Color.fromARGB(255, 255, 255, 255),
-          onPressed: () {},
-          ),
-          ),],
+                child: IconButton(
+                  icon: Icon(Icons.delete_outline_rounded),
+                  iconSize: 25,
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  onPressed: () {
+                    // popup with msg
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            'Delete?',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          content: Text(
+                            'Are you sure you want to delete this post?',
+                            style: Theme.of(context).textTheme.displayMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.red),
+                                    minimumSize: MaterialStateProperty.all<Size>(
+                                            Size(
+                                              100, 25
+                                            ))
+                                  ),
+                                  child: Text(
+                                    'Yes',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    // Handle button press
+                                  },
+                                ),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.grey),
+                                    minimumSize: MaterialStateProperty.all<Size>(
+                                            Size(
+                                              100, 25
+                                            ))
+                                  ),
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    // Handle "Cancel" button press
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.background,
+                          elevation: 10,
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,
