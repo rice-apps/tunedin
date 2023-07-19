@@ -41,6 +41,27 @@ router.put('/:grouphandle', async (ctx, next) => {
 	group.followers = [];
 	group.members = [user];
 	group.timeline = [];
+	group.admin = [user];
+	await group.save();
+	ctx.body = group;
+});
+
+router.put('/makeadmin/:userhandle/:grouphandle', async (ctx, next) => {
+	const admin = await User.findOneBy({
+		handle: ctx.params.userhandle,
+	});
+	if (admin === null) {
+		ctx.status = 404;
+		return;
+	}
+	const group = await Group.findOneBy({
+		handle: ctx.params.grouphandle,
+	});
+	if (group === null) {
+		ctx.status = 404;
+		return;
+	}
+	group.admin.push(admin);
 	await group.save();
 	ctx.body = group;
 });
@@ -147,18 +168,18 @@ router.delete('/member/:admin/:grouphandle/:userhandle', async (ctx, next) => {
 		handle: ctx.params.userhandle,
 	});
 
-	const admins = group.admin
-	
+	const admins = group.admin;
+
 	if (user === null) {
 		ctx.status = 404;
 		return;
 	}
 
-	if (!admins.includes(ctx.params.admin)) {
-		ctx.status = 404;
-		return;
-	}
-	
+	// if (!admins.includes(ctx.params.admin)) {
+	// 	ctx.status = 404;
+	// 	return;
+	// }
+
 	group.members = group.members.filter((member) => member._id !== user._id);
 	await group.save();
 	ctx.body = group;

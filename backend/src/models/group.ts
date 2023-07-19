@@ -29,7 +29,6 @@ class Group extends BaseEntity {
 
 	@Column()
 	admin: User[];
-
 }
 
 export default Group;
