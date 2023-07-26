@@ -8,13 +8,17 @@ import 'screen/home_screen.dart';
 import 'screen/login_screen.dart';
 import '../constants.dart';
 import 'screen/discovery_screen.dart';
+import 'screen/profile_screen.dart';
 import 'screen/personal_account_screen.dart';
 import 'themes/tunedin_icon_icons.dart';
 
 void main() async {
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    ProviderScope(
+      child: MaterialApp(
+          theme: Themes.darkTheme,
+          title: 'Welcome to TunedIn',
+          home: ProfileScreen(isGroupProfile: false)),
     ),
   );
 }
