@@ -66,6 +66,73 @@ router.put('/makeadmin/:userhandle/:grouphandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
+router.put('/admingivesrights/:userhandle/:adminhandle/:grouphandle',async (ctx, next) => {
+	const group = await Group.findOneBy({
+		handle: ctx.params.grouphandle,
+	});
+	if (group === null) {
+		ctx.status = 404;
+		return;
+	}
+	const admin = await User.findOneBy({
+		handle: ctx.params.adminhandle,
+	});
+	const admins = group.admin;
+	if (!admins.includes(admin)) {
+		ctx.status = 404;
+		return;
+	}
+	const user = await User.findOneBy({
+		handle: ctx.params.userhandle,
+	});
+	
+	if (admin === null) {
+		ctx.status = 404;
+		return;
+	}
+	
+	group.admin.push(user);
+	await group.save();
+	ctx.body = group;
+});
+
+router.put('revokeadmin/:adminhandle/:deletedadminhandle/:grouphandle' ,async (ctx, next) => {
+	const group = await Group.findOneBy({
+		handle: ctx.params.grouphandle,
+	});
+	if (group === null) {
+		ctx.status = 404;
+		return;
+	}
+	const admin = await User.findOneBy({
+		handle: ctx.params.adminhandle,
+	});
+	if (admin === null) {
+		ctx.status = 404;
+		return;
+	}
+	const admins = group.admin;
+	if (!admins.includes(admin)) {
+		ctx.status = 404;
+		return;
+	}
+	const deletedadmin = await User.findOneBy({
+		handle: ctx.params.deletedadminhandle,
+	});
+	if (deletedadmin === null) {
+		ctx.status = 404;
+		return;
+	}
+	if (!admins.includes(deletedadmin)) {
+		ctx.status = 404;
+		return;
+	}
+	
+	group.admin = group.admin.filter((user) => user !== deletedadmin);
+	await group.save();
+	ctx.body = group;
+})
+
 router.put('/join/:grouphandle', async (ctx, next) => {
 	const group = await Group.findOneBy({
 		handle: ctx.params.grouphandle,
@@ -135,7 +202,6 @@ router.post('/removegrouppost/:adminhandle/:grouphandle/:postID', async (ctx, ne
 		ctx.status = 404;
 		return;
 	}
-
 	
 	group.timeline = group.timeline.filter((post) => post !== ctx.params.postID);
 	await group.save();
