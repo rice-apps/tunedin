@@ -106,6 +106,43 @@ router.put('/follow/:grouphandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
+router.post('/removegrouppost/:adminhandle/:grouphandle/:postID', async (ctx, next) => {
+	const group = await Group.findOneBy({
+		handle: ctx.params.grouphandle,
+	});
+	if (group === null) {
+		ctx.status = 404;
+		return;
+	}
+	const admins = group.admin;
+	
+	const admin = await User.findOneBy({
+		handle: ctx.params.adminhandle,
+	});
+	
+	if (admin === null) {
+		ctx.status = 404;
+		return;
+	}
+	
+	if (!admins.includes(admin)) {
+		ctx.status = 404;
+		return;
+	}
+	const timeline = group.timeline;
+
+	if (!timeline.includes(ctx.params.postID)) {
+		ctx.status = 404;
+		return;
+	}
+
+	
+	group.timeline = group.timeline.filter((post) => post !== ctx.params.postID);
+	await group.save();
+	ctx.body = group;
+	
+});
+
 router.delete('/', async (ctx, next) => {
 	ctx.body = await Group.clear();
 });
@@ -156,7 +193,7 @@ router.delete('/follower/:grouphandle/:userhandle', async (ctx, next) => {
 	ctx.body = group;
 });
 
-router.delete('/member/:admin/:grouphandle/:userhandle', async (ctx, next) => {
+router.delete('/member/:adminhandle/:grouphandle/:userhandle', async (ctx, next) => {
 	const group = await Group.findOneBy({
 		handle: ctx.params.grouphandle,
 	});
@@ -175,10 +212,14 @@ router.delete('/member/:admin/:grouphandle/:userhandle', async (ctx, next) => {
 		return;
 	}
 
-	// if (!admins.includes(ctx.params.admin)) {
-	// 	ctx.status = 404;
-	// 	return;
-	// }
+	const admin = await User.findOneBy({
+		handle: ctx.params.adminhandle,
+	});
+
+	if (!admins.includes(admin)) {
+		ctx.status = 404;
+		return;
+	}
 
 	group.members = group.members.filter((member) => member._id !== user._id);
 	await group.save();
